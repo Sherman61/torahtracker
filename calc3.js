@@ -18,12 +18,19 @@ function handleMesechetClick() {
     const numPereks = parseInt(this.className.match(/\d+/)[0]);
     const mesechetName = this.innerText;
     displayPereks(mesechetName, numPereks);
-    updateInstruction('please select a start perek');
+
+    // Check if a start perek has already been selected
+    if (selectedStartPerekIndex !== null && selectedEndPerekIndex === null) {
+        updateInstruction('Select an end perek');
+    } else {
+        updateInstruction('Select a start perek');
+    }
 }
+
 
 // Display pereks for a given mesechet
 function displayPereks(mesechetName, numPereks) {
-    console.log('clicked on a mesachta \n running display pereks');
+    console.log('clicked on a mesachta \n running displayPereks');
     const sideNav = document.querySelector('#sideNav');
     hideBBContainer(sideNav);
     const pereksContainer = createPereksContainer(mesechetName, numPereks);
@@ -93,10 +100,12 @@ function handlePerekSelection(event) {
         const perekIndex = Number(targetElement.getAttribute('data-perek-index'));
         if (selectedStartPerekIndex === null) {
             selectedStartPerekIndex = perekIndex;
-            updateInstruction('Select till what perek to calculate');
+            console.log(`Start perek selected: ${perekIndex}`);  // Log start perek selection
+            updateInstruction('Select a end perek');
             targetElement.style.backgroundColor = 'lightgreen';
         } else if (selectedEndPerekIndex === null) {
             selectedEndPerekIndex = perekIndex;
+            console.log(`End perek selected: ${perekIndex}`);    // Log end perek selection
             targetElement.style.backgroundColor = 'lightgreen';
             calculateTotalPereks();
         }
@@ -106,12 +115,12 @@ function handlePerekSelection(event) {
 // Function to calculate total pereks selected
 function calculateTotalPereks() {
     let totalPereks = selectedEndPerekIndex - selectedStartPerekIndex + 1;
-    updateInstruction(`Total pereks selected: ${totalPereks}`);
+    updateInstruction(`Total pereks: ${totalPereks}`);
     console.log('Total pereks selected:', totalPereks);
     
     setTimeout(function() {
        
-        document.querySelector('#instruction').innerText='Select a Masechta';
+        document.querySelector('#instruction').innerText='Select a start perek';
     }, 1200);
 
     resetPerekSelection();
