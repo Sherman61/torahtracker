@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 90vh;
+  font-family: Arial, sans-serif;
+}
+.header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-size: 2em;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        @media only screen and (max-width: 800px) {
+            .header {
+                font-size: 1.5em;
+            }
+        }
+
+        @media only screen and (max-width: 500px) {
+            .header {
+                font-size: 1em;
+            }
+        }
+#mesandperek, #bold{
+    text-align: center;
+
+}
+#bold{
+    font-weight: 700;
+    font-size: large;
+}
+.container { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+}
+
+.sidebar {
+  width: 300px;
+  position: relative; /* To position the sideNavContainer absolutely relative to this element */
+  background: #f1f1f1;
+  padding: 10px;
+  transition: transform 0.3s ease;
+  border-right: 1px solid #ddd;
+  max-height: 60vh;
+}
+
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.menu-item {
+  margin-bottom: 10px;
+}
+
+.menu-item a {
+  display: block;
+  text-decoration: none;
+  color: #333;
+  padding: 5px;
+} 
+
+
+.side-nav-container {
+  position: absolute; /* Changed from fixed to absolute */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 13;
+  max-height: 100%; /* Changed from 60vh to 100% to cover the entire sidebar */
+  overflow-y: auto;
+  width: 100%; /* Make it the same width as the sidebar */
+  padding: 10px;
+  border-left: 1px solid #ddd;
+  background: #f1f1f1;
+}
+.side-nav {
+  //list-style-type: none;
+  //margin: 10px 0;
+} 
+
+.side-nav {
+  position: relative;
+  top: 0;
+  width: 300px;
+  background: #f1f1f1;
+
+//background: blue;
+
+ // padding: 10px; 
+  border-left: 1px solid #ddd;
+ transform: translateX(0px);
+  transition: transform 0.5s ease-out;
+  overflow-y: auto; 
+  max-height: 60vh;  /* Add this line to limit the height of the side navigation */
+}
+
+.side-nav-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.side-nav-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.side-nav-container::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.side-nav-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@media (max-width: 800px) {
+  .sidebar, .menu {
+    max-height: 50vh;
+overflow-y:auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar, .menu {
+    max-height: 48vh;
+  }
+}
+
+@media (max-width: 400px) {
+  .sidebar, .menu {
+    max-height: 46vh;
+
+  }
+}
+
+ /* ... your existing styles ... */
+
+        /* Styles for the confetti text */
+        .confetti-text {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3em;
+            z-index: 1000;
+            color: #ff0000;
+            text-align: center;
+            width: 100%;
+        }
+/* Different classes for different confetti texts
+        .confetti1 { color: #ff0000; }
+        .confetti2 { color: #00ff00; }
+        .confetti3 { color: #0000ff; }
+        .confetti4 { color: #ff00ff; }
+        .confetti5 { color: #00ffff; }
+        
+         */
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>mishnayes</title>
+</head>
+<body>
+   <header class="header">
+    <p id="finished"></p>
+    <p id="percentdone"></p>
+    <p id="to-go"></p>
+    <!--<p id="pereks-today">-->
+
+        <p id="today"></p>
+   </header>
+    <h2 id="mesandperek"></h2>
+    <div class="container">
+        
+        <div class="sidebar">
+            <ul class="menu">
+                <li class="menu-item">
+                    <p id="bold">mesachet</p>
+                    <ul class="submenu">
+                        <li><p class="bb bb9">brachot</p>  </li>
+                        
+                        <li><p class="bb bb8">Peah</p></li>
+
+
+                    </ul>
+                </li>
+            </ul>
+        </div> 
+    </div>
+          
+ 
+    <script>
+     // Calculate the total number of pereks in all masechtot
+let totalPereks = Array.from(document.querySelectorAll('.bb')).reduce((sum, bbElement) => {
+    return sum + parseInt(bbElement.className.match(/\d+/)[0]);
+}, 0);
+
+const bbElements = document.querySelectorAll('.bb');
+let currentGlobalPerekIndex = parseInt(localStorage.getItem('globalPerekIndex') || '1') - 1;
+
+let pereksTodayStartIndex = parseInt(localStorage.getItem('pereksTodayStartIndex') || '0');
+let lastDate = localStorage.getItem('lastDate') || '';
+let todayDate = new Date().toDateString();
+
+if (lastDate !== todayDate) {
+    lastDate = todayDate;
+    localStorage.setItem('lastDate', todayDate);
+    pereksTodayStartIndex = currentGlobalPerekIndex;
+    localStorage.setItem('pereksTodayStartIndex', pereksTodayStartIndex.toString());
+}
+
+bbElements.forEach((bbElement, index) => {
+    bbElement.addEventListener('click', () => createSideNavs(index + 1));
+    
+});
+
+function createSideNavs(mesechetIndex) {
+    const oldSideNavContainer = document.querySelector('.side-nav-container');
+    if (oldSideNavContainer) {
+        oldSideNavContainer.remove();
+    }
+
+    const sideNavContainer = document.createElement('ul');
+    sideNavContainer.classList.add('side-nav-container');
+    document.querySelector('.sidebar').appendChild(sideNavContainer);
+
+    const bbElement = bbElements[mesechetIndex - 1];
+    const num = parseInt(bbElement.className.match(/\d+/)[0]);
+    const mesechet = bbElement.textContent;
+
+    for (let i = 1; i <= num; i++) {
+        const globalPerekIndex = calculateGlobalPerekIndex(mesechetIndex, i);
+        const sideNav = document.createElement('li');
+
+        sideNav.classList.add('side-nav');
+        sideNav.style.top = `${i * 1}px`;
+        sideNav.style.transform = `translateX(0px)`;
+        sideNav.innerHTML = `<p>${mesechet} perek ${i}</p>`;
+       
+        sideNav.addEventListener('click', () => {
+            if (globalPerekIndex <= currentGlobalPerekIndex) {
+                const confirmAction = window.confirm('You are selecting a previous perek. Did you do this by mistake?');
+                if (confirmAction) {
+                    return;
+                }
+            }
+            currentGlobalPerekIndex = globalPerekIndex - 1;
+            localStorage.setItem('globalPerekIndex', `${currentGlobalPerekIndex + 1}`);
+            localStorage.setItem('mesechet', mesechet);
+            localStorage.setItem('perek', `perek ${i}`);
+            updateStats();
+            updateMesAndPerek();
+        });
+
+        sideNavContainer.appendChild(sideNav);
+    }
+
+    setTimeout(() => {
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.side-nav') && !event.target.closest('.bb')) {
+                const sideNavs = document.querySelectorAll('.side-nav');
+                sideNavs.forEach(sideNav => sideNav.remove());
+            }
+        });
+    }, 0);
+}
+
+document.addEventListener('click', function (event) {
+    if (!event.target.closest('.sidebar')) {
+        const oldSideNavContainer = document.querySelector('.side-nav-container');
+        if (oldSideNavContainer) {
+            oldSideNavContainer.remove();
+        }
+    }
+});
+
+function calculateGlobalPerekIndex(mesechetIndex, perekIndex) {
+    let globalPerekIndex = 0;
+    for (let i = 0; i < mesechetIndex - 1; i++) {
+        globalPerekIndex += parseInt(bbElements[i].className.match(/\d+/)[0]);
+    }
+    globalPerekIndex += perekIndex;
+    return globalPerekIndex;
+}
+
+function updateMesAndPerek() {
+    const mesechet = localStorage.getItem('mesechet') || '';
+    const perek = localStorage.getItem('perek') || '';
+    const mesAndPerekElement = document.getElementById('mesandperek');
+    mesAndPerekElement.innerText = `${mesechet} ${perek}`;
+}
+
+function updateStats() {
+    const finishedElement = document.getElementById('finished');
+    finishedElement.innerText = `Pereks finished: ${currentGlobalPerekIndex}`;
+
+    const percentDoneElement = document.getElementById('percentdone');
+    const percentDone = Math.round((currentGlobalPerekIndex / totalPereks) * 100);
+    percentDoneElement.innerText = `Percent done: ${percentDone}%`;
+
+    const toGoElement = document.getElementById('to-go');
+    const toGo = totalPereks - currentGlobalPerekIndex;
+    toGoElement.innerText = `Pereks to go: ${toGo}`;
+
+    const pereksTodayElement = document.getElementById('today');
+    const pereksToday = currentGlobalPerekIndex - pereksTodayStartIndex;
+    pereksTodayElement.innerText = `Pereks learned today: ${pereksToday}`;
+}
+
+// Update stats and mesechet and perek on page load
+updateStats();
+updateMesAndPerek();
+
+    </script>
+
+       
+    </body>
+    </html>

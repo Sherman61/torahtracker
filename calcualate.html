@@ -1,0 +1,417 @@
+          
+       <!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+
+    body, html {
+      margin: 0;
+      padding: 0;
+     // height: 90vh;
+      background-color: aqua;
+      font-family: Arial, sans-serif;
+    }
+    @media(min-width:500px) {
+        
+        body,html{background-color:#ADD8E6;}}
+    
+    .header {
+                position: sticky;
+                top: 0;
+                background-color:#3f567e ;
+                color: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+                font-size: 2em;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+    
+            @media only screen and (max-width: 800px) {
+                .header {
+                    font-size: 1.5em;
+                }
+            }
+    
+            @media only screen and (max-width: 500px) {
+                .header {
+                    font-size: 1em;
+                }
+            }
+            #mesandperek, #bold{
+          text-align: center;
+          font-weight: 700;
+          font-size: 1.5em;
+      }
+    .container { 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      position: relative;
+      overflow: hidden;
+      text-align:center;
+      font-size: 20px;
+    
+    }
+    
+    .sidebar {
+      width: 300px;
+      position: relative; /* To position the sideNavContainer absolutely relative to this element */
+      background: #f1f1f1;
+      padding: 10px;
+      transition: transform 0.3s ease;
+      border-right: 1px solid #ddd;
+      max-height: 60vh;
+    }
+    
+    
+    .menu {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    
+    .menu-item {
+      margin-bottom: 10px;
+    }
+    
+    .menu-item a {
+      display: block;
+      text-decoration: none;
+      color: #333;
+      padding: 5px;
+    } 
+    
+    
+    .side-nav-container {
+      position: absolute; /* Changed from fixed to absolute */
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 13;
+      max-height: 100%; /* Changed from 60vh to 100% to cover the entire sidebar */
+      overflow-y: auto;
+      width: 100%; /* Make it the same width as the sidebar */
+      padding: 10px;
+      border-left: 1px solid #ddd;
+      background: #f1f1f1;
+    }
+    
+    
+    .side-nav {
+      position: relative;
+      top: 0;
+      width: 300px;
+      background: #f1f1f1;
+    
+      border-left: 1px solid #ddd;
+     transform: translateX(0px);
+      transition: transform 0.5s ease-out;
+      overflow-y: auto; 
+      max-height: 60vh;  /* Add this line to limit the height of the side navigation */
+    }
+    
+    .side-nav-container::-webkit-scrollbar {
+      width: 10px;
+    }
+    
+    .side-nav-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    
+    .side-nav-container::-webkit-scrollbar-thumb {
+      background: #888;
+    }
+    
+    .side-nav-container::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    
+    @media (min-width: 800px) and (min-height:620px) {
+      
+    .sidebar{
+        width: 500px;
+        padding: 0px;  
+    }
+      }
+    
+    @media (max-width: 800px) {
+      .sidebar, .menu {
+        max-height: 50vh;
+    overflow-y:auto;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .sidebar, .menu {
+        max-height: 48vh;
+      }
+    }
+    
+    @media (max-width: 400px) {
+      .sidebar, .menu {
+        max-height: 46vh;
+    
+      }
+    }
+    @media (max-width: 350px) {
+      .sidebar, .menu {
+        max-height: 42vh;
+    
+      }
+    }
+    @media (max-height: 500px) {
+      .sidebar, .menu {
+        max-height: 42vh;
+    
+      }
+    }
+    li{
+        list-style: none;
+    }
+     .bb:hover{
+      font-weight:bolder;
+     // color: aquamarine;
+    }
+    
+    .hide ,
+      .hidden {
+        display: none !important;
+    }
+    
+    .side-nav {
+        padding: 15px 20px;
+      //  cursor: pointer;
+        transition: 0.5s;
+       
+    }
+
+    .pereks-container{
+      height: 500px;
+      overflow-y:auto;
+    }
+        </style>
+           <title>Calculate Pereks</title>
+       </head>
+       <body>
+           <h1>Calculate Total Pereks</h1>
+           <h2 id="selected-range"></h2>
+           <h2 id="instruction">Select a Masechta</h2>
+           <div class="sidebar" id="outerSidebar">
+               <div class="container">
+                   <div class="sidebar" id="sideNav">
+                    <div class="bb-container">
+                      <ul class="menu">
+                        <li class="menu-item">
+                          <p id="bold">mesachet</p>
+                 
+                          <ul class="submenu">
+                       <!-- Dynamic list of pereks will be generated here -->
+                       <li><p class="bb bb9">ברכות</p>  </li>
+                       <li><p class="bb bb8">פאה</p></li>
+<li><p class="bb bb7">דמאי</p></li>
+<li><p class="bb bb9">כלאים</p></li>
+<li><p class="bb bb10">שביעית</p></li>
+<li><p class="bb bb11">תרומות</p></li>
+<li><p class="bb bb5">מעשרות</p></li>
+<li><p class="bb bb5">מעשר שני</p></li>
+<li><p class="bb bb4">חלה</p></li>
+<li><p class="bb bb3">ערלה</p></li>
+<li><p class="bb bb4">ביכורים</p></li>
+
+<hr>
+<li><p class="bb bb24">שבת</p></li>
+<li><p class="bb bb10">עירובין</p></li>
+<li><p class="bb bb10">פסחים</p></li>
+<li><p class="bb bb8">שקלים</p></li>
+<li><p class="bb bb8">יומא</p></li>
+<li><p class="bb bb5">סוכה</p></li>
+<li><p class="bb bb5">ביצה</p></li>
+<li><p class="bb bb4">ראש השנה</p></li>
+<li><p class="bb bb4">תענית</p></li>
+<li><p class="bb bb4">מגילה</p></li>
+<li><p class="bb bb3">מועד קטן</p></li>
+<li><p class="bb bb3">חגיגה</p></li>
+
+<hr>
+<li><p class="bb bb16">יבמות</p></li>
+<li><p class="bb bb13">כתובות</p></li>
+<li><p class="bb bb11">נדרים</p></li>
+<li><p class="bb bb9">נזיר</p></li>
+<li><p class="bb bb9">סוטה</p></li>
+<li><p class="bb bb9">גיטין</p></li>
+<li><p class="bb bb4">קידושין</p></li>
+
+<hr>
+<li><p class="bb bb10">בבא קמא</p></li>
+<li><p class="bb bb10">בבא מציעא</p></li>
+<li><p class="bb bb10">בבא בתרא</p></li>
+<li><p class="bb bb11">סנהדרין</p></li>
+<li><p class="bb bb3">מכות</p></li>
+<li><p class="bb bb8">שבועות</p></li>
+<li><p class="bb bb8">עדיות</p></li>
+<li><p class="bb bb5">עבודה זרה</p></li>
+<li><p class="bb bb6">אבות</p></li>
+<li><p class="bb bb3">הוריות</p></li>
+
+<hr>
+<li><p class="bb bb14">זבחים</p></li>
+<li><p class="bb bb13">מנחות</p></li>
+<li><p class="bb bb12">חולין</p></li>
+<li><p class="bb bb9">בכורות</p></li>
+<li><p class="bb bb9">ערכין</p></li>
+<li><p class="bb bb7">תמורה</p></li>
+<li><p class="bb bb6">כריתות</p></li>
+<li><p class="bb bb6">מעילה</p></li>
+<li><p class="bb bb7">תמיד</p></li>
+<li><p class="bb bb5">מדות</p></li>
+<li><p class="bb bb3">קינים</p></li>
+
+<hr>
+<li><p class="bb bb30" >כלים</p></li>
+<li><p class="bb bb18">אהלות</p></li>
+<li><p class="bb bb14">נגעים</p></li>
+<li><p class="bb bb12">פרה</p></li>
+<li><p class="bb bb10">טהרות</p></li>
+<li><p class="bb bb10">מקוואות</p></li>
+<li><p class="bb bb10">נדה</p></li>
+<li><p class="bb bb6">מכשירין</p></li>
+<li><p class="bb bb5">זבים</p></li>
+<li><p class="bb bb4">טבול יום</p></li>
+<li><p class="bb bb4">ידים</p></li>
+<li><p class="bb bb3">עוקצים</p></li>
+ 
+
+          </ul>
+        </li>
+        </ul>
+        </div>
+        
+        </div>
+        </div>
+           <p id="result"></p>
+           
+           <script src="calc2.js">
+  /*   // Store the original HTML of the sidebar
+let originalSidebarHTML = '';
+
+// Function to save the original mesechets view
+function saveOriginalSidebar() {
+  const sideNav = document.querySelector('#sideNav');
+  if (sideNav) {
+    originalSidebarHTML = sideNav.innerHTML;
+  }
+}
+
+// Call this function on page load to save the original sidebar content
+window.onload = saveOriginalSidebar;
+
+// Attach click event listeners to each mesechet
+function attachMesechetClickListeners() {
+  document.querySelectorAll('.bb').forEach(mesechet => {
+      mesechet.addEventListener('click', function() {
+          const numPereks = parseInt(this.className.match(/\d+/)[0]);
+          const mesechetName = this.innerText;
+          displayPereks(mesechetName, numPereks);
+      });
+  });
+}
+
+function displayPereks(mesechetName, numPereks) {
+    const sideNav = document.querySelector('#sideNav');
+    sideNav.innerHTML = ''; // Clear previous content
+
+    const pereksContainer = document.createElement('div');
+    pereksContainer.className = 'pereks-container';
+
+    const mesechetTitle = document.createElement('h2');
+    mesechetTitle.innerText = mesechetName;
+    pereksContainer.appendChild(mesechetTitle);
+
+    for (let i = 1; i <= numPereks; i++) {
+        let perekDiv = document.createElement('div');
+        perekDiv.setAttribute('class', 'perek');
+        perekDiv.setAttribute('data-perek-index', i);
+        perekDiv.innerText = `${mesechetName} פרק ${toHebrewNumber(i)}`;
+        pereksContainer.appendChild(perekDiv);
+    }
+
+    sideNav.appendChild(pereksContainer);
+}
+
+// Function to convert numbers to Hebrew numerals
+function toHebrewNumber(num) {
+    const hebrewNumbers = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'יא', 'יב', 'יג', 'יד', 'טו', 'טז', 'יז', 'יח', 'יט', 'כ', 'כא', 'כב', 'כג', 'כד', 'כה', 'כו', 'כז', 'כח', 'כט', 'ל'];
+    return hebrewNumbers[num - 1] || num;
+}
+
+let selectedStartPerekIndex = null;
+let selectedEndPerekIndex = null;
+let instructionElement = document.getElementById('instruction');
+
+// Event listener for selecting pereks
+document.querySelector('#sideNav').addEventListener('click', (event) => {
+    const targetElement = event.target;
+
+    if (targetElement.classList.contains('perek')) {
+        const perekIndex = Number(targetElement.getAttribute('data-perek-index'));
+
+        if (selectedStartPerekIndex === null) {
+            selectedStartPerekIndex = perekIndex;
+            instructionElement.innerText = 'Select till what perek to calculate';
+            targetElement.style.backgroundColor = 'lightgreen';
+        } else if (selectedEndPerekIndex === null) {
+            selectedEndPerekIndex = perekIndex;
+            targetElement.style.backgroundColor = 'lightgreen';
+
+            calculateTotalPereks();
+        }
+    }
+});
+
+// Function to calculate total pereks selected
+function calculateTotalPereks() {
+    let totalPereks = selectedEndPerekIndex - selectedStartPerekIndex + 1;
+    instructionElement.innerText = `Total pereks selected: ${totalPereks}`;
+    console.log('Total pereks selected:', totalPereks);
+
+    // Reset selection for next calculation
+    resetPerekSelection();
+}
+
+// Function to reset perek selection
+function resetPerekSelection() {
+    const pereks = document.querySelectorAll('.perek');
+    pereks.forEach(perek => perek.style.backgroundColor = 'transparent');
+    selectedStartPerekIndex = null;
+    selectedEndPerekIndex = null;
+}
+
+// Function to close the pereks menu and restore the original mesechet list
+function closePereksMenu() {
+  const sideNav = document.querySelector('#sideNav');
+  if (sideNav) {
+    sideNav.innerHTML = originalSidebarHTML; // Restore the original HTML
+    attachMesechetClickListeners(); // Reattach event listeners to mesechet items
+  }
+}
+
+// Event listener for clicking outside the pereks menu
+document.addEventListener('click', function(event) {
+  const clickedInsideMenu = event.target.closest('#sideNav');
+  const clickedOnMesechet = event.target.classList.contains('bb');
+
+  if (!clickedInsideMenu && !clickedOnMesechet) {
+    closePereksMenu();
+  }
+});
+ */
+    </script>     
+       </body>
+       </html>
+       
