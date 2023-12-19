@@ -11,7 +11,7 @@
   // Attach click event listeners to each mesechet
   document.querySelectorAll('.bb').forEach(mesechet => {
     mesechet.addEventListener('click', function() {
-        console.log(`Attaching litener Masechet: ${this.innerText}`)
+        
         const numPereks = parseInt(this.className.match(/\d+/)[0]);
         const mesechetName = this.innerText;
         document.querySelector('#instruction').innerText='please select a start perek';
@@ -20,7 +20,7 @@
 });
 
 function displayPereks(mesechetName, numPereks) {
-    console.log('running function')
+    console.log('clicked on a mesechet')
     const sideNav = document.querySelector('#sideNav');
     // sideNav.innerHTML = ''; // Clear previous content
     sideNav.querySelector('.bb-container').style = "display:none";
@@ -49,25 +49,59 @@ function toHebrewNumber(num) {
     return hebrewNumbers[num - 1] || num;
 }
 
-let selectedStartMesechetIndex = null;
-let selectedStartPerekIndex = null;
-let selectedEndMesechetIndex = null;
-let selectedEndPerekIndex = null;
+let selectedStartGlobalIndex = null;
+let selectedEndGlobalIndex = null;
+
+
+ 
+let totalGlobalPereks = 0;
 let instructionElement = document.getElementById('instruction');
 
+// Function to update the total global number of pereks
+function updateTotalGlobalPereks() {
+    totalGlobalPereks = 0;
+    document.querySelectorAll('.bb').forEach(mesechet => {
+        totalGlobalPereks += parseInt(mesechet.className.match(/\d+/)[0]);
+    });
+}
+
+// Call this function on page load or when the mesechtot list updates
+updateTotalGlobalPereks();
+
+// Function to find the global index of a perek
+function findGlobalPerekIndex(mesechetName, perekIndex) {
+    let globalIndex = 0;
+    let found = false;
+
+    document.querySelectorAll('.bb').forEach(mesechet => {
+        if (mesechet.innerText === mesechetName) {
+            globalIndex += perekIndex;
+            found = true;
+            return;
+        }
+        if (!found) {
+            globalIndex += parseInt(mesechet.className.match(/\d+/)[0]);
+        }
+    });
+
+    return globalIndex;
+}
+// Event listener for selecting pereks
 // Event listener for selecting pereks
 document.querySelector('#sideNav').addEventListener('click', (event) => {
     const targetElement = event.target;
 
     if (targetElement.classList.contains('perek')) {
         const perekIndex = Number(targetElement.getAttribute('data-perek-index'));
+const mesechetName = targetElement.closest('.pereks-container').querySelector('h2').innerText;
+        const globalIndex = findGlobalPerekIndex(mesechetName, perekIndex);
 
-        if (selectedStartPerekIndex === null) {
-            selectedStartPerekIndex = perekIndex;
+        if (selectedStartGlobalIndex === null) {
+            selectedStartGlobalIndex = globalIndex;
             instructionElement.innerText = 'Select till what perek to calculate';
             targetElement.style.backgroundColor = 'lightgreen';
-        } else if (selectedEndPerekIndex === null) {
-            selectedEndPerekIndex = perekIndex;
+        } else if (selectedEndGlobalIndex === null) {
+            selectedEndGlobalIndex = globalIndex;
             targetElement.style.backgroundColor = 'lightgreen';
 
             calculateTotalPereks();
@@ -77,9 +111,9 @@ document.querySelector('#sideNav').addEventListener('click', (event) => {
 
 // Function to calculate total pereks selected
 function calculateTotalPereks() {
-    let totalPereks = selectedEndPerekIndex - selectedStartPerekIndex + 1;
-    instructionElement.innerText = `Total pereks selected: ${totalPereks}`;
-    console.log('Total pereks selected:', totalPereks);
+    let totalPereks = selectedEndGlobalIndex - selectedStartGlobalIndex + 0;
+    instructionElement.innerText = `${totalPereks} perokem total`;
+    //console.log('Total pereks selected:', totalPereks);
 
     // Reset selection for next calculation
     resetPerekSelection();
@@ -89,8 +123,14 @@ function calculateTotalPereks() {
 function resetPerekSelection() {
     const pereks = document.querySelectorAll('.perek');
     pereks.forEach(perek => perek.style.backgroundColor = 'transparent');
-    selectedStartPerekIndex = null;
-    selectedEndPerekIndex = null;
+    selectedStartGlobalIndex = null;
+    selectedEndGlobalIndex = null;
+
+    setTimeout(function() {
+       
+        document.querySelector('#instruction').innerText='Select a Masechta';
+    }, 1200);
+    
 }
 
 
@@ -110,5 +150,6 @@ function resetPerekSelection() {
       if (!clickedInsideMenu && !clickedOnMesechet) {
         closePereksMenu();
         sideNav.querySelector('.bb-container').style = "display:block";
+document.querySelector('#instruction').innerText = "Select a Masechta";
       }
-    }); 
+    });  
