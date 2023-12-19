@@ -87,15 +87,16 @@ function findGlobalPerekIndex(mesechetName, perekIndex) {
     return globalIndex;
 }
 // Event listener for selecting pereks
-// Event listener for selecting pereks
+
 document.querySelector('#sideNav').addEventListener('click', (event) => {
     const targetElement = event.target;
 
     if (targetElement.classList.contains('perek')) {
+        
         const perekIndex = Number(targetElement.getAttribute('data-perek-index'));
 const mesechetName = targetElement.closest('.pereks-container').querySelector('h2').innerText;
         const globalIndex = findGlobalPerekIndex(mesechetName, perekIndex);
-
+        console.log('clicked on a perek')
         if (selectedStartGlobalIndex === null) {
             selectedStartGlobalIndex = globalIndex;
             instructionElement.innerText = 'Select till what perek to calculate';
@@ -103,18 +104,19 @@ const mesechetName = targetElement.closest('.pereks-container').querySelector('h
         } else if (selectedEndGlobalIndex === null) {
             selectedEndGlobalIndex = globalIndex;
             targetElement.style.backgroundColor = 'lightgreen';
-
+            
             calculateTotalPereks();
         }
     }
 });
 
 // Function to calculate total pereks selected
+// this is what happens when you click on a end perek
 function calculateTotalPereks() {
     let totalPereks = selectedEndGlobalIndex - selectedStartGlobalIndex + 0;
     instructionElement.innerText = `${totalPereks} perokem total`;
     //console.log('Total pereks selected:', totalPereks);
-
+    console.log('clicked on end perek')
     // Reset selection for next calculation
     resetPerekSelection();
 }
