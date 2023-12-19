@@ -5,13 +5,47 @@
   <meta charset="utf-8"/>
   <link rel="stylesheet" href="calc.css">
   <style>
+ body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
 
-    .selected{
-      background-color: aliceblue;
-      width: 80px;
-      padding: 10px;
-      min-height: 50px;
-    }
+        #selected-range {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .selected {
+            background-color: #e7e7e7;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            #selected-range {
+                width: 90%;
+            }
+        }
   </style>
            <title>Calculate Pereks</title>
        </head>
