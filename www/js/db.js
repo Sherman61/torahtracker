@@ -53,3 +53,19 @@ async function saveDailyProgressToDB(date, startIndex, endIndex, pereksToday) {
   store.put({ date, startIndex, endIndex, pereksToday });
   return tx.complete;
 }
+
+ async function deleteProgress(date) {
+  const db = await openDB();
+  const tx = db.transaction(STORE_NAME, 'readwrite');
+  const store = tx.objectStore(STORE_NAME);
+  store.delete(date);
+  return tx.complete;
+}
+
+
+async function clearAllProgress() {
+  const db = await openDB();
+  const tx = db.transaction(STORE_NAME, 'readwrite');
+  tx.objectStore(STORE_NAME).clear();
+  return tx.complete;
+}

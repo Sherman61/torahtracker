@@ -1,68 +1,35 @@
-function formatDate(date) {
-  return date.toISOString().split('T')[0]; // yyyy-mm-dd
-}
+//calendar.js
+let selectedDate = null;
 
-function createDayCell(date, entry) {
-  const div = document.createElement('div');
-  div.className = 'day';
-  const todayStr = formatDate(new Date());
-  if (formatDate(date) === todayStr) div.classList.add('today');
-
-  const dateP = document.createElement('div');
-  dateP.className = 'date';
-  dateP.innerText = date.getDate();
-  div.appendChild(dateP);
-
-  if (entry) {
-    const summary = document.createElement('div');
-    summary.className = 'summary';
-    summary.innerText = `Today: ${entry.pereksToday}`;
-    div.appendChild(summary);
-  }
-
-  div.addEventListener('click', async () => {
-    const from = prompt('Start index?', entry?.pereksTodayStartIndex || '');
-    const global = prompt('Global index?', entry?.globalPerekIndex || '');
-    const today = prompt('Pereks today?', entry?.pereksToday || '');
-
-    if (from && global && today) {
-      await saveProgress(formatDate(date), {
-        pereksTodayStartIndex: parseInt(from),
-        globalPerekIndex: parseInt(global),
-        pereksToday: parseInt(today)
-      });
-      renderCalendar(); // refresh
-    }
-  });
-
-  return div;
+function formatDate(d) { return d.toISOString().split('T')[0]; }
+function toHebrewNumber(n) {
+  const h=['א','ב','ג','ד','ה','ו','ז','ח','ט','י','יא','יב','יג','יד','טו','טז','יז','יח','יט','כ','כא','כב','כג','כד','כה','כו','כז','כח','כט','ל'];
+  return h[n-1]||n;
 }
 
 async function renderCalendar() {
-  const container = document.getElementById('calendar');
-  container.innerHTML = '';
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth();
-  const firstDay = new Date(year, month, 1);
-  const totalDays = new Date(year, month + 1, 0).getDate();
+  const cal = document.getElementById('calendar');
+  cal.innerHTML = '';
+  const now=new Date(), y=now.getFullYear(), m=now.getMonth();
+  const first=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate();
+  const all = await getAllProgress(), map={};
+  all.forEach(e=>map[e.date]=e);
 
-  const firstWeekday = firstDay.getDay(); // Sunday=0
-  const allProgress = await getAllProgress();
-  const progressMap = {};
-  allProgress.forEach(entry => progressMap[entry.date] = entry);
-
-  // Fill blanks before 1st
-  for (let i = 0; i < firstWeekday; i++) {
-    const empty = document.createElement('div');
-    empty.className = 'day';
-    container.appendChild(empty);
-  }
-
-  for (let d = 1; d <= totalDays; d++) {
-    const day = new Date(year, month, d);
-    const entry = progressMap[formatDate(day)];
-    container.appendChild(createDayCell(day, entry));
+  for(let i=0;i<first;i++) cal.appendChild(document.createElement('div')).className='day';
+  for(let d=1;d<=days;d++){
+    const dt=new Date(y,m,d), key=formatDate(dt), entry=map[key];
+    const div=document.createElement('div'); div.className='day';
+    if(key===formatDate(new Date())) div.classList.add('today');
+    const p=document.createElement('div'); p.className='date'; p.innerText=d; div.appendChild(p);
+    if(entry){ let s=document.createElement('div'); s.className='summary'; s.innerText=`Today: ${entry.pereksToday}`; div.appendChild(s); }
+    div.addEventListener('click',()=>{
+      selectedDate=key;
+      document.getElementById('instruction').innerText='Select a Masechta';
+      document.getElementById('menuOverlay').classList.remove('hidden');
+      document.getElementById('menu').classList.remove('menu-hidden');
+    //   document.getElementById('backBtn').classList.add('hidden');
+    });
+    cal.appendChild(div);
   }
 }
 
