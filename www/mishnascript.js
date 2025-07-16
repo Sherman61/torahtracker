@@ -154,6 +154,12 @@ function updatePereksToday(previousIndex, currentIndex) {
   // Update the pereksToday in localStorage and stats
   localStorage.setItem("pereksToday", `${pereksToday}`);
   updateStats();
+  const date = new Date().toISOString().split("T")[0]; // e.g. "2025-07-16"
+const start = pereksTodayStartIndex;
+const end = currentGlobalPerekIndex;
+const doneToday = end - start;
+saveDailyProgressToDB(date, start, end, doneToday);
+
 }
 function handlePerekClick(prevIndex, newIndex, mesechet, perekNumber) {
   const diff = newIndex - prevIndex;
