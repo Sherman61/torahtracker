@@ -1,0 +1,112 @@
+ *{text-align:center; font-weight:800;} 
+
+body{background-color:#d7e1e5; font-family: Arial, sans-serif;
+}
+body, html {
+
+margin: 0;}
+table { width: fit; 
+border-collapse: collapse; 
+overflow:flow;
+text-align:center;
+//background-color:Turquoise; 
+margin:0 auto; 
+margin-top:10px;
+font-size:24px;
+}
+
+th, td { border: 1px solid black; padding: 10px; text-align:center; }
+
+tr{background-color: #f2f2f2;}
+
+#total { font-size: 20px; font-weight: bold;}
+
+#percent { font-size: 18px;} 
+
+th{ background-color: #333;
+color: #fff;
+}
+
+input{width:16.5vw; height:50px; cursor: pointer;}
+
+.input-field{font-size:34px; text-align:center; }
+
+#clear-all{
+background-color: #3f567e;
+color: white;
+padding: 12px 20px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+font-size: 14px;
+margin-top: 10px;
+width:90%;
+}
+
+@media(min-width:500px) {
+
+//body{background-color:#ADD8E6;}}
+
+.space{padding-bottom: 70px;}
+
+
+//#torahPortion {
+    background-color: #FFD700;  /* Gold background */
+  
+    color: #000;                /* Black text */
+    padding: 10px;              /* Padding for some space around the text */
+    margin: 20px auto;          /* Centered with margin */
+    border-radius: 10px;        /* Rounded corners */
+    border: 2px solid #000;     /* Black border */
+    font-size: 1.5em;           /* Larger text */
+    width: 60%;                 /* Width of the element */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Adding some shadow for depth */
+    text-align: center;         /* Centering the text */
+  }
+
+  /* Media query for larger screens */
+  @media(min-width:500px) {
+    body {
+      background-color: #d7e1e5;
+    }
+
+    #torahPortion {
+      width: 40%; /* Smaller width for larger screens */
+    }
+  }
+  #openNav {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  margin: 10px;
+  font-size: 24px;
+  color: #000;
+}
+.header {
+  margin-top: 0px;
+            position: sticky;
+            top: 0;
+            background-color:#3f567e ;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-size: 2em;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        @media only screen and (max-width: 800px) {
+            .header {
+                font-size: 1.5em;
+            }
+            table{width: 90%;}
+        }
+
+        @media only screen and (max-width: 500px) {
+            .header {
+                font-size: 1em;
+            }
+            
+        }

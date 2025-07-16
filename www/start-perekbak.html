@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start of Day Perek</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <style>
+
+body, html { 
+      margin: 0;
+      padding: 0;
+     // height: 90vh;
+      background-color: #c9d3e5; 
+      font-family: Arial, sans-serif;
+    }
+    @media(min-width:500px) {
+        
+        body,html{background-color:#d7e1e5;}}
+    
+    .header {
+                position: sticky;
+                top: 0;
+                background-color:#3f567e ;
+                color: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 20px;
+                font-size: 2em;
+                gap: 20px;
+                flex-wrap: wrap; 
+            }
+    h1,h2,#instruction{
+      text-align: center;
+    }
+            @media only screen and (max-width: 800px) {
+                .header {
+                    font-size: 1.5em;
+                }
+            }
+    
+            @media only screen and (max-width: 500px) {
+                .header {
+                    font-size: 1em;
+                }
+            }
+            #mesandperek, #bold{
+          text-align: center;
+          font-weight: 700;
+          font-size: 1.5em;
+      }
+
+    .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed; /* Changed from relative to fixed */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for the height and width of the container */
+  text-align: center;
+  font-size: 20px;
+}
+
+    .sidebar {
+      width: 300px;
+      position: relative; /* To position the sideNavContainer absolutely relative to this element */
+      background: #f1f1f1;
+      padding: 10px;
+      transition: transform 0.3s ease;
+      border-right: 1px solid #ddd;
+      max-height: 60vh;
+    }
+    
+    
+    .menu {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      max-height: 60vh;
+      overflow-y: auto;
+      
+    }
+    
+    .menu-item {
+      margin-bottom: 10px;
+
+    }
+    
+    .menu-item a {
+      display: block;
+      text-decoration: none;
+      color: #333;
+      padding: 5px;
+      cursor: pointer;
+    } 
+    
+    
+    .side-nav-container {
+      position: absolute; /* Changed from fixed to absolute */
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 13;
+      max-height: 100%; /* Changed from 60vh to 100% to cover the entire sidebar */
+      overflow-y: auto;
+      width: 100%; /* Make it the same width as the sidebar */
+      padding: 10px;
+      border-left: 1px solid #ddd;
+      background: #f1f1f1;
+    }
+    
+    
+    .side-nav {
+      position: relative;
+      top: 0;
+      width: 300px;
+      background: #f1f1f1;
+      cursor: pointer;
+      border-left: 1px solid #ddd;
+     transform: translateX(0px);
+      transition: transform 0.5s ease-out;
+      overflow-y: auto; 
+      max-height: 60vh;  /* Add this line to limit the height of the side navigation */
+    }
+    
+    .side-nav-container::-webkit-scrollbar {
+      width: 10px;
+    }
+    
+    .side-nav-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    
+    .side-nav-container::-webkit-scrollbar-thumb {
+      background: #888;
+    }
+    
+    .side-nav-container::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    
+    @media (min-width: 800px) and (min-height:620px) {
+      
+    .sidebar{
+        width: 500px;
+        padding: 0px;  
+    }
+      }
+    
+    @media (max-width: 800px) {
+      .sidebar, .menu {
+        max-height: 50vh;
+    overflow-y:auto;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .sidebar, .menu {
+        max-height: 48vh;
+      }
+    }
+    
+    @media (max-width: 400px) {
+      .sidebar, .menu {
+        max-height: 46vh;
+    
+      }
+    }
+    @media (max-width: 350px) {
+      .sidebar, .menu {
+        max-height: 42vh;
+    
+      }
+    }
+    @media (max-height: 500px) {
+      .sidebar, .menu {
+        max-height: 42vh;
+    
+      }
+    }
+    li{
+        list-style: none;
+        cursor: pointer;
+    }
+     .bb:hover{
+      font-weight:bolder;
+     // color: aquamarine;
+    }
+    
+    .hide ,
+      .hidden {
+        display: none !important;
+    }
+    
+    .side-nav {
+        padding: 15px 20px;
+      //  cursor: pointer;
+        transition: 0.5s;
+       
+    }
+
+    .pereks-container{
+      height: 500px;
+      overflow-y:auto;
+    }
+    #openNav {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  margin: 10px;
+  font-size: 24px;
+  color: #000;
+}
+    </style>
+    
+</head> 
+<body>
+    <i class="fa-solid fa-arrow-left" id="openNav" onclick="location.href='settings.html'"></i>
+    <h2 id="pereksTodayStartIndex"></h2>
+    <h2 id="goal"></h2>
+    <div class="container ">
+        
+        <div class="sidebar ">
+            <div class="bb-container ">
+            <ul class="menu ">
+              
+                <li class="menu-item ">
+                     
+                    <p id="bold">mesachet</p>
+                 
+                    <ul class="submenu ">
+                        
+                        <li><p class="bb bb9">ברכות</p>  </li>
+                        <li><p class="bb bb8">פאה</p></li>
+<li><p class="bb bb7">דמאי</p></li>
+<li><p class="bb bb9">כלאים</p></li>
+<li><p class="bb bb10">שביעית</p></li>
+<li><p class="bb bb11">תרומות</p></li>
+<li><p class="bb bb5">מעשרות</p></li>
+<li><p class="bb bb5">מעשר שני</p></li>
+<li><p class="bb bb4">חלה</p></li>
+<li><p class="bb bb3">ערלה</p></li>
+<li><p class="bb bb4">ביכורים</p></li>
+
+<hr>
+<li><p class="bb bb24">שבת</p></li>
+<li><p class="bb bb10">עירובין</p></li>
+<li><p class="bb bb10">פסחים</p></li>
+<li><p class="bb bb8">שקלים</p></li>
+<li><p class="bb bb8">יומא</p></li>
+<li><p class="bb bb5">סוכה</p></li>
+<li><p class="bb bb5">ביצה</p></li>
+<li><p class="bb bb4">ראש השנה</p></li>
+<li><p class="bb bb4">תענית</p></li>
+<li><p class="bb bb4">מגילה</p></li>
+<li><p class="bb bb3">מועד קטן</p></li>
+<li><p class="bb bb3">חגיגה</p></li>
+
+<hr>
+<li><p class="bb bb16">יבמות</p></li>
+<li><p class="bb bb13">כתובות</p></li>
+<li><p class="bb bb11">נדרים</p></li>
+<li><p class="bb bb9">נזיר</p></li>
+<li><p class="bb bb9">סוטה</p></li>
+<li><p class="bb bb9">גיטין</p></li>
+<li><p class="bb bb4">קידושין</p></li>
+
+<hr>
+<li><p class="bb bb10">בבא קמא</p></li>
+<li><p class="bb bb10">בבא מציעא</p></li>
+<li><p class="bb bb10">בבא בתרא</p></li>
+<li><p class="bb bb11">סנהדרין</p></li>
+<li><p class="bb bb3">מכות</p></li>
+<li><p class="bb bb8">שבועות</p></li>
+<li><p class="bb bb8">עדיות</p></li>
+<li><p class="bb bb5">עבודה זרה</p></li>
+<li><p class="bb bb6">אבות</p></li>
+<li><p class="bb bb3">הוריות</p></li>
+
+<hr>
+<li><p class="bb bb14">זבחים</p></li>
+<li><p class="bb bb13">מנחות</p></li>
+<li><p class="bb bb12">חולין</p></li>
+<li><p class="bb bb9">בכורות</p></li>
+<li><p class="bb bb9">ערכין</p></li>
+<li><p class="bb bb7">תמורה</p></li>
+<li><p class="bb bb6">כריתות</p></li>
+<li><p class="bb bb6">מעילה</p></li>
+<li><p class="bb bb7">תמיד</p></li>
+<li><p class="bb bb5">מדות</p></li>
+<li><p class="bb bb3">קינים</p></li>
+
+<hr>
+<li><p class="bb bb30">כלים</p></li>
+<li><p class="bb bb18">אהלות</p></li>
+<li><p class="bb bb14">נגעים</p></li>
+<li><p class="bb bb12">פרה</p></li>
+<li><p class="bb bb10">טהרות</p></li>
+<li><p class="bb bb10">מקוואות</p></li>
+<li><p class="bb bb10">נדה</p></li>
+<li><p class="bb bb6">מכשירין</p></li>
+<li><p class="bb bb5">זבים</p></li>
+<li><p class="bb bb4">טבול יום</p></li>
+<li><p class="bb bb4">ידים</p></li>
+<li><p class="bb bb3">עוקצים</p></li>
+
+
+</ul>
+</li>
+</ul>
+</div>
+
+</div>
+</div>
+    <script>
+
+
+    // let texts = localStorage.getItem(pereksTodayStartIndex);
+   // document.getElementById('pereksTodayStartIndex').innerText = pereksTodayStartIndex;
+    document.addEventListener('DOMContentLoaded', function () {
+        // Calculate the total number of pereks in all masechtot
+        let totalPereks = Array.from(document.querySelectorAll('.bb')).reduce((sum, bbElement) => {
+            return sum + parseInt(bbElement.className.match(/\d+/)[0]);
+        }, 0);
+    
+        const bbElements = document.querySelectorAll('.bb');
+        function findMesechetAndPerekByIndex(index) {
+                let cumulativePereks = 0;
+                for (let i = 0; i < bbElements.length; i++) {
+                    const pereksInMesechet = parseInt(bbElements[i].className.match(/\d+/)[0]);
+                    if (cumulativePereks + pereksInMesechet >= index) {
+                        const perekNumber = index - cumulativePereks;
+                        const perekHebrew = hebrewDigits[perekNumber - 1] || 'Unknown';
+                        return { mesechet: bbElements[i].textContent, perek: perekHebrew };
+                    }
+                    cumulativePereks += pereksInMesechet;
+                }
+                return { mesechet: 'Unknown', perek: 'Unknown' };
+            }
+            function updatePereksTodayStartIndexDisplay() {
+    let pereksTodayStartIndex = parseInt(localStorage.getItem('pereksTodayStartIndex') || '0');
+    const { mesechet, perek } = findMesechetAndPerekByIndex(pereksTodayStartIndex + 1);
+    const pereksTodayStartIndexDisplay = document.getElementById('pereksTodayStartIndex');
+    pereksTodayStartIndexDisplay.innerHTML = `Start of day <br> ${mesechet} פרק ${perek}`;
+}
+function updateGoalDisplay() {
+    let pereksTodayStartIndex = parseInt(localStorage.getItem('pereksTodayStartIndex') || '0');
+    const goalIndex = pereksTodayStartIndex + 18; // Add 18 to the start index
+    const { mesechet, perek } = findMesechetAndPerekByIndex(goalIndex);
+    const goalDisplay = document.getElementById('goal');
+    goalDisplay.innerHTML = `Goal (+ 18) <br> ${mesechet} פרק ${perek}`;
+}
+
+
+        let pereksTodayStartIndex = parseInt(localStorage.getItem('pereksTodayStartIndex') || '0');
+    
+        let lastDate = localStorage.getItem('lastDate') || '';
+        let todayDate = new Date().toDateString();
+    
+        if (lastDate !== todayDate) {
+            lastDate = todayDate;
+            localStorage.setItem('lastDate', todayDate);
+            pereksTodayStartIndex = 0;
+            localStorage.setItem('pereksTodayStartIndex', pereksTodayStartIndex.toString());
+        }
+    
+        function calculateGlobalPerekIndex(mesechetIndex, perekIndex) {
+            let globalPerekIndex = 0;
+            for (let i = 0; i < mesechetIndex - 1; i++) {
+                globalPerekIndex += parseInt(bbElements[i].className.match(/\d+/)[0]);
+            }
+            globalPerekIndex += perekIndex;
+            return globalPerekIndex;
+        }
+    
+        // A mapping of English to Hebrew digits
+        const hebrewDigits = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'י"א', 'י"ב', 'י"ג', 'י"ד', 'ט"ו', 'ט"ז', 'י"ז', 'י"ח', 'י"ט', 'כ', 'כ"א', 'כ"ב', 'כ"ג', 'כ"ד', 'כ"ה', 'כ"ו', 'כ"ז', 'כ"ח', 'כ"ט', 'ל'];
+    
+        function createSideNavs(mesechetIndex) {
+            const oldSideNavContainer = document.querySelector('.side-nav-container');
+            if (oldSideNavContainer) {
+                oldSideNavContainer.remove();
+            }
+    
+      
+    const sideNavContainer = document.createElement('ul');
+    sideNavContainer.classList.add('side-nav-container');
+    document.querySelector('.sidebar').appendChild(sideNavContainer);
+
+    const bbElement = bbElements[mesechetIndex - 1];
+    const num = parseInt(bbElement.className.match(/\d+/)[0]);
+    const mesechet = bbElement.textContent;
+
+    for (let i = 0; i < num; i++) {
+        const globalPerekIndex = calculateGlobalPerekIndex(mesechetIndex, i + 0);
+        const sideNav = document.createElement('li');
+        sideNav.classList.add('side-nav');
+        sideNav.style.top = `${i * 1}px`;
+        sideNav.style.transform = `translateX(0px)`;
+
+        const perekHebrewNumber = hebrewDigits[i]; // translate to Hebrew number
+        sideNav.innerHTML = `<p>${mesechet} פרק ${perekHebrewNumber}</p>`; // use Hebrew number here
+
+        sideNav.addEventListener('click', () => {
+            pereksTodayStartIndex = globalPerekIndex;
+            localStorage.setItem('pereksTodayStartIndex', pereksTodayStartIndex.toString());
+            updatePereksTodayStartIndexDisplay();
+            updateGoalDisplay(); 
+        });
+        sideNavContainer.appendChild(sideNav);
+    }
+    
+            setTimeout(() => {
+                document.addEventListener('click', function (event) {
+                    if (!event.target.closest('.side-nav') && !event.target.closest('.bb')) {
+                        const sideNavs = document.querySelectorAll('.side-nav');
+                        sideNavs.forEach(sideNav => sideNav.remove());
+                    }
+                });
+            }, 0);
+        }
+    
+        bbElements.forEach((bbElement, index) => {
+            bbElement.addEventListener('click', () => {
+                createSideNavs(index + 1);
+            });
+        });
+    
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.sidebar')) {
+                const oldSideNavContainer = document.querySelector('.side-nav-container');
+                if (oldSideNavContainer) {
+                    oldSideNavContainer.remove();
+                }
+            }
+        });
+    
+        // Display the pereksTodayStartIndex from local storage
+        const pereksTodayStartIndexDisplay = document.getElementById('pereksTodayStartIndex');
+        updatePereksTodayStartIndexDisplay();
+        updateGoalDisplay(); 
+    });
+  
+    </script>
+</body>
+</html>

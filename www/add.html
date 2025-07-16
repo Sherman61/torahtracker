@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable and Deletable Local Storage with Reload</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <script src="themes/theme.js"></script>
+   <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        input, button {
+            padding: 8px 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        #displayArea {
+            margin-top: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #displayArea > div {
+            border-bottom: 1px solid #eee;
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #displayArea input[type="text"] {
+            flex: 1;
+            margin-right: 10px;
+        }
+   
+    
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        input, button { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>
+     
+    </h1>
+    <i class="fa-solid fa-arrow-left" id="openNav" onclick="location.href='settings.html'"></i>
+    <label for="title">Title:</label>
+    <input type="text" id="title" placeholder="Enter title">
+    <label for="value">Value:</label>
+    <input type="text" id="value" placeholder="Enter value">
+    <button onclick="addOrUpdate()">Add</button>
+    <button onclick="resetPage()">Reload Page</button>
+    <div id="displayArea"></div>
+
+    <script>
+        function addOrUpdate() {
+            const title = document.getElementById('title').value;
+            const value = document.getElementById('value').value;
+            localStorage.setItem(title, value);
+            displayLocalStorage();
+            document.getElementById('title').value = '';
+            document.getElementById('value').value = '';
+        }
+
+        function displayLocalStorage() {
+            const displayArea = document.getElementById('displayArea');
+            displayArea.innerHTML = '';
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+                displayArea.innerHTML += `<div>
+                    ${key}: <input type="text" value="${value}" id="value-${key}" />
+                    <button onclick="updateValue('${key}')">Save</button>
+                    <button onclick="location.reload()">reset</button>
+                    <button onclick="deleteKey('${key}')">Delete</button>
+                </div>`;
+            }
+        }
+
+        function updateValue(key) {
+            const newValue = document.getElementById(`value-${key}`).value;
+            localStorage.setItem(key, newValue);
+            displayLocalStorage();
+        }
+
+        function deleteKey(key) {
+            localStorage.removeItem(key);
+            displayLocalStorage();
+        }
+
+        function resetPage() {
+            location.reload();
+        }
+
+        // Display items on initial load
+        window.onload = displayLocalStorage;
+    </script>
+</body>
+</html>

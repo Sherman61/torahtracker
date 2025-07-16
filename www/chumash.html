@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="This website is a simple tracking and logging tool to help users keep track of their progress in learning the Maver Sedrah">
+    <title>Maver Sedrah</title>
+
+<script src="themes/theme.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+
+<script src="parsha.js"></script>
+</head>
+<body>
+  <header class="header">
+     <i class="fas fa-cog" id="openNav" onclick="location.href='settings.html'"></i>
+  <div id="torahPortion">Loading...</div>
+</header>
+<table class="table">
+  <thead>
+    <tr>
+        <th>תרגום </th>
+        <th>שנים </th> 
+        <th>אחד  </th>
+        <th>יום</th>     
+        </tr>
+  </thead>
+  <tbody>
+    <tr>
+    
+      <td>
+        <input type="checkbox" class="checkbox" id="checkbox1">
+      </td>
+      <td>
+          <input type="checkbox" class="checkbox" id="checkbox8">
+      </td>
+      <td>
+          <input type="checkbox" class="checkbox" id="checkbox15">
+                </td>
+     
+        <td>ראשון </td>
+    </tr>
+    <tr>
+     
+      <td>
+        <input type="checkbox" class="checkbox" id="checkbox2">
+      </td>
+        <td>
+        <input type="checkbox" class="checkbox" id="checkbox9">
+      </td>
+         <td>
+        <input type="checkbox" class="checkbox" id="checkbox16">
+      </td>
+       <td>שני</td>
+    </tr>
+    <tr>
+           <td>
+        <input type="checkbox" class="checkbox" id="checkbox3">
+      </td>
+    
+      <td>
+        <input type="checkbox" class="checkbox" id="checkbox10">
+      </td>
+         <td>
+        <input type="checkbox" class="checkbox" id="checkbox17">
+      </td>
+      <td> שלישי </td>
+      
+    </tr>
+    <tr>
+   
+      <td>
+        <input type="checkbox" class="checkbox" id="checkbox4">
+      </td>
+      
+          <td>
+        <input type="checkbox" class="checkbox" id="checkbox11">
+      </td>
+         <td>
+        <input type="checkbox" class="checkbox" id="checkbox18">
+      </td>
+      <td>רביעי </td>
+    </tr>
+       <tr>
+   
+      <td>
+        <input type="checkbox" class="checkbox" id="checkbox5">
+      </td>
+         <td>
+        <input type="checkbox" class="checkbox" id="checkbox12">
+      </td>
+           <td>
+        <input type="checkbox" class="checkbox" id="checkbox19">
+      </td>
+       <td>חמישי </td> 
+    </tr>
+    <tr>
+    
+      <td>
+        <input type="checkbox" class="checkbox" id="checkbox6">
+      </td>
+          <td>
+        <input type="checkbox" class="checkbox" id="checkbox13">
+      </td> 
+         <td>
+        <input type="checkbox" class="checkbox" id="checkbox20">
+      </td>  
+          <td>שישי</td> 
+    </tr>
+    <tr>
+    
+      <td>
+        <input type="checkbox" class="checkbox" id="checkbox7">
+      </td>
+        <td>
+        <input type="checkbox" class="checkbox" id="checkbox14">
+      </td>
+        <td>
+        <input type="checkbox" class="checkbox" id="checkbox21">
+      </td>
+        <td>שביעי</td>  
+          </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4">
+        <button id="clear-all">Clear All<br>
+        Percent: <span class="percent"></span></button>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+<div class="space"></div>
+  <div class="bottom-nav">
+    <a href="index.html">Mishnayes</a>
+    <a href="teheilem.html" >Teheilem</a>
+    <a href="chumash.html" class="active">Chumash</a>
+   
+  </div> 
+  
+   <script src="chumash.js">
+  
+    </script>  
+    <script> 
+      // On page load, retrieve the saved data
+window.onload = function () {
+  const storedPercent = localStorage.getItem("percent") ?? "0";
+percent.textContent = storedPercent + "%";
+
+ 
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = JSON.parse(localStorage.getItem(checkbox.id));
+  });
+};
+
+
+
+    </script>
+      </body>
+</html>

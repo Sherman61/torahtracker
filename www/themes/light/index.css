@@ -1,0 +1,201 @@
+body, html {
+
+  margin: 0;
+  padding: 0;
+ // height: 90vh;
+  background-color: #d7e1e5;
+  font-family: Arial, sans-serif;
+}
+@media(min-width:500px) {
+    
+  //  body,html{background-color:#ADD8E6;}}
+
+.header {
+  margin-top: 0px;
+            position: sticky;
+            top: 0;
+            background-color:#3f567e ;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-size: 2em;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        @media only screen and (max-width: 800px) {
+            .header {
+                font-size: 1.5em;
+            }
+        }
+
+        @media only screen and (max-width: 500px) {
+            .header {
+                font-size: 1em;
+            }
+        }
+        #mesandperek, #bold{
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.5em;
+      //margin-bottom: 40px;
+  }
+  .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed; /* Keeps the container in a fixed position */
+  top: initial; /* Keeps the container in its natural vertical position */
+  left: 50%; /* Center horizontally in the viewport */
+  transform: translateX(-50%); /* Adjust only horizontally */
+  text-align: center;
+  font-size: 20px;
+  //margin-top: 20px; /* Adds 20px margin to the top */
+}
+
+
+.sidebar {
+  width: 300px;
+  position: relative; /* To position the sideNavContainer absolutely relative to this element */
+  background: #f1f1f1;
+  padding: 10px;
+  transition: transform 0.3s ease;
+  border-right: 1px solid #ddd;
+  max-height: 60vh;
+}
+
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 60vh;
+  overflow-y: auto;
+  
+}
+
+.menu-item {
+  margin-bottom: 10px;
+}
+
+.menu-item a {
+  display: block;
+  text-decoration: none;
+  color: #333;
+  padding: 5px;
+} 
+
+
+.side-nav-container {
+   position: fixed;; /* Changed from fixed to absolute */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 15;
+  max-height: 100%; /* Changed from 60vh to 100% to cover the entire sidebar */
+  overflow-y: auto;
+ width: 100%; /* Make it the same width as the sidebar */
+   padding: 10px;
+  border-left: 1px solid #ddd;
+  background: #f1f1f1; 
+} 
+
+
+.side-nav {
+  position: relative;
+  top: 0;
+  width: 300px;
+  background: #f1f1f1;
+
+  border-left: 1px solid #ddd;
+ transform: translateX(0px);
+  transition: transform 0.5s ease-out;
+  overflow-y: auto; 
+  max-height: 60vh;  /* Add this line to limit the height of the side navigation */
+}
+
+.side-nav-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.side-nav-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.side-nav-container::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.side-nav-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@media (min-width: 800px) and (min-height:620px) {
+  
+.sidebar{
+    width: 500px;
+    padding: 0px;  
+}
+  }
+
+@media (max-width: 800px) {
+  .sidebar, .menu {
+    max-height: 50vh;
+overflow-y:auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar, .menu {
+    max-height: 48vh;
+  }
+}
+
+@media (max-width: 400px) {
+  .sidebar, .menu {
+    max-height: 46vh;
+
+  }
+}
+@media (max-width: 350px) {
+  .sidebar, .menu {
+    max-height: 42vh;
+
+  }
+}
+@media (max-height: 500px) {
+  .sidebar, .menu {
+    max-height: 42vh;
+
+  }
+}
+li{
+    list-style: none;
+    cursor: pointer;
+}
+ .bb:hover{
+  font-weight:bolder;
+ // color: aquamarine;
+}
+
+.hide ,
+  .hidden {
+    display: none !important;
+}
+
+.side-nav {
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: 0.5s;
+   
+}
+#openNav {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  margin: 10px;
+  font-size: 24px;
+  color: #000;
+}

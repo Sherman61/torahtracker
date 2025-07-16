@@ -1,0 +1,139 @@
+* {
+    text-align: center;
+    font-weight: 800;
+  }
+  
+  body {
+    background-color: #1a1a1a; /* Dark background for the body */
+    font-family: Arial, sans-serif;
+    color: #f1f1f1; /* Light text for readability */
+    margin: 0;
+  }
+  
+  table {
+    width: fit;
+    border-collapse: collapse;
+    overflow: flow;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 10px;
+    font-size: 24px;
+    color: #e4e4e4; /* Light text color for table */
+  }
+  
+  th, td {
+    border: 1px solid #888; /* Lighter border for contrast */
+    padding: 10px;
+    text-align: center;
+  }
+  
+  tr {
+    background-color: #333333; /* Dark background for table rows */
+  }
+  
+  #total {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  #percent {
+    font-size: 18px;
+  }
+  
+  th {
+    background-color: #222; /* Darker header background */
+    color: #fff;
+  }
+  
+  input {
+    width: 16.5vw;
+    height: 50px;
+    cursor: pointer;
+    background-color: #555; /* Dark input fields */
+    color: #fff; /* Light text for inputs */
+    border: 1px solid #777; /* Lighter border for inputs */
+  }
+  
+  .input-field {
+    font-size: 34px;
+    text-align: center;
+  }
+  
+  #clear-all {
+    background-color: #3f567e;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    width: 90%;
+  }
+  
+  .space {
+    padding-bottom: 70px;
+  }
+  
+/*   #torahPortion {
+    background-color: #FFD700; /* Gold background */
+    /* color: #000; Black text */
+    /* padding: 10px;
+    margin: 20px auto;
+    border-radius: 10px;
+    border: 2px solid #000;
+    font-size: 1.5em;
+    width: 60%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  } */ 
+  
+  @media (min-width: 500px) {
+    body {
+      background-color: #1a1a1a; /* Dark background for larger screens */
+    }
+  
+    #torahPortion {
+      width: 40%;
+    }
+  }
+  
+  #openNav {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    margin: 10px;
+    font-size: 24px;
+    color: #fff; /* Light color for better visibility */
+  }
+  
+  .header {
+    margin-top: 0px;
+    position: sticky;
+    top: 0;
+    background-color: #242424; /* Dark header background */
+    color: #e4e4e4; /* Light header text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-size: 2em;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  @media only screen and (max-width: 800px) {
+    .header {
+      font-size: 1.5em;
+    }
+    table {
+      width: 90%;
+    }
+  }
+  
+  @media only screen and (max-width: 500px) {
+    .header {
+      font-size: 1em;
+    }
+  }
+  

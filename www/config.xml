@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8' ?>
+<widget
+    android-versionCode = '1'
+    id = 'com.Shiyaswebsite.com.torahtracker'
+    version = '1.2' 
+    xmlns = 'https://www.w3.org/ns/widgets'>
+<icon src="torah.png" platform="ios" width="auto" height="auto" density="mdpi" />
+<preference name="AndroidWindowSplashScreenAnimatedIcon" value="torah.png" />
+<preference name="AndroidWindowSplashScreenBackground" value="#3f567e" />
+    <name>Torah Tracker</name>
+    <description>Torah Tracker</description>
+    <author>Shiya Sherman</author>
+
+    <preference name = 'orientation' value = 'portrait'/>
+
+</widget>
+ 

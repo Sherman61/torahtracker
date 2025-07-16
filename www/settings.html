@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <script src="themes/theme.js"></script>
+</head>
+<body>
+    <i class="fa-solid fa-arrow-left" id="openNav" onclick="location.href='index.html'"></i>
+    
+    <div class="container">
+        <h1>Settings</h1>
+
+        <div class="links">
+            <a href="calcualate.html" class="themes-link fade">Calculater</a>
+            <a href="themes/index.html" class="themes-link fade">Themes</a>
+            <a href="start-perek.html">Edit start day perek</a>
+            <a href="changelog.html" class="themes-link fade">Changelog</a>
+
+            <a href="start-daf.html">Edit start day daf <h6>under construction</h6></a>
+            <a href="gemorah.html" class="themes-link fade">gemorah <h6>under construction</h6></a>
+            <a href="add.html" class="themes-link fade">admin only <h6>under construction</h6></a>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <h2>Perek Goal Display</h2>
+            <button id="toggleGoalDisplayBtn">Toggle Perek Goal</button>
+            <p id="goalStatus"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleBtn = document.getElementById('toggleGoalDisplayBtn');
+            const goalStatus = document.getElementById('goalStatus');
+
+            let displayPerekGoal = localStorage.getItem('displayPerekGoal');
+            if (displayPerekGoal === null) {
+                displayPerekGoal = 'true';
+                localStorage.setItem('displayPerekGoal', displayPerekGoal);
+            }
+
+            function updateGoalStatusText() {
+                const current = localStorage.getItem('displayPerekGoal') === 'true';
+                goalStatus.textContent = current ? 'Goal display is ON' : 'Goal display is OFF';
+            }
+
+            toggleBtn.addEventListener('click', () => {
+                const current = localStorage.getItem('displayPerekGoal') === 'true';
+                localStorage.setItem('displayPerekGoal', (!current).toString());
+                updateGoalStatusText();
+            });
+
+            updateGoalStatusText();
+        });
+    </script>
+</body>
+</html>

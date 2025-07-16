@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start of Day daff</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+   
+    <!-- <script src="themes/theme.js"></script> -->
+    <link rel="stylesheet" href="themes/light/start-perek.css">
+</head> 
+<body>
+    <i class="fa-solid fa-arrow-left" id="openNav" onclick="location.href='settings.html'"></i>
+    <h2 id="daffTodayStartIndex"></h2>
+  
+    <div class="goal-display-container">
+        <h2 id="goal"></h2>
+    </div>
+    <div class="edit-goal-container">
+        <button id="editGoalBtn">Edit Goal</button>
+        <input type="number" id="goalInput" style="display: none;" placeholder="Enter new goal" />
+    </div>
+    
+    <div class="space"></div>
+    
+    <div class="container ">
+        
+        <div class="sidebar ">
+            <div class="bb-container ">
+            <ul class="menu ">
+              
+                <li class="menu-item ">
+                     
+                    <p id="bold">mesachet</p>
+                 
+                    <ul class="submenu ">
+                        
+                        <li><p class="bb bb63">ברכות</p>  </li>
+                        <li><p class="bb bb8">פאה</p></li>
+<li><p class="bb bb7">דמאי</p></li>
+<li><p class="bb bb9">כלאים</p></li>
+<li><p class="bb bb10">שביעית</p></li>
+<li><p class="bb bb11">תרומות</p></li>
+<li><p class="bb bb5">מעשרות</p></li>
+<li><p class="bb bb5">מעשר שני</p></li>
+<li><p class="bb bb4">חלה</p></li>
+<li><p class="bb bb3">ערלה</p></li>
+<li><p class="bb bb4">ביכורים</p></li>
+
+<hr>
+<li><p class="bb bb24">שבת</p></li>
+<li><p class="bb bb10">עירובין</p></li>
+<li><p class="bb bb10">פסחים</p></li>
+<li><p class="bb bb8">שקלים</p></li>
+<li><p class="bb bb8">יומא</p></li>
+<li><p class="bb bb5">סוכה</p></li>
+<li><p class="bb bb5">ביצה</p></li>
+<li><p class="bb bb4">ראש השנה</p></li>
+<li><p class="bb bb4">תענית</p></li>
+<li><p class="bb bb4">מגילה</p></li>
+<li><p class="bb bb3">מועד קטן</p></li>
+<li><p class="bb bb3">חגיגה</p></li>
+
+<hr>
+<li><p class="bb bb16">יבמות</p></li>
+<li><p class="bb bb13">כתובות</p></li>
+<li><p class="bb bb11">נדרים</p></li>
+<li><p class="bb bb9">נזיר</p></li>
+<li><p class="bb bb9">סוטה</p></li>
+<li><p class="bb bb9">גיטין</p></li>
+<li><p class="bb bb4">קידושין</p></li>
+
+<hr>
+<li><p class="bb bb10">בבא קמא</p></li>
+<li><p class="bb bb10">בבא מציעא</p></li>
+<li><p class="bb bb10">בבא בתרא</p></li>
+<li><p class="bb bb11">סנהדרין</p></li>
+<li><p class="bb bb3">מכות</p></li>
+<li><p class="bb bb8">שבועות</p></li>
+<li><p class="bb bb8">עדיות</p></li>
+<li><p class="bb bb5">עבודה זרה</p></li>
+<li><p class="bb bb6">אבות</p></li>
+<li><p class="bb bb3">הוריות</p></li>
+
+<hr>
+<li><p class="bb bb14">זבחים</p></li>
+<li><p class="bb bb13">מנחות</p></li>
+<li><p class="bb bb12">חולין</p></li>
+<li><p class="bb bb9">בכורות</p></li>
+<li><p class="bb bb9">ערכין</p></li>
+<li><p class="bb bb7">תמורה</p></li>
+<li><p class="bb bb6">כריתות</p></li>
+<li><p class="bb bb6">מעילה</p></li>
+<li><p class="bb bb7">תמיד</p></li>
+<li><p class="bb bb5">מדות</p></li>
+<li><p class="bb bb3">קינים</p></li>
+
+<hr>
+<li><p class="bb bb30">כלים</p></li>
+<li><p class="bb bb18">אהלות</p></li>
+<li><p class="bb bb14">נגעים</p></li>
+<li><p class="bb bb12">פרה</p></li>
+<li><p class="bb bb10">טהרות</p></li>
+<li><p class="bb bb10">מקוואות</p></li>
+<li><p class="bb bb10">נדה</p></li>
+<li><p class="bb bb6">מכשירין</p></li>
+<li><p class="bb bb5">זבים</p></li>
+<li><p class="bb bb4">טבול יום</p></li>
+<li><p class="bb bb4">ידים</p></li>
+<li><p class="bb bb3">עוקצים</p></li>
+
+
+</ul>
+</li>
+</ul>
+</div>
+
+</div>
+</div>
+    <script>
+
+
+    // let texts = localStorage.getItem(daffTodayStartIndex);
+   // document.getElementById('daffTodayStartIndex').innerText = daffTodayStartIndex;
+    document.addEventListener('DOMContentLoaded', function () {
+        // Calculate the total number of daffs in all masechtot
+        let totaldaffs = Array.from(document.querySelectorAll('.bb')).reduce((sum, bbElement) => {
+            return sum + parseInt(bbElement.className.match(/\d+/)[0]);
+        }, 0);
+    
+        const bbElements = document.querySelectorAll('.bb');
+        function findMesechetAnddaffByIndex(index) {
+                let cumulativedaffs = 0;
+                for (let i = 0; i < bbElements.length; i++) {
+                    const daffsInMesechet = parseInt(bbElements[i].className.match(/\d+/)[0]);
+                    if (cumulativedaffs + daffsInMesechet >= index) {
+                        const daffNumber = index - cumulativedaffs;
+                        const daffHebrew = hebrewDigits[daffNumber - 1] || 'Unknown';
+                        return { mesechet: bbElements[i].textContent, daff: daffHebrew };
+                    }
+                    cumulativedaffs += daffsInMesechet;
+                }
+                return { mesechet: 'Unknown', daff: 'Unknown' };
+            }
+            function updatedaffTodayStartIndexDisplay() {
+    let daffTodayStartIndex = parseInt(localStorage.getItem('daffimTodayStartIndex') || '0');
+    const { mesechet, daff } = findMesechetAnddaffByIndex(daffTodayStartIndex + 1);
+    const daffTodayStartIndexDisplay = document.getElementById('daffTodayStartIndex');
+    daffTodayStartIndexDisplay.innerHTML = `Start of day  ${mesechet} פרק ${daff}`;
+}
+let daffGoal = 7; // Default value
+
+function updateGoalDisplay() {
+        let daffTodayStartIndex = parseInt(localStorage.getItem('daffTodayStartIndex') || '0');
+        const goalIndex = daffTodayStartIndex + daffGoal - 0;  // Adjust for zero-based index
+        const { mesechet, daff } = findMesechetAnddaffByIndex(goalIndex + 1);  // +1 for display
+        const goalDisplay = document.getElementById('goal');
+        goalDisplay.innerHTML = `Goal + ${daffGoal + 0}  ${mesechet} פרק ${daff}`;
+    }
+    const editGoalBtn = document.getElementById('editGoalBtn');
+    const goalInput = document.getElementById('goalInput');
+
+    editGoalBtn.addEventListener('click', function() {
+        goalInput.style.display = 'block';
+        goalInput.value = daffGoal; // Display current goal adjusted for user
+    });
+
+    goalInput.addEventListener('change', function() {
+        daffGoal = parseInt(goalInput.value) || daffGoal; // Update goal if valid number
+        updateGoalDisplay();
+        goalInput.style.display = 'none';
+    });
+
+
+
+        let daffTodayStartIndex = parseInt(localStorage.getItem('daffTodayStartIndex') || '0');
+    
+        let lastDate = localStorage.getItem('lastDate') || '';
+        let todayDate = new Date().toDateString();
+    
+        if (lastDate !== todayDate) {
+            lastDate = todayDate;
+            localStorage.setItem('lastDate', todayDate);
+            daffTodayStartIndex = 0;
+            localStorage.setItem('daffTodayStartIndex', daffTodayStartIndex.toString());
+        }
+    
+
+        document.getElementById('editGoalBtn').addEventListener('click', function() {
+    var goalInput = document.getElementById('goalInput');
+    var container = document.querySelector('.container');
+    if (goalInput.style.display === 'none' || goalInput.style.display === '') {
+        goalInput.style.display = 'block';
+        container.style.transform = 'translate(-50%, -50%)'; // Adjust the container position downwards
+    } else {
+        //goalInput.style.display = 'none';
+        container.style.transform = 'translate(-50%, -35%)'; // Reset the container position
+    }
+});
+
+
+        function calculateGlobaldaffIndex(mesechetIndex, daffIndex) {
+            let globaldaffIndex = 0;
+            for (let i = 0; i < mesechetIndex - 1; i++) {
+                globaldaffIndex += parseInt(bbElements[i].className.match(/\d+/)[0]);
+            }
+            globaldaffIndex += daffIndex;
+            return globaldaffIndex;
+        }
+    
+      // A mapping of English to Hebrew digits
+const hebrewDigits = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'י"א', 'י"ב', 'י"ג', 'י"ד', 'ט"ו', 'ט"ז', 'י"ז', 'י"ח', 'י"ט',
+ 'כ', 'כ"א', 'כ"ב', 'כ"ג', 'כ"ד', 'כ"ה', 'כ"ו', 'כ"ז', 'כ"ח', 'כ"ט', 'ל'
+,'ל"א', 'ל"ב', 'ל"ג', 'ל"ד', 'ל"ה', 'ל"ו', 'ל"ז', 'ל"ח', 'ל"ט',
+    'מ', 'מ"א', 'מ"ב', 'מ"ג', 'מ"ד', 'מ"ה', 'מ"ו', 'מ"ז', 'מ"ח', 'מ"ט',  
+    'נ', 'נ"א', 'נ"ב', 'נ"ג', 'נ"ד', 'נ"ה', 'נ"ו', 'נ"ז', 'נ"ח', 'נ"ט',
+    'ס', 'ס"א', 'ס"ב', 'ס"ג', 'ס"ד', 'ס"ה', 'ס"ו', 'ס"ז', 'ס"ח', 'ס"ט',
+    'ע', 'ע"א', 'ע"ב', 'ע"ג', 'ע"ד', 'ע"ה', 'ע"ו', 'ע"ז', 'ע"ח', 'ע"ט',
+    'פ', 'פ"א', 'פ"ב', 'פ"ג', 'פ"ד', 'פ"ה', 'פ"ו', 'פ"ז', 'פ"ח', 'פ"ט',
+    'צ', 'צ"א', 'צ"ב', 'צ"ג', 'צ"ד', 'צ"ה', 'צ"ו', 'צ"ז', 'צ"ח', 'צ"ט',
+    
+];
+
+        function createSideNavs(mesechetIndex) {
+            const oldSideNavContainer = document.querySelector('.side-nav-container');
+            if (oldSideNavContainer) {
+                oldSideNavContainer.remove();
+            }
+    
+      
+    const sideNavContainer = document.createElement('ul');
+    sideNavContainer.classList.add('side-nav-container');
+    document.querySelector('.sidebar').appendChild(sideNavContainer);
+
+    const bbElement = bbElements[mesechetIndex - 1];
+    const num = parseInt(bbElement.className.match(/\d+/)[0]);
+    const mesechet = bbElement.textContent;
+    document.querySelector('.menu-item').style.opacity = 0;
+        
+  
+    for (let i = 0; i < num; i++) {
+        const globaldaffIndex = calculateGlobaldaffIndex(mesechetIndex, i + 0);
+        const sideNav = document.createElement('li');
+        sideNav.classList.add('side-nav');
+        sideNav.style.top = `${i * 1}px`;
+        sideNav.style.transform = `translateX(0px)`;
+
+        const daffHebrewNumber = hebrewDigits[i]; // translate to Hebrew number
+        sideNav.innerHTML = `<p>${mesechet} פרק ${daffHebrewNumber}</p>`; // use Hebrew number here
+
+        sideNav.addEventListener('click', () => {
+            daffTodayStartIndex = globaldaffIndex;
+            localStorage.setItem('daffTodayStartIndex', daffTodayStartIndex.toString());
+            updatedaffTodayStartIndexDisplay();
+            updateGoalDisplay(); 
+        });
+        sideNavContainer.appendChild(sideNav);
+    }
+    
+            setTimeout(() => {
+                document.addEventListener('click', function (event) {
+                    if (!event.target.closest('.side-nav') && !event.target.closest('.bb')) {
+                        const sideNavs = document.querySelectorAll('.side-nav');
+                        document.querySelector('.menu-item').style.opacity = 1;
+                        sideNavs.forEach(sideNav => sideNav.remove());
+                    }
+                });
+            }, 0);
+        }
+    
+        bbElements.forEach((bbElement, index) => {
+            bbElement.addEventListener('click', () => {
+                createSideNavs(index + 1);
+            });
+        });
+        document.addEventListener('click', function(event) {
+    var goalInput = document.getElementById('goalInput');
+    var editGoalBtn = document.getElementById('editGoalBtn');
+    var container = document.querySelector('.container');
+
+    // Check if the clicked element is not the goalInput and not the editGoalBtn
+    if (!goalInput.contains(event.target) && event.target !== editGoalBtn) {
+        if (goalInput.style.display === 'block') {
+            goalInput.style.display = 'none';
+            container.style.transform = 'translate(-50%, -50%)'; // Reset the container position
+        }
+    }
+});
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.sidebar')) {
+                const oldSideNavContainer = document.querySelector('.side-nav-container');
+                if (oldSideNavContainer) {
+                    oldSideNavContainer.remove();
+                }
+            }
+        });
+    
+        // Display the daffTodayStartIndex from local storage
+        const daffTodayStartIndexDisplay = document.getElementById('daffTodayStartIndex');
+        updatedaffTodayStartIndexDisplay();
+        updateGoalDisplay(); 
+    });
+  
+    </script>
+</body>
+</html>

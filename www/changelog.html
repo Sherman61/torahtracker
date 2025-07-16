@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Changelog</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    .back {
+      font-size: 1.5em;
+      cursor: pointer;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    h1 {
+      margin-bottom: 10px;
+      color: #444;
+    }
+    .version {
+      margin-bottom: 20px;
+    }
+    .version h2 {
+      font-size: 1.2em;
+      color: #555;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    ul li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <i class="fa-solid fa-arrow-left back" onclick="location.href='settings.html'"></i>
+  <h1>Changelog</h1>
+<div class="version">
+  <h2>Version 1.2 <small>(current) date: 7/16/25</small></h2>
+  <ul>
+    <li>✅ Accurately targets goal perek index now</li>
+    <li>🐞 Bug fixed: goal checkmark no longer appears one perek early</li>
+  </ul>
+</div>
+
+  <div class="version">
+    <h2>Version 1.0.9.1 <small> date:7/15/25</small></h2>
+    <ul>
+      <li>🎉 Confetti celebration added when daily perek goal is reached</li>
+      <li>✅ Goal display paragraph added with checkmark if completed</li>
+      <li>📦 Goal visibility setting saved via <code>displayPerekGoal</code> in localStorage</li>
+      <li>📅 Goal now checks against date properly and won't re-trigger confetti the same day</li>
+    </ul>
+  </div>
+
+  <div class="version">
+    <h2>Version 1.0.9.0</h2>
+    <ul>
+      <li>🧮 Checkbox progress tracking added with percent calculation</li>
+      <li>🗓️ Weekly reset on Sunday at midnight implemented</li>
+      <li>📊 Stored percent and checkbox states using localStorage</li>
+    </ul>
+  </div>
+</body>
+</html>
