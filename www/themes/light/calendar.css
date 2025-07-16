@@ -1,80 +1,277 @@
-* { box-sizing: border-box; }
-body, html { margin:0; padding:0; font-family:Arial,sans-serif; background:#d7e1e5; }
-/* open nav is the arrow left on top of the screen */
-#openNav { position: fixed; top: 10px; left: 10px; margin: 10px; font-size: 24px; color: #000; cursor: pointer;}
-h1 { text-align:center; margin:0; padding:20px; background:#3f567e; color:#fff; font-size:2rem; }
-#instruction { text-align:center; margin:10px; font-weight:bold; }
-#calendar { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; padding:10px; max-width:800px; margin:0 auto; }
-.day { background:#fff; border:1px solid #ccc; border-radius:4px; min-height:60px; cursor:pointer;
-       display:flex; flex-direction:column; align-items:center; justify-content:flex-start; transition:0.2s; }
-.day:hover { background:#e0f0ff; }
-.day.today { border:2px solid #3f567e; background:#f0f8ff; }
-.day .date { font-weight:bold; margin-bottom:5px; }
-.day .summary { font-size:0.9em; text-align:center; }
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  font-family: Arial, sans-serif;
+  background: #d7e1e5;
+  height: 100%;
+  overflow-x: auto;
+}
 
-#menuOverlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3);
-               display:flex; justify-content:center; align-items:center; }
-#menu { background:#f9f9f9; padding:20px; border-radius:8px; width:90%; max-width:400px; }
-.menu-hidden { display:none; }
-#bbContainer, #pereksContainer { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
-.bb, .perek { padding:6px 12px; background:#fff; border:1px solid #999; border-radius:4px; cursor:pointer;
-               transition:0.2s; white-space:nowrap; }
-.bb:hover, .perek:hover { background:#cce5ff; }
-#cancelBtn, #backBtn { margin:5px; padding:8px 16px; border:none; border-radius:4px; cursor:pointer; }
-#cancelBtn { background:#e74c3c; color:#fff; }
-#cancelBtn:hover { background:#c0392b; }
-#backBtn { background:#3f567e; color:#fff; }
-#backBtn:hover { background:#2c3e50; }
-.hidden { display:none!important; }
-
-@media(max-width:800px) { #calendar { grid-template-columns:repeat(4,1fr); } }
-@media(max-width:500px) { #calendar { grid-template-columns:repeat(2,1fr); } h1{font-size:1.5rem;} }
-    .menu {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-        max-height: 60vh;
-        overflow-y: auto;
-    }
-    
-    .menu-item {
-        margin-bottom: 10px;
-    }
-    
-    .submenu {
-        list-style-type: none;
-        padding-left: 20px;
-        display: none; /* Initially hidden */
-    }
-    
-    .menu-item:hover .submenu {
-        display: block; /* Show submenu on hover */
-    }
-    
-    .bb, .perek {
-        padding: 6px 12px;
-        background-color: #fff;
-        border: 1px solid #999;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.2s ease;}
-    .bb:hover, .perek:hover {
-        background-color: #cce5ff;
-    }
-
-
-    /* style the back arrow button */
-#backBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;            /* space between arrow and text */
-  margin-bottom: 10px; /* pull it away from the lists */
-  background: none;
-  border: none;
-  font-size: 1rem;
-  color: #3f567e;
+/* Top Bar */
+#openNav {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 1.5rem;
+  color: #333;
   cursor: pointer;
 }
-#backBtn:hover {
-  text-decoration: underline;
+h1 {
+  text-align: center;
+  background: #3f567e;
+  color: #fff;
+  padding: 1rem;
+  font-size: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Instruction */
+#instruction {
+  text-align: center;
+  margin: 1rem 0;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Calendar Grid */
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  padding: 1rem;
+  max-width: 900px;
+  margin: auto;
+}
+.day {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-height: 80px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  transition: background 0.2s, transform 0.1s;
+}
+.day:hover {
+  background: #e0f0ff;
+  transform: translateY(-2px);
+}
+.day.today {
+  border-color: #3f567e;
+  box-shadow: 0 0 5px rgba(63,86,126,0.5);
+}
+.day .date {
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+.day .summary {
+  font-size: 0.9rem;
+  text-align: center;
+  color: #555;
+}
+
+/* Overlay & Menu */
+#menuOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hidden { display: none!important; }
+#menu {
+  background: #f9f9f9;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  max-height: 80vh;
+  overflow: auto;
+}
+.menu-hidden { display: none;
+overflow: auto; 
+
+  max-height: 80vh; }
+
+
+
+/* Masechtot & Pereks Lists */
+#bbContainer,
+#pereksContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  /* position: relative; */
+  /* height: 300px; Fixed height for scrolling */
+  overflow: auto;
+}
+.bb, .perek {
+  padding: 0.6rem 1rem;
+  background: #fff;
+  border: 1px solid #999;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  white-space: nowrap;
+}
+.bb:hover, .perek:hover {
+  background: #cce5ff;
+  transform: translateY(-1px);
+}
+
+/* Buttons */
+#backBtn,
+#clearBtn,
+#clearAllBtn,
+#cancelBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 0.5rem;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+#backBtn {
+  background: #3f567e;
+  color: #fff;
+}
+#clearBtn,
+#clearAllBtn {
+  background: #e74c3c;
+  color: #fff;
+}
+#cancelBtn {
+  background: #888;
+  color: #fff;
+}
+#backBtn:hover { background: #2c3e50; }
+#clearBtn:hover,
+#clearAllBtn:hover { background: #c0392b; }
+#cancelBtn:hover { background: #555; }
+
+/* Media Queries */
+@media (max-width: 800px) {
+  #calendar {
+    grid-template-columns: repeat(4, 1fr);
+    font-size: 1rem;
+    gap: 0.2rem;
+  padding: 0.5rem;
+  min-height: 50px;
+  }
+  #menu {
+    max-width: 90%;
+    padding: 1rem;
+  }
+}/* Extra-small devices (≤ 500px) */
+@media (max-width: 500px) {
+  #calendar {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.3rem;
+    padding: 0.5rem;
+  }
+  .day {
+    min-height: 60px;
+    padding: 0.3rem;
+  }
+  .day .date {
+    font-size: 0.9rem;
+  }
+  .day .summary {
+    font-size: 0.75rem;
+  }
+  #menu {
+    padding: 1rem;
+  }
+  #bbContainer, #pereksContainer {
+    gap: 0.4rem;
+  }
+  .bb, .perek {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  #backBtn, #clearBtn, #clearAllBtn, #cancelBtn {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Tiny devices (≤ 380px) */
+@media (max-width: 380px) {
+  #calendar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.2rem;
+  }
+  .day {
+    min-height: 50px;
+  }
+  .day .date {
+    font-size: 0.8rem;
+  }
+  .day .summary {
+    font-size: 0.7rem;
+  }
+  h1 {
+    font-size: 1.25rem;
+    padding: 0.6rem;
+  }
+  #instruction {
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+  }
+  #bbContainer, #pereksContainer {
+    gap: 0.3rem;
+  }
+  .bb, .perek {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  #menu {
+    width: 95%;
+  }
+}
+
+
+/* Ultra-tiny devices (≤ 320px) */
+@media (max-width: 320px) {
+  /* #calendar {
+    grid-template-columns: repeat(1, 1fr);
+  } */
+  .day {
+    min-height: 40px;
+  }
+  .day .date {
+    font-size: 0.75rem;
+  }
+  .day .summary {
+    display: none; /* hide summary to save space */
+  }
+
+  /* Force a single‐row horizontal list for both containers */
+  #bbContainer,
+  #pereksContainer {
+    display: flex;
+    /* flex-wrap: nowrap; */
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* smooth on iOS */
+  }
+
+  /* hide _vertical_ scrollbar but leave horizontal visible */
+  #bbContainer::-webkit-scrollbar,
+  #pereksContainer::-webkit-scrollbar {
+    width: 0;      /* hide vertical scrollbar */
+    height: auto;  /* keep horizontal scrollbar height normal */
+  }
 }
