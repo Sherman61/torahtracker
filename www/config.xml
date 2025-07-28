@@ -1,8 +1,8 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
 <widget
     android-versionCode = '1'
-    id = 'com.Shiyaswebsite.com.torahtracker'
-    version = '1.3.5' 
+    id = 'com.shiyaswebsite.torahtracker'
+    version = '1.4' 
     xmlns = 'https://www.w3.org/ns/widgets'>
 <icon src="torah.png" platform="ios" width="auto" height="auto" density="mdpi" />
 <preference name="AndroidWindowSplashScreenAnimatedIcon" value="torah.png" />

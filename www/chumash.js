@@ -35,15 +35,22 @@ function updatePercent(parshaName) {
 }
 async function updateParshaBoxes(){
     const parsha = await fetchTorahPortion()
+   
  let localParsha = localStorage.getItem("localParsha")
 //  if(localParsha == null || undefined){
 //     return;
 //  }
 //  else 
+console.log("local parsha: " + localParsha)
+ console.log("parsha: " + parsha)
  if(parsha !== 'Unavailable' && parsha !== localParsha){
     console.log("not the same chumash week, checkboxes cleared")
     localStorage.setItem("localParsha", parsha)
     clearAllCheckboxes();
+ }
+ 
+ else if(parsha.includes("-")){
+    console.log("this weeks parsha is a double parsha")
  }
 }
 

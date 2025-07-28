@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Torah Tracker Calendar</title>
   <link rel="stylesheet" href="themes/light/calendar.css"/>
+  <script src="themes/theme.js"></script>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
     
 </head>
 <body>
-  <h1>Torah Tracker</h1>
+  <h1>Torah Tracker <span style="font-size: medium; margin: 0%;">Mishnayes</span></h1>
+  
   <i class="fa-solid fa-arrow-left" id="openNav" onclick="location.href='settings.html'"></i>
 
   <!-- calendar grid -->
@@ -19,11 +21,16 @@
   <div id="menuOverlay" class="hidden">
     
     <div id="menu" class="menu-hidden">
-      <div id="instruction">Select a date</div>
-       
-<button id="backBtn" >
+      
+      <div id="instruction"><p>select a date</p> 
+
+      </div>
+       <button id="backBtn" >
   <i class="fa fa-arrow-left"></i> Back
 </button>
+      
+        
+
     
       <!-- list of masechtot -->
       <div id="bbContainer"></div>

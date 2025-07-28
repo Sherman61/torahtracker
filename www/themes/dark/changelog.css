@@ -1,0 +1,43 @@
+/* Dark Theme for Changelog / Viewer */
+
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #121212;       /* deep charcoal */
+  color: #e0e0e0;            /* near-white */
+}
+
+.back {
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: inline-block;
+  color: #bbb;               /* light gray */
+}
+.back:hover {
+  color: #fff;
+}
+
+h1 {
+  margin-bottom: 10px;
+  color: #f0f0f0;            /* very light */
+}
+
+.version {
+  margin-bottom: 20px;
+}
+.version h2 {
+  font-size: 1.2em;
+  color: #ccc;               /* soft gray */
+}
+
+ul {
+  padding-left: 20px;
+}
+ul li {
+  margin-bottom: 5px;
+  color: #ddd;               /* light gray for list items */
+}
+ul li::marker {
+  color: #888;               /* muted marker/bullet */
+}

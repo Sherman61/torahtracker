@@ -10,8 +10,9 @@ function fetchTorahPortion() {
             const items = data.items;
             const parshaItem = items.find(item => item.category === 'parashat');
             const parshaName = parshaItem ? parshaItem.hebrew : 'Unavailable';
-            document.getElementById('torahPortion').textContent = parshaName;
+            // document.getElementById('currentParsha').textContent = parshaName;
             return parshaName;
+            
         })
         .catch(error => {
             console.error('Error fetching data: ', error);

@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #d7e1e5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+.links {
+    margin-bottom: 20px;
+}
+
+.links a {
+    display: block;
+    padding: 10px 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.links a:hover {
+    background-color: #eee;
+}
+
+.security-page {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.security-page label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.security-page input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.themes-page {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.themes-page label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.transfer-page {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.transfer-page input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+}
+
+.notifications-page {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.notifications-page input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* Media queries */
+@media only screen and (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .links a {
+        padding: 8px 16px;
+    }
+}
+
+header {
+background-color: #f2f2f2;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+padding: 20px;
+text-align: center;
+}
+#openNav {
+position: fixed;
+top: 10px;
+left: 10px;
+margin: 10px;
+font-size: 24px;
+color: #000;
+}

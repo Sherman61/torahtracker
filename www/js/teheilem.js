@@ -24,7 +24,7 @@
   // Function to update today's psalms
   function updateToday(currentPsalmIndex) {
     const startOfDayPsalmIndex = parseInt(localStorage.getItem('startOfDayPsalmIndex'));
-    const psalmsToday = currentPsalmIndex - startOfDayPsalmIndex + 1;
+    const psalmsToday = currentPsalmIndex - startOfDayPsalmIndex + 0;
 
     document.getElementById('today').textContent = `Teheilem today: ${psalmsToday}`;
   }

@@ -8,7 +8,7 @@ const STORE_NAME = 'dailyProgress';
 
 function openDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, 1);
+    const request = indexedDB.open(DB_NAME, 2);
     request.onerror = () => reject(request.error);
     request.onsuccess = () => resolve(request.result);
     request.onupgradeneeded = () => {
@@ -30,10 +30,15 @@ async function saveProgress(date, data) {
 
 async function getProgress(date) {
   const db = await openDB();
-  const tx = db.transaction(STORE_NAME, 'readonly');
-  const store = tx.objectStore(STORE_NAME);
-  return store.get(date);
+  return new Promise((resolve, reject) => {
+    const tx    = db.transaction(STORE_NAME, 'readonly');
+    const store = tx.objectStore(STORE_NAME);
+    const req   = store.get(date);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror   = () => reject(req.error);
+  });
 }
+
 
 async function getAllProgress() {
   const db = await openDB();
@@ -46,13 +51,15 @@ async function getAllProgress() {
     request.onerror = () => reject(request.error);
   });
 }
-async function saveDailyProgressToDB(date, startIndex, endIndex, pereksToday) {
+async function saveDailyProgressToDB(date, startIndex, endIndex, pereksToday, goalReached = false) {
   const db = await openDB();
   const tx = db.transaction(STORE_NAME, 'readwrite');
   const store = tx.objectStore(STORE_NAME);
-  store.put({ date, startIndex, endIndex, pereksToday });
+  // now include goalReached in every record
+  store.put({ date, startIndex, endIndex, pereksToday, goalReached });
   return tx.complete;
 }
+
 
  async function deleteProgress(date) {
   const db = await openDB();

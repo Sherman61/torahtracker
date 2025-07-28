@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a; /* Dark background */
+    margin: 0;
+    padding: 0;
+    color: #f1f1f1; /* Light text for readability */
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #e4e4e4; /* Light text color */
+    text-align: center;
+}
+
+.links {
+    margin-bottom: 20px;
+}
+
+.links a {
+    display: block;
+    padding: 10px 20px;
+    background-color: #333; /* Dark link background */
+    border: 1px solid #444; /* Slightly lighter border for contrast */
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #ccc; /* Light link text */
+}
+
+.links a:hover {
+    background-color: #444; /* Darker shade on hover */
+}
+
+.security-page, .themes-page, .transfer-page, .notifications-page {
+    background-color: #282828; /* Dark background for sections */
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.security-page label, .themes-page label, .transfer-page label, .notifications-page label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #ddd; /* Light label color */
+}
+
+.security-page input[type="checkbox"],
+.notifications-page input[type="radio"] {
+    margin-right: 10px;
+}
+
+.transfer-page input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #444; /* Slightly lighter border for contrast */
+    background-color: #333; /* Dark input field */
+    color: #fff; /* Light text for inputs */
+}
+
+/* Media queries */
+@media only screen and (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .links a {
+        padding: 8px 16px;
+    }
+}
+
+header {
+    background-color: #3f567e; /* Dark header background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Adjusted for better visibility */
+    padding: 20px;
+    text-align: center;
+}
+
+#openNav {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    margin: 10px;
+    font-size: 24px;
+    color: #fff; /* Light icon color */
+}

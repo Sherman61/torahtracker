@@ -1,0 +1,97 @@
+/* themes/dark/calendar.css */
+
+/* 1) Define your dark palette as variables */
+:root {
+  --bg:           #121212;
+  --text:         #e0e0e0;
+  --day-bg:       #1e1e1e;
+  --day-border:   #444;
+  --today-border: #4a7ebb;
+  --hover-bg:     #2a2a2a;
+  --card-bg:      #1e1e1e;
+  --th-bg:        #1f1f1f;
+  --btn-bg:       #2c3e50;
+  --btn-hover:    #1b2838;
+  --cancel-bg:    #772d2d;
+  --cancel-hover: #5a2222;
+  --nav-bg:       #181818;
+  --nav-text:     #e0e0e0;
+}
+
+/* 2) Base overrides */
+body, html {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+h1 {
+  background-color: #2c3e50;
+  color: var(--text);
+}
+
+/* Calendar grid */
+#calendar {
+  background: var(--bg);
+}
+.day {
+  background-color: var(--day-bg);
+  border: 1px solid var(--day-border);
+}
+.day:hover {
+  background-color: var(--hover-bg);
+}
+.day.today {
+  border: 2px solid var(--today-border);
+  background-color: #262626;
+}
+.day .date,
+.day .summary {
+  color: var(--text);
+}
+
+/* Overlay & menu */
+#menu {
+  background-color: var(--card-bg);
+}
+.bb, .perek {
+  background: var(--card-bg);
+  border: 1px solid var(--day-border);
+  color: var(--text);
+}
+.bb:hover, .perek:hover {
+  background: var(--hover-bg);
+}
+
+/* Buttons */
+#backBtn {
+  background: var(--btn-bg);
+  color: var(--text);
+}
+#backBtn:hover {
+  background: var(--btn-hover);
+}
+#cancelBtn {
+  background: var(--cancel-bg);
+  color: var(--text);
+}
+#cancelBtn:hover {
+  background: var(--cancel-hover);
+}
+
+/* Bottom nav, if you have one */
+.bottom-nav {
+  background: var(--nav-bg);
+}
+.bottom-nav a {
+  color: var(--nav-text);
+}
+
+/* Scrollbars in dark */
+#bbContainer::-webkit-scrollbar,
+#pereksContainer::-webkit-scrollbar {
+  background: var(--card-bg);
+}
+#bbContainer::-webkit-scrollbar-thumb,
+#pereksContainer::-webkit-scrollbar-thumb {
+  background: var(--day-border);
+}

@@ -4,8 +4,54 @@ body, html {
   background-color: #1a1a1a; /* Dark background */
   font-family: Arial, sans-serif;
   color: #f1f1f1; /* Light text for readability */
+   
+ height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+ 
 }
 
+/* style the details/summary dock */
+.stats-dock {
+  position: sticky;
+  bottom: 0;
+  background: #3f567e;
+  color: #fff;
+  border-top: 2px solid #2c3e50;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+  width: 100%;
+  z-index: 10;
+}
+.stats-dock summary {
+  list-style: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+.stats-dock summary::-webkit-details-marker {
+  display: none; /* hide the default marker */
+}
+.stats-dock summary::before {
+  content: "📊 ";
+}
+.stats-dock .header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+}
+.stats-dock .header p {
+  margin: 0;
+  color: #f0f0f0;
+}
+
+/* Make sure internal collapse hides the header */
+.stats-dock:not([open]) .header {
+  display: none;
+}
 @media (min-width: 500px) {
   body, html {
     background-color: #262626; /* Slightly lighter dark shade */

@@ -158,6 +158,8 @@ function updatePereksToday(previousIndex, currentIndex) {
 const start = pereksTodayStartIndex;
 const end = currentGlobalPerekIndex;
 const doneToday = end - start;
+  // Save the daily progress to the database
+  
 saveDailyProgressToDB(date, start, end, doneToday);
 
 }
@@ -188,8 +190,7 @@ document.addEventListener("click", function (event) {
       oldSideNavContainer.remove();
       document.querySelector("ul").style.opacity = "1";
       document.querySelector(".menu").style.opacity = "1";
-      // document.querySelector('.menu').style.display = 'block';
-      // document.querySelector('ul.side-nav-container').style.display = 'none';
+     
     }
   }
 });
@@ -232,47 +233,77 @@ function updateStats() {
 }
 
 
-// Function to check and launch confetti if the goal is reached
 function updateGoalDisplayParagraph() {
   const goalElement = document.getElementById("goal");
   const displayPerekGoal = localStorage.getItem("displayPerekGoal") === "true";
-
   if (!goalElement) return;
 
-  if (displayPerekGoal) {
-    let perekGoal = parseInt(localStorage.getItem("perekGoal")) || 18;
-    let pereksTodayStartIndex = parseInt(localStorage.getItem("pereksTodayStartIndex") || "0");
-    if (isNaN(perekGoal) || perekGoal <= 0) {
-      perekGoal = 18;
-    }
-
-    const goalIndex = pereksTodayStartIndex + perekGoal - 0;
-    const currentGlobalPerekIndex = parseInt(localStorage.getItem("globalPerekIndex") || "1") - 1;
-
-    function findMesechetAndPerekByIndex(index) {
-      let cumulativePereks = 0;
-      for (let i = 0; i < bbElements.length; i++) {
-        const pereksInMesechet = parseInt(bbElements[i].className.match(/\d+/)[0]);
-        if (cumulativePereks + pereksInMesechet > index) {
-          const perekNumber = index - cumulativePereks;
-          const perekHebrew = hebrewDigits[perekNumber] || "Unknown";
-          return { mesechet: bbElements[i].textContent, perek: perekHebrew };
-        }
-        cumulativePereks += pereksInMesechet;
-      }
-      return { mesechet: "Unknown", perek: "Unknown" };
-    }
-
-    const { mesechet, perek } = findMesechetAndPerekByIndex(goalIndex);
-    const isComplete = currentGlobalPerekIndex >= goalIndex;
-    const checkMark = isComplete ? " ✅" : "";
-
-    goalElement.innerText = `Goal: ${mesechet} פרק ${perek}${checkMark}`;
-    goalElement.style.display = "block";
-  } else {
+  if (!displayPerekGoal) {
     goalElement.style.display = "none";
+    return;
+  }
+
+  // read goal size & start index
+  let perekGoal = parseInt(localStorage.getItem("perekGoal"), 10) || 18;
+  let startIndex = parseInt(localStorage.getItem("pereksTodayStartIndex"), 10) || 0;
+  if (isNaN(perekGoal) || perekGoal <= 0) perekGoal = 18;
+
+  // compute the global index at which the goal is hit
+  const goalIndex = startIndex + perekGoal;
+
+  // current global index
+  const currentIndex = parseInt(localStorage.getItem("globalPerekIndex"), 10) - 1;
+
+  // helper to map global→{mesechet,perek}
+  function findMesechetAndPerekByIndex(idx) {
+    let cumulative = 0;
+    for (let i = 0; i < bbElements.length; i++) {
+      const count = parseInt(bbElements[i].className.match(/\d+/)[0], 10);
+      if (cumulative + count > idx) {
+        const local = idx - cumulative + 1;
+        return {
+          mesechet: bbElements[i].textContent,
+          perek: hebrewDigits[local - 1] || "?"
+        };
+      }
+      cumulative += count;
+    }
+    return { mesechet: "Unknown", perek: "?" };
+  }
+
+  const { mesechet, perek } = findMesechetAndPerekByIndex(goalIndex);
+  const isComplete = currentIndex >= goalIndex;
+  const checkMark = isComplete ? " ✅" : "";
+
+  goalElement.innerText = `Goal: ${mesechet} פרק ${perek}${checkMark}`;
+  goalElement.style.display = "block";
+ 
+  // if we've just completed it today, persist that flag
+  if (isComplete) {
+    const today = new Date().toISOString().split("T")[0];
+    getProgress(today).then(record => {
+      if (record && !record.goalReached) {
+        const date = new Date().toISOString().split("T")[0]; // e.g. "2025-07-16"
+        const start = pereksTodayStartIndex;
+const end = currentGlobalPerekIndex;
+const doneToday = end - start;
+        // update the existing record with goalReached=true
+        saveDailyProgressToDB(
+          date, start, end, doneToday,
+          /*goal reached */ true
+        );
+      } else if (!record) {
+        // no record exists, create a new one with goalReached=true
+        saveDailyProgressToDB(today, startIndex, currentIndex, perekGoal, true);
+      }
+    });
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateGoalDisplayParagraph();
+});
+
 
 document.addEventListener("DOMContentLoaded", function () {
   updateGoalDisplayParagraph();
@@ -282,3 +313,6 @@ document.addEventListener("DOMContentLoaded", function () {
 // Update stats and mesechet and perek on page load
 updateStats();
 updateMesAndPerek();
+// bottom function to update pereks today
+const prevIndex = parseInt(localStorage.getItem("pereksTodayStartIndex") || "0");
+updatePereksToday(prevIndex, currentGlobalPerekIndex);

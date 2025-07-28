@@ -1,0 +1,128 @@
+/* calendar-dark.css */
+/* ----------------- */
+/* Base variables */
+:root {
+  --bg-page: #1e1e1e;
+  --bg-panel: #2a2a2a;
+  --bg-day: #333;
+  --bg-day-hover: #3a3a3a;
+  --bg-today: #444;
+  --border-day: #444;
+  --text-primary: #eee;
+  --text-secondary: #bbb;
+  --accent: #5a9bd5;
+  --btn-bg: #444;
+  --btn-hover: #555;
+  --btn-danger: #cc4444;
+  --btn-danger-hover: #bb3333;
+  --btn-back: #5a9bd5;
+  --btn-back-hover: #4a8bd5;
+}
+
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+}
+html, body {
+  font-family: Arial, sans-serif;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  height: 100%;
+  overflow-x: auto;
+}
+
+/* Top Bar */
+#openNav {
+  color: var(--text-primary);
+}
+h1 {
+  background: var(--btn-back);
+  color: var(--text-primary);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Instruction */
+#instruction {
+  color: var(--text-secondary);
+}
+
+/* Calendar Grid */
+#calendar {
+  background: var(--bg-panel);
+}
+.day {
+  background: var(--bg-day);
+  border: 1px solid var(--border-day);
+}
+.day:hover {
+  background: var(--bg-day-hover);
+}
+.day.today {
+  border-color: var(--accent);
+  box-shadow: 0 0 5px var(--accent);
+}
+.day .date {
+  color: var(--text-primary);
+}
+.day .summary {
+  color: var(--text-secondary);
+}
+
+/* Overlay & Menu */
+#menuOverlay {
+  background: rgba(0,0,0,0.6);
+}
+#menu {
+  background: var(--bg-panel);
+  color: var(--text-primary);
+}
+
+/* Masechtot & Pereks Lists */
+#bbContainer, #pereksContainer {
+  background: var(--bg-panel);
+}
+.bb, .perek {
+  background: var(--bg-day);
+  border: 1px solid var(--border-day);
+  color: var(--text-primary);
+}
+.bb:hover, .perek:hover {
+  background: var(--bg-day-hover);
+}
+
+/* Buttons */
+#backBtn {
+  background: var(--btn-back);
+  color: var(--text-primary);
+}
+#backBtn:hover {
+  background: var(--btn-back-hover);
+}
+#clearBtn, #clearAllBtn {
+  background: var(--btn-danger);
+  color: var(--text-primary);
+}
+#clearBtn:hover, #clearAllBtn:hover {
+  background: var(--btn-danger-hover);
+}
+#cancelBtn {
+  background: var(--btn-bg);
+  color: var(--text-primary);
+}
+#cancelBtn:hover {
+  background: var(--btn-hover);
+}
+
+/* Scrollbars (WebKit) */
+#bbContainer::-webkit-scrollbar,
+#pereksContainer::-webkit-scrollbar,
+#calendar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+#bbContainer::-webkit-scrollbar-thumb,
+#pereksContainer::-webkit-scrollbar-thumb,
+#calendar::-webkit-scrollbar-thumb {
+  background: var(--border-day);
+  border-radius: 4px;
+}

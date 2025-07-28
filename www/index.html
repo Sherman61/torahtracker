@@ -50,6 +50,16 @@
         font-size: 20px;
        
       }
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f1f1f1;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+      }
     </style>
    
 
@@ -57,18 +67,20 @@
   </head>
 
   <body>
+    <details class="stats-dock" open>
+    <summary>Progress 📊</summary>
     <header class="header">
-      <i
-        class="fas fa-cog"
-        id="openNav"
-        onclick="location.href='settings.html'"
-      ></i>
+      <i class="fas fa-cog" id="openNav" onclick="location.href='settings.html'"></i>
       <p id="finished"></p>
       <p id="percentdone"></p>
       <p id="to-go"></p>
-      <p id="today"><!--pereks today--></p>
-      <p id="goal" style="display: none"></p>
+      <p id="today"></p>
+      <p id="goal" style="display:none"></p>
     </header>
+  </details>
+    
+
+    <!-- <h1>Mishnayes</h1> -->
     <h2 id="mesandperek"></h2>
     <div class="container">
       <div class="sidebar">
@@ -283,8 +295,9 @@
         </div>
       </div>
     </div>
+    <!-- <div class="space">d</div> -->
     <div class="side-nav-container" style="display: none"></div>
-    <div class="space"></div>
+    
     <div class="bottom-nav">
       <a href="index.html" class="active">Mishnayes</a>
       <a href="teheilem.html">Teheilem</a>
@@ -293,8 +306,9 @@
 
     <p id="result"></p>
     <script src="js/db.js"></script>
-
-    <script src="mishnascript.js"></script>
     <script src="goalConfetti.js"></script>
+<!-- <script src="ms2.js"></script> -->
+    <script src="mishnascript.js"></script>
+    
   </body>
 </html>
