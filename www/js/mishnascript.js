@@ -299,12 +299,18 @@ function updateGoalDisplayParagraph() {
 // Scroll to current mesechet on load
 function scrollToCurrentMesechet() {
   const mesechetName = localStorage.getItem("mesechet");
-  if (!mesechetName) return;
+  const sidebar = document.querySelector(".sidebar");
+  if (!mesechetName || !sidebar) return;
 
-  const bbEls = document.querySelectorAll(".bb");
+  const bbEls = sidebar.querySelectorAll(".bb");
   for (const el of bbEls) {
     if (el.textContent.trim() === mesechetName.trim()) {
-      el.scrollIntoView({ block: "center", behavior: "smooth" });
+      const offset =
+        el.offsetTop - sidebar.clientHeight / 2 + el.offsetHeight / 2;
+      sidebar.scrollTo({
+        top: Math.max(offset, 0),
+        behavior: "smooth",
+      });
       break;
     }
   }

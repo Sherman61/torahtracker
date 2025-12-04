@@ -78,6 +78,12 @@ body, html {
     margin-bottom: 10px;
     cursor: pointer;
   }
+
+  .section-title {
+    font-weight: 700;
+    margin: 10px 0 5px;
+    text-align: center;
+  }
   
   .menu-item a {
     display: block;
