@@ -39,24 +39,14 @@
 
     container.innerHTML = "";
 
-    let mesechetCounter = 0;
-
-    data.forEach((item) => {
+    data.forEach((item, index) => {
       const li = document.createElement("li");
-
-      if (item.section) {
-        li.classList.add("section-title");
-        li.textContent = item.section;
-        container.appendChild(li);
-        return;
-      }
-
       const p = document.createElement("p");
 
       // Keep your bb + bb{pereks} classes
       p.classList.add("bb", `bb${item.pereks}`);
       p.textContent = item.name;
-      p.dataset.mesechetIndex = String(++mesechetCounter);
+      p.dataset.mesechetIndex = String(index + 1);
 
       li.appendChild(p);
       container.appendChild(li);
