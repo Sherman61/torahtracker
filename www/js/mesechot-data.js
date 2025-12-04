@@ -1,4 +1,5 @@
 const mesechotData = [
+  { section: "זרעים" },
   { name: "ברכות", pereks: 9 },
   { name: "פאה", pereks: 8 },
   { name: "דמאי", pereks: 7 },
@@ -10,6 +11,7 @@ const mesechotData = [
   { name: "חלה", pereks: 4 },
   { name: "ערלה", pereks: 3 },
   { name: "ביכורים", pereks: 4 },
+  { section: "מועד" },
   { name: "שבת", pereks: 24 },
   { name: "עירובין", pereks: 10 },
   { name: "פסחים", pereks: 10 },
@@ -22,15 +24,15 @@ const mesechotData = [
   { name: "מגילה", pereks: 4 },
   { name: "מועד קטן", pereks: 3 },
   { name: "חגיגה", pereks: 3 },
+  { section: "נשים" },
   { name: "יבמות", pereks: 16 },
   { name: "כתובות", pereks: 13 },
-
   { name: "נדרים", pereks: 11 },
   { name: "נזיר", pereks: 9 },
   { name: "סוטה", pereks: 9 },
   { name: "גיטין", pereks: 9 },
   { name: "קידושין", pereks: 4 },
-
+  { section: "נזיקין" },
   { name: "בבא קמא", pereks: 10 },
   { name: "בבא מציעא", pereks: 10 },
   { name: "בבא בתרא", pereks: 10 },
@@ -41,7 +43,7 @@ const mesechotData = [
   { name: "עבודה זרה", pereks: 5 },
   { name: "אבות", pereks: 6 },
   { name: "הוריות", pereks: 3 },
-
+  { section: "קדשים" },
   { name: "זבחים", pereks: 14 },
   { name: "מנחות", pereks: 13 },
   { name: "חולין", pereks: 12 },
@@ -53,7 +55,7 @@ const mesechotData = [
   { name: "תמיד", pereks: 7 },
   { name: "מדות", pereks: 5 },
   { name: "קינים", pereks: 3 },
-
+  { section: "טהרות" },
   { name: "כלים", pereks: 30 },
   { name: "אהלות", pereks: 18 },
   { name: "נגעים", pereks: 14 },
