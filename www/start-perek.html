@@ -13,6 +13,31 @@
     <script src="themes/theme.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/mesechot-data.js"></script>
+    <style>
+        .section-title {
+            /* color: blue; */
+            border: 1px solid #000;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .bb.current-mesechet {
+            font-size: 1.1em;
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+
+        .perek-header-title {
+            flex: 1;
+            /* take up the remaining space between left & right */
+            font-size: 18px;
+            font-weight: bold;
+            padding: 4px 0;
+            text-align: center;
+            /* center the text within that space */
+        }
+    </style>
 </head>
 
 <body>
@@ -148,20 +173,16 @@
 
                 mesechotData.forEach((item) => {
                     // Section row
+
                     if (item.section) {
-                        const li = document.createElement('li');
-                        li.className = 'masechet-section';
-
-                        const hr = document.createElement('hr');
-                        const label = document.createElement('span');
+                        const li = document.createElement("li");
+                        li.classList.add("section-title");
+                        const label = document.createElement("span");
                         label.textContent = item.section;
-
-                        li.appendChild(hr);
                         li.appendChild(label);
                         mesechetList.appendChild(li);
                         return;
                     }
-
                     // Real masechet
                     const li = document.createElement('li');
                     const p = document.createElement('p');
@@ -205,13 +226,12 @@
                 titleSpan.textContent = mesechet.name;
                 titleSpan.className = 'perek-header-title';
 
-                const closeBtn = document.createElement('button');
-                closeBtn.type = 'button';
-                closeBtn.textContent = '×';
-                closeBtn.style.border = 'none';
-                closeBtn.style.background = 'transparent';
-                closeBtn.style.fontSize = '1.2rem';
-                closeBtn.style.cursor = 'pointer';
+                const closeBtn = document.createElement("i");
+                closeBtn.className = "fa-solid fa-x perek-close-button";
+                closeBtn.style.cursor = "pointer";
+                closeBtn.style.fontSize = "1.2rem";
+                closeBtn.style.padding = "4px";   // optional for easier tapping
+
 
                 closeBtn.addEventListener('click', (e) => {
                     e.stopPropagation();

@@ -86,7 +86,9 @@ function updateStats() {
 
   const percentDoneElement = document.getElementById("percentdone");
   if (percentDoneElement) {
-    const percentDone = Math.round((currentGlobalPerekIndex / totalPereks) * 100);
+    const percentDone = Math.round(
+      (currentGlobalPerekIndex / totalPereks) * 100
+    );
     percentDoneElement.innerText = `Percent done: ${percentDone}%`;
   }
 
@@ -114,7 +116,8 @@ function updateGoalDisplayParagraph() {
   }
 
   let perekGoal = parseInt(localStorage.getItem("perekGoal"), 10) || 18;
-  const startIndex = parseInt(localStorage.getItem("pereksTodayStartIndex"), 10) || 0;
+  const startIndex =
+    parseInt(localStorage.getItem("pereksTodayStartIndex"), 10) || 0;
   if (isNaN(perekGoal) || perekGoal <= 0) perekGoal = 18;
 
   const goalIndex = startIndex + perekGoal;
@@ -184,20 +187,20 @@ function handlePerekClick(prevIndex, newIndex, mesechet, perekNumber) {
 
 function scrollToCurrentMesechet() {
   const mesechetName = (localStorage.getItem("mesechet") || "").trim();
-  const sidebar = document.querySelector(".sidebar");
-  if (!sidebar) return;
+  if (!mesechetName) return;
 
-  const scrollContainer = sidebar.querySelector(".submenu") || sidebar;
-  const bbEls = scrollContainer.querySelectorAll(".bb");
+  // Find the matching .bb anywhere in the document
+  const bbEls = document.querySelectorAll(".bb");
   let targetEl = null;
 
   bbEls.forEach((el) => {
     el.classList.remove("current-mesechet");
-    if (!targetEl && mesechetName && el.textContent.trim() === mesechetName) {
+    if (!targetEl && el.textContent.trim() === mesechetName) {
       targetEl = el;
     }
   });
 
+  // Fallback to first if nothing matched
   if (!targetEl && bbEls.length > 0) {
     targetEl = bbEls[0];
   }
@@ -205,11 +208,11 @@ function scrollToCurrentMesechet() {
 
   targetEl.classList.add("current-mesechet");
 
-  const containerRect = scrollContainer.getBoundingClientRect();
-  const elRect = targetEl.getBoundingClientRect();
-  const offset = elRect.top - containerRect.top;
-
-  scrollContainer.scrollTop += offset - scrollContainer.clientHeight * 0.3;
+  // This is what worked in your test
+  targetEl.scrollIntoView({
+    block: "center",
+    behavior: "smooth",
+  });
 }
 
 function renderMesechetList() {
@@ -277,13 +280,11 @@ function renderPerekList(realMasechetIndex1Based) {
   titleSpan.textContent = mesechet.name;
   titleSpan.className = "perek-header-title";
 
-  const closeBtn = document.createElement("button");
-  closeBtn.type = "button";
-  closeBtn.textContent = "×";
-  closeBtn.style.border = "none";
-  closeBtn.style.background = "transparent";
-  closeBtn.style.fontSize = "1.2rem";
+  const closeBtn = document.createElement("i");
+  closeBtn.className = "fa-solid fa-x perek-close-button";
   closeBtn.style.cursor = "pointer";
+  closeBtn.style.fontSize = "1.2rem";
+  closeBtn.style.padding = "4px"; // optional for easier tapping
 
   closeBtn.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -310,7 +311,12 @@ function renderPerekList(realMasechetIndex1Based) {
         i
       );
 
-      handlePerekClick(currentGlobalPerekIndex, globalPerekIndex, mesechet.name, i + 1);
+      handlePerekClick(
+        currentGlobalPerekIndex,
+        globalPerekIndex,
+        mesechet.name,
+        i + 1
+      );
       renderMesechetList();
     });
 
