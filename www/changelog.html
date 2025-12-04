@@ -1,38 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Changelog</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <script src="themes/theme.js"></script>
 </head>
+
 <body>
   <i class="fa-solid fa-arrow-left back" onclick="location.href='settings.html'"></i>
   <h1>Changelog</h1>
+  <div class="version">
+    <h2>Version 1.4.5 <small>(current) date: 7/19/25</small></h2>
+    <ul>
+      <li>📚 Added full Masechtot section headers (e.g., זרעים / מועד / נשים / נזיקין / קדשים / טהרות)</li>
+      <li>🔄 Rebuilt Mishnayos page navigation system with dynamic lists + perek sub-menus</li>
+      <li>🧭 Added smooth auto-scrolling to the user’s current Masechet on load</li>
+      <li>🎛️ Added “X” close button (FontAwesome) when viewing a Masechet's perek list</li>
+      <li>🛠️ Fixed click-outside behavior to cleanly close perek menu</li>
+      <li>🎯 Reworked goal display + confetti logic to match new schema and indexing</li>
+      <li>📱 Improved mobile layout for all dropdowns, lists, and navigation transitions</li>
+      <li>🌙 Updated dark mode CSS for better contrast on new elements</li>
+      <li>🐞 Fixed several scrolling issues where .sidebar.scrollTop wouldn't update</li>
+    </ul>
+  </div>
 
   <p>Here you can find the latest updates and changes made to the Torah Tracker app.</p>
   <div class="version">
-  <h2>Version 1.4 <small>(current) date: 7/18/25</small></h2>
-  <ul>
-    <li>✨ Added support for double-Parsha slider on the Chumash page (navigate between two portions)</li>
-    <li>🌑 Enhanced Dark Theme across all pages for full UI consistency</li>
-    <li>🔧 Various style and layout tweaks for better mobile responsiveness</li>
-  </ul>
-</div>
+    <h2>Version 1.4 <small>date: 7/18/25</small></h2>
+    <ul>
+      <li>✨ Added support for double-Parsha slider on the Chumash page (navigate between two portions)</li>
+      <li>🌑 Enhanced Dark Theme across all pages for full UI consistency</li>
+      <li>🔧 Various style and layout tweaks for better mobile responsiveness</li>
+    </ul>
+  </div>
 
-  
+
   <div class="version">
-  <h2>Version 1.3.7 <small>date: 7/17/25</small></h2>
-  <ul>
-    <li>📈 Added collapsible “Progress” section on Mishnayes page</li>
-    <li>🗑️ Added “Clear All” button to calendar overlay to wipe entire daily‐progress history</li>
-    <li>🔄 “Goal Achieved” column now toggles between ✔️/❌ on click in the progress viewer</li>
-    <li>🐞 Minor bug fixes in IndexedDB key handling and calendar routines; goal flag now persists correctly</li>
-  </ul>
-</div>
+    <h2>Version 1.3.7 <small>date: 7/17/25</small></h2>
+    <ul>
+      <li>📈 Added collapsible “Progress” section on Mishnayes page</li>
+      <li>🗑️ Added “Clear All” button to calendar overlay to wipe entire daily‐progress history</li>
+      <li>🔄 “Goal Achieved” column now toggles between ✔️/❌ on click in the progress viewer</li>
+      <li>🐞 Minor bug fixes in IndexedDB key handling and calendar routines; goal flag now persists correctly</li>
+    </ul>
+  </div>
 
-   <div class="version">
+  <div class="version">
     <h2>Version 1.3.6 <small>date: 7/17/25</small></h2>
     <ul>
       <li>🐞 Minor bug fixes across calendar & IndexedDB routines</li>
@@ -42,7 +58,7 @@
   </div>
   <div class="version">
     <h2>Version 1.3.5 <small>date: 7/17/25</small></h2>
-     <ul>
+    <ul>
       <li>💾 Added IndexedDB alongside localStorage for daily progress storage</li>
       <li>📅 Introduced Calendar page to view and select dates</li>
       <li>📋 Added “View Daily Progress” page showing table of saved entries:
@@ -50,13 +66,13 @@
       </li>
     </ul>
   </div>
-<div class="version">
-  <h2>Version 1.2 <small> date: 7/16/25</small></h2>
-  <ul>
-    <li>✅ Accurately targets goal perek index now</li>
-    <li>🐞 Bug fixed: goal checkmark no longer appears one perek early</li>
-  </ul>
-</div>
+  <div class="version">
+    <h2>Version 1.2 <small> date: 7/16/25</small></h2>
+    <ul>
+      <li>✅ Accurately targets goal perek index now</li>
+      <li>🐞 Bug fixed: goal checkmark no longer appears one perek early</li>
+    </ul>
+  </div>
 
   <div class="version">
     <h2>Version 1.0.9.1 <small> date:7/15/25</small></h2>
@@ -77,4 +93,5 @@
     </ul>
   </div>
 </body>
+
 </html>

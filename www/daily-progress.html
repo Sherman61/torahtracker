@@ -1,71 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IndexedDB Viewer</title>
-  <script src="themes/theme.js"></script>  
+  <script src="themes/theme.js"></script>
+
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <style>
-     /* 1) Define all colors as CSS variables on :root */
-:root {
-  /* Light‐mode defaults */
-  --bg:            #fff;
-  --text:          #333;
-  --border:        #ccc;
-  --th-bg:         #f2f2f2;
-  --goal-hover:    #eef;
-  
-}
+    /* 1) Define all colors as CSS variables on :root */
+    :root {
+      /* Light‐mode defaults */
+      --bg: #fff;
+      --text: #333;
+      --border: #ccc;
+      --th-bg: #f2f2f2;
+      --goal-hover: #eef;
 
-/* 2) Dark‐mode overrides whenever <html> has class "dark" */
-html.dark {
-  --bg:            #121212;
-  --text:          #e0e0e0;
-  --border:        #444;
-  --th-bg:         #333;
-  --goal-hover:    #444;
-  --nav-color:     #fff;
-}
+    }
 
-/* 3) Base styles use those variables */
-body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  background: var(--bg);
-  color: var(--text);
-}
+    /* 2) Dark‐mode overrides whenever <html> has class "dark" */
+    html.dark {
+      --bg: #121212;
+      --text: #e0e0e0;
+      --border: #444;
+      --th-bg: #333;
+      --goal-hover: #444;
+      --nav-color: #fff;
+    }
 
-#openNav {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  font-size: 24px;
-  color: var(--nav-color);
-  cursor: pointer;
-}
+    /* 3) Base styles use those variables */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: var(--bg);
+      color: var(--text);
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-th, td {
-  padding: 8px;
-  border: 1px solid var(--border);
-  text-align: center;
-}
-th {
-  background-color: var(--th-bg);
-}
-td.goal {
-  cursor: pointer;
-}
-td.goal:hover {
-  background: var(--goal-hover);
-}
+    #openNav {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      color: var(--nav-color);
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    th {
+      background-color: var(--th-bg);
+    }
+
+    td.goal {
+      cursor: pointer;
+    }
+
+    td.goal:hover {
+      background: var(--goal-hover);
+    }
   </style>
 </head>
+
 <body>
   <h1>Saved Daily Progress</h1>
   <i id="openNav" class="fa-solid fa-arrow-left" onclick="location.href='settings.html'"></i>
@@ -89,31 +98,47 @@ td.goal:hover {
   <script src="js/db.js"></script>
   <script>
     function toHebrewNumber(num) {
-      const heb = ['א','ב','ג','ד','ה','ו','ז','ח','ט','י','יא','יב','יג','יד','טו','טז','יז','יח','יט','כ','כא','כב','כג','כד','כה','כו','כז','כח','כט','ל'];
+      const heb = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'יא', 'יב', 'יג', 'יד', 'טו', 'טז', 'יז', 'יח', 'יט', 'כ', 'כא', 'כב', 'כג', 'כד', 'כה', 'כו', 'כז', 'כח', 'כט', 'ל'];
       return heb[num - 1] || num;
     }
     function mapGlobalIndexToMasechetPerek(globalIndex) {
       let count = 0;
-      for (let i = 0; i < mesechtotData.length; i++) {
-        const { name, pereks } = mesechtotData[i];
-        if (globalIndex < count + pereks) {
-          const local = globalIndex - count + 1;
-          return { masechet: name, perekHebrew: toHebrewNumber(local) };
+
+      for (let i = 0; i < mesechotData.length; i++) {
+        const item = mesechotData[i];
+
+        // Skip section headers like { section: "זרעים" }
+        if (!item.name || typeof item.pereks !== "number") {
+          continue;
         }
+
+        const pereks = item.pereks;
+
+        // globalIndex is zero-based
+        if (globalIndex < count + pereks) {
+          const local = globalIndex - count + 1; // 1-based perek
+          return {
+            masechet: item.name,
+            perekHebrew: toHebrewNumber(local),
+          };
+        }
+
         count += pereks;
       }
-      return { masechet: 'Unknown', perekHebrew: '?' };
+
+      return { masechet: "Unknown", perekHebrew: "?" };
     }
 
+
     async function loadData() {
-      const all   = await getAllProgress();
+      const all = await getAllProgress();
       const tbody = document.getElementById('data-body');
       tbody.innerHTML = '';
 
       all.forEach(entry => {
         const start = mapGlobalIndexToMasechetPerek(entry.startIndex);
-        const end   = mapGlobalIndexToMasechetPerek(entry.endIndex);
-        const mark  = entry.goalReached ? '✔️' : '❌';
+        const end = mapGlobalIndexToMasechetPerek(entry.endIndex);
+        const mark = entry.goalReached ? '✔️' : '❌';
 
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -131,7 +156,7 @@ td.goal:hover {
         if (!cell) return;
 
         // find the date from the same row
-        const row  = cell.parentElement;
+        const row = cell.parentElement;
         const date = row.children[0].textContent;
 
         // load the actual record
@@ -140,10 +165,10 @@ td.goal:hover {
         // toggle & save _all_ fields
         rec.goalReached = !rec.goalReached;
         await saveProgress(date, {
-          startIndex:   rec.startIndex,
-          endIndex:     rec.endIndex,
-          pereksToday:  rec.pereksToday,
-          goalReached:  rec.goalReached
+          startIndex: rec.startIndex,
+          endIndex: rec.endIndex,
+          pereksToday: rec.pereksToday,
+          goalReached: rec.goalReached
         });
 
         // update just that cell
@@ -154,4 +179,5 @@ td.goal:hover {
     document.addEventListener('DOMContentLoaded', loadData);
   </script>
 </body>
+
 </html>

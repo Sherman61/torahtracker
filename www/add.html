@@ -1,33 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editable and Deletable Local Storage with Reload</title>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
-    <!-- <link rel="stylesheet" href="themes/light/add.css"> -->
-   <script src="themes/theme.js"></script>
-   
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <script src="themes/theme.js"></script> -->
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin: 0 0 16px 0;
+            padding-right: 40px;
+        }
+
+        #openNav {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .page-container {
+            max-width: 700px;
+            margin: 40px auto 0 auto;
+        }
+
+        /* Add / update form */
+        .form-container {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            /* <- forces label on its own line */
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .form-group input {
+            display: block;
+            /* <- input on its own line */
+            padding: 8px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        button {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            border: 1px solid #bbb;
+            background: #f4f4f4;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #e2e2e2;
+        }
+
+        /* LocalStorage items list */
+        #displayArea {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .ls-item {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .ls-item-key {
+            display: block;
+            /* title on its own line */
+            font-weight: bold;
+            margin: 0 0 6px 0;
+            word-break: break-all;
+            font-size: 0.95rem;
+        }
+
+        .ls-item-input {
+            display: block;
+            /* input on its own line */
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 8px;
+        }
+
+        .ls-item-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        @media (min-width: 600px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .form-container {
+                padding: 16px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>
-     view and edit localStorage items
-    </h1>
     <i class="fa-solid fa-arrow-left" id="openNav" onclick="location.href='settings.html'"></i>
-   
-    <label for="title">Title:</label>
-    <input type="text" id="title" placeholder="Enter title">
-    <label for="value">Value:</label>
-    <input type="text" id="value" placeholder="Enter value">
-    <button onclick="addOrUpdate()">Add</button>
-    <button onclick="resetPage()">Reload Page</button>
-    <div id="displayArea"></div>
+
+    <div class="page-container">
+        <h1>View and edit localStorage items</h1>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label for="title">Title (key)</label>
+                <input type="text" id="title" placeholder="Enter title">
+            </div>
+            <div class="form-group">
+                <label for="value">Value</label>
+                <input type="text" id="value" placeholder="Enter value">
+            </div>
+            <div class="form-actions">
+                <button onclick="addOrUpdate()">Add / Update</button>
+                <button onclick="resetPage()">Reload Page</button>
+            </div>
+        </div>
+
+        <div id="displayArea"></div>
+    </div>
 
     <script>
         function addOrUpdate() {
             const title = document.getElementById('title').value;
             const value = document.getElementById('value').value;
+            if (!title) return;
+
             localStorage.setItem(title, value);
             displayLocalStorage();
             document.getElementById('title').value = '';
@@ -37,20 +180,55 @@
         function displayLocalStorage() {
             const displayArea = document.getElementById('displayArea');
             displayArea.innerHTML = '';
+
             for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
                 const value = localStorage.getItem(key);
-                displayArea.innerHTML += `<div>
-                   <p  class="key"> ${key}:</p> <input type="text" class="value" value="${value}" id="value-${key}" />
-                    <button onclick="updateValue('${key}')">Save</button>
-                    <button onclick="location.reload()">reset</button>
-                    <button onclick="deleteKey('${key}')">Delete</button>
-                </div>`;
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'ls-item';
+
+                const keyEl = document.createElement('span');
+                keyEl.className = 'ls-item-key';
+                keyEl.textContent = key;
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'ls-item-input';
+                input.value = value;
+                input.id = `value-${key}`;
+
+                const actions = document.createElement('div');
+                actions.className = 'ls-item-actions';
+
+                const saveBtn = document.createElement('button');
+                saveBtn.textContent = 'Save';
+                saveBtn.onclick = () => updateValue(key);
+
+                const resetBtn = document.createElement('button');
+                resetBtn.textContent = 'Reset view';
+                resetBtn.onclick = () => location.reload();
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.onclick = () => deleteKey(key);
+
+                actions.appendChild(saveBtn);
+                actions.appendChild(resetBtn);
+                actions.appendChild(deleteBtn);
+
+                wrapper.appendChild(keyEl);
+                wrapper.appendChild(input);
+                wrapper.appendChild(actions);
+
+                displayArea.appendChild(wrapper);
             }
         }
 
         function updateValue(key) {
-            const newValue = document.getElementById(`value-${key}`).value;
+            const input = document.getElementById(`value-${key}`);
+            if (!input) return;
+            const newValue = input.value;
             localStorage.setItem(key, newValue);
             displayLocalStorage();
         }
@@ -64,8 +242,8 @@
             location.reload();
         }
 
-        // Display items on initial load
         window.onload = displayLocalStorage;
     </script>
 </body>
+
 </html>
