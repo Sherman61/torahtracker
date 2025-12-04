@@ -1,299 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start of Day Perek</title>
     <!-- <link rel="stylesheet" href="style.css"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
-   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <script src="themes/theme.js"></script>
-</head> 
+    <script src="js/settings.js"></script>
+    <script src="js/mesechot-data.js"></script>
+</head>
+
 <body>
     <i class="fa-solid fa-arrow-left" id="openNav" onclick="location.href='settings.html'"></i>
     <h2 id="pereksTodayStartIndex"></h2>
-  
+
     <div class="goal-display-container">
         <h2 id="goal"></h2>
     </div>
     <div class="edit-goal-container">
-        <button id="editGoalBtn">Edit Goal</button>
-        <input type="number" id="goalInput" style="display: none;" placeholder="Enter new goal" />
+        <button id="editGoalBtn" style="z-index: 2" ;>Edit Goal</button>
+
+        <div id="goalEditPanel" class="goal-edit-panel" style="
+            display: none;
+            margin-top: 10px;
+            gap: 8px;
+            align-items: center;
+            padding: 8px;
+            border-radius: 6px;
+            background: #fff;
+            border: 1px solid #ccc;
+            position: relative;
+            z-index: 3;
+        ">
+            <input type="number" id="goalInput" min="1" placeholder="Perekim per day"
+                style="padding: 6px 8px; border-radius: 6px; border: 1px solid #ccc; max-width: 120px;" />
+            <button id="saveGoalBtn"
+                style="padding: 6px 10px; border-radius: 6px; border: none; background: #4caf50; color: white; cursor: pointer;">
+                Save
+            </button>
+            <button id="cancelGoalBtn" type="button"
+                style="padding: 6px 10px; border-radius: 6px; border: 1px solid #ccc; background: #f5f5f5; cursor: pointer;">
+                Cancel
+            </button>
+        </div>
     </div>
-    
+
+
     <div class="space"></div>
-    
+
     <div class="container ">
-        
+
         <div class="sidebar ">
             <div class="bb-container ">
-            <ul class="menu ">
-              
-                <li class="menu-item ">
-                     
-                    <p id="bold">mesachet</p>
-                 
-                    <ul class="submenu ">
-                        
-                        <li><p class="bb bb9">ברכות</p>  </li>
-                        <li><p class="bb bb8">פאה</p></li>
-<li><p class="bb bb7">דמאי</p></li>
-<li><p class="bb bb9">כלאים</p></li>
-<li><p class="bb bb10">שביעית</p></li>
-<li><p class="bb bb11">תרומות</p></li>
-<li><p class="bb bb5">מעשרות</p></li>
-<li><p class="bb bb5">מעשר שני</p></li>
-<li><p class="bb bb4">חלה</p></li>
-<li><p class="bb bb3">ערלה</p></li>
-<li><p class="bb bb4">ביכורים</p></li>
+                <ul class="menu ">
+                    <li class="menu-item ">
+                        <p id="bold">mesachet</p>
+                        <ul class="submenu" id="mesechetList">
+                            <!-- will be filled by JS -->
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-<hr>
-<li><p class="bb bb24">שבת</p></li>
-<li><p class="bb bb10">עירובין</p></li>
-<li><p class="bb bb10">פסחים</p></li>
-<li><p class="bb bb8">שקלים</p></li>
-<li><p class="bb bb8">יומא</p></li>
-<li><p class="bb bb5">סוכה</p></li>
-<li><p class="bb bb5">ביצה</p></li>
-<li><p class="bb bb4">ראש השנה</p></li>
-<li><p class="bb bb4">תענית</p></li>
-<li><p class="bb bb4">מגילה</p></li>
-<li><p class="bb bb3">מועד קטן</p></li>
-<li><p class="bb bb3">חגיגה</p></li>
+    </div>
 
-<hr>
-<li><p class="bb bb16">יבמות</p></li>
-<li><p class="bb bb13">כתובות</p></li>
-<li><p class="bb bb11">נדרים</p></li>
-<li><p class="bb bb9">נזיר</p></li>
-<li><p class="bb bb9">סוטה</p></li>
-<li><p class="bb bb9">גיטין</p></li>
-<li><p class="bb bb4">קידושין</p></li>
-
-<hr>
-<li><p class="bb bb10">בבא קמא</p></li>
-<li><p class="bb bb10">בבא מציעא</p></li>
-<li><p class="bb bb10">בבא בתרא</p></li>
-<li><p class="bb bb11">סנהדרין</p></li>
-<li><p class="bb bb3">מכות</p></li>
-<li><p class="bb bb8">שבועות</p></li>
-<li><p class="bb bb8">עדיות</p></li>
-<li><p class="bb bb5">עבודה זרה</p></li>
-<li><p class="bb bb6">אבות</p></li>
-<li><p class="bb bb3">הוריות</p></li>
-
-<hr>
-<li><p class="bb bb14">זבחים</p></li>
-<li><p class="bb bb13">מנחות</p></li>
-<li><p class="bb bb12">חולין</p></li>
-<li><p class="bb bb9">בכורות</p></li>
-<li><p class="bb bb9">ערכין</p></li>
-<li><p class="bb bb7">תמורה</p></li>
-<li><p class="bb bb6">כריתות</p></li>
-<li><p class="bb bb6">מעילה</p></li>
-<li><p class="bb bb7">תמיד</p></li>
-<li><p class="bb bb5">מדות</p></li>
-<li><p class="bb bb3">קינים</p></li>
-
-<hr>
-<li><p class="bb bb30">כלים</p></li>
-<li><p class="bb bb18">אהלות</p></li>
-<li><p class="bb bb14">נגעים</p></li>
-<li><p class="bb bb12">פרה</p></li>
-<li><p class="bb bb10">טהרות</p></li>
-<li><p class="bb bb10">מקוואות</p></li>
-<li><p class="bb bb10">נדה</p></li>
-<li><p class="bb bb6">מכשירין</p></li>
-<li><p class="bb bb5">זבים</p></li>
-<li><p class="bb bb4">טבול יום</p></li>
-<li><p class="bb bb4">ידים</p></li>
-<li><p class="bb bb3">עוקצים</p></li>
-
-
-</ul>
-</li>
-</ul>
-</div>
-
-</div>
-</div>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const pereksTodayStartIndexDisplay = document.getElementById('pereksTodayStartIndex');
+            const goalContainer = document.querySelector('.goal-display-container');
+            const goalEl = document.getElementById('goal');
+            const mesechetList = document.getElementById('mesechetList');
+            const sidebar = document.querySelector('.sidebar');
 
+            // Safety check to avoid silent crash
+            if (!mesechetList || typeof mesechotData === 'undefined' || !Array.isArray(mesechotData)) {
+                console.error('mesechetList element or mesechotData is missing.');
+                return;
+            }
 
-    // let texts = localStorage.getItem(pereksTodayStartIndex);
-   // document.getElementById('pereksTodayStartIndex').innerText = pereksTodayStartIndex;
-    document.addEventListener('DOMContentLoaded', function () {
-        // Calculate the total number of pereks in all masechtot
-        let totalPereks = Array.from(document.querySelectorAll('.bb')).reduce((sum, bbElement) => {
-            return sum + parseInt(bbElement.className.match(/\d+/)[0]);
-        }, 0);
-    
-        const bbElements = document.querySelectorAll('.bb');
-        function findMesechetAndPerekByIndex(index) {
+            // Hebrew numerals for perakim
+            const hebrewDigits = [
+                'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י',
+                'י"א', 'י"ב', 'י"ג', 'י"ד', 'ט"ו', 'ט"ז', 'י"ז', 'י"ח', 'י"ט',
+                'כ', 'כ"א', 'כ"ב', 'כ"ג', 'כ"ד', 'כ"ה', 'כ"ו', 'כ"ז', 'כ"ח', 'כ"ט', 'ל'
+            ];
+
+            let isShowingPereks = false;
+
+            // Use data instead of DOM for index calculations
+            function findMesechetAndPerekByIndex(index) {
                 let cumulativePereks = 0;
-                for (let i = 0; i < bbElements.length; i++) {
-                    const pereksInMesechet = parseInt(bbElements[i].className.match(/\d+/)[0]);
+                for (let i = 0; i < mesechotData.length; i++) {
+                    const pereksInMesechet = mesechotData[i].pereks;
                     if (cumulativePereks + pereksInMesechet >= index) {
-                        const perekNumber = index - cumulativePereks;
+                        const perekNumber = index - cumulativePereks; // 1-based
                         const perekHebrew = hebrewDigits[perekNumber - 1] || 'Unknown';
-                        return { mesechet: bbElements[i].textContent, perek: perekHebrew };
+                        return { mesechet: mesechotData[i].name, perek: perekHebrew };
                     }
                     cumulativePereks += pereksInMesechet;
                 }
                 return { mesechet: 'Unknown', perek: 'Unknown' };
             }
+
             function updatePereksTodayStartIndexDisplay() {
-    let pereksTodayStartIndex = parseInt(localStorage.getItem('pereksTodayStartIndex') || '0');
-    const { mesechet, perek } = findMesechetAndPerekByIndex(pereksTodayStartIndex + 1);
-    const pereksTodayStartIndexDisplay = document.getElementById('pereksTodayStartIndex');
-    pereksTodayStartIndexDisplay.innerHTML = `Start of day  ${mesechet} פרק ${perek}`;
-}
-let perekGoal = parseInt(localStorage.getItem('perekGoal')) || 18; // Load from storage or use default
-
-
-function updateGoalDisplay() {
-        let pereksTodayStartIndex = parseInt(localStorage.getItem('pereksTodayStartIndex') || '0');
-        const goalIndex = pereksTodayStartIndex + perekGoal - 0;  // Adjust for zero-based index
-        const { mesechet, perek } = findMesechetAndPerekByIndex(goalIndex + 1);  // +1 for display
-        const goalDisplay = document.getElementById('goal');
-        goalDisplay.innerHTML = `Goal + ${perekGoal + 0}  ${mesechet} פרק ${perek}`;
-    }
-    const editGoalBtn = document.getElementById('editGoalBtn');
-    const goalInput = document.getElementById('goalInput');
-
-    editGoalBtn.addEventListener('click', function() {
-        goalInput.style.display = 'block';
-        goalInput.value = perekGoal; // Display current goal adjusted for user
-    });
-
-   goalInput.addEventListener('change', function() {
-    perekGoal = parseInt(goalInput.value) || perekGoal; // Update goal if valid number
-    localStorage.setItem('perekGoal', perekGoal);        // Save to localStorage
-    updateGoalDisplay();
-    goalInput.style.display = 'none';
-});
-
-
-
-
-        let pereksTodayStartIndex = parseInt(localStorage.getItem('pereksTodayStartIndex') || '0');
-    
-        let lastDate = localStorage.getItem('lastDate') || '';
-        let todayDate = new Date().toDateString();
-    
-        if (lastDate !== todayDate) {
-            lastDate = todayDate;
-            localStorage.setItem('lastDate', todayDate);
-            pereksTodayStartIndex = 0;
-            localStorage.setItem('pereksTodayStartIndex', pereksTodayStartIndex.toString());
-        }
-    
-
-        document.getElementById('editGoalBtn').addEventListener('click', function() {
-    var goalInput = document.getElementById('goalInput');
-    var container = document.querySelector('.container');
-    if (goalInput.style.display === 'none' || goalInput.style.display === '') {
-        goalInput.style.display = 'block';
-        container.style.transform = 'translate(-50%, -50%)'; // Adjust the container position downwards
-    } else {
-        //goalInput.style.display = 'none';
-        container.style.transform = 'translate(-50%, -35%)'; // Reset the container position
-    }
-});
-
-
-        function calculateGlobalPerekIndex(mesechetIndex, perekIndex) {
-            let globalPerekIndex = 0;
-            for (let i = 0; i < mesechetIndex - 1; i++) {
-                globalPerekIndex += parseInt(bbElements[i].className.match(/\d+/)[0]);
+                let pereksTodayStartIndex = parseInt(localStorage.getItem('pereksTodayStartIndex') || '0', 10);
+                const { mesechet, perek } = findMesechetAndPerekByIndex(pereksTodayStartIndex + 1);
+                pereksTodayStartIndexDisplay.innerHTML = `Start of day  ${mesechet} פרק ${perek}`;
             }
-            globalPerekIndex += perekIndex;
-            return globalPerekIndex;
-        }
-    
-        // A mapping of English to Hebrew digits
-        const hebrewDigits = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'י"א', 'י"ב', 'י"ג', 'י"ד', 'ט"ו', 'ט"ז', 'י"ז', 'י"ח', 'י"ט', 'כ', 'כ"א', 'כ"ב', 'כ"ג', 'כ"ד', 'כ"ה', 'כ"ו', 'כ"ז', 'כ"ח', 'כ"ט', 'ל'];
-    
-        function createSideNavs(mesechetIndex) {
-            const oldSideNavContainer = document.querySelector('.side-nav-container');
-            if (oldSideNavContainer) {
-                oldSideNavContainer.remove();
+
+            // Respect settings toggle
+            let displayPerekGoal = localStorage.getItem('displayPerekGoal');
+            const showGoal = (displayPerekGoal === null || displayPerekGoal === 'true');
+            if (goalContainer) {
+                goalContainer.style.display = showGoal ? 'block' : 'none';
             }
-    
-      
-    const sideNavContainer = document.createElement('ul');
-    sideNavContainer.classList.add('side-nav-container');
-    document.querySelector('.sidebar').appendChild(sideNavContainer);
 
-    const bbElement = bbElements[mesechetIndex - 1];
-    const num = parseInt(bbElement.className.match(/\d+/)[0]);
-    const mesechet = bbElement.textContent;
-    document.querySelector('.menu-item').style.opacity = 0;
-        
-  
-    for (let i = 0; i < num; i++) {
-        const globalPerekIndex = calculateGlobalPerekIndex(mesechetIndex, i + 0);
-        const sideNav = document.createElement('li');
-        sideNav.classList.add('side-nav');
-        sideNav.style.top = `${i * 1}px`;
-        sideNav.style.transform = `translateX(0px)`;
+            // Global index calculation (keeping your style)
+            function calculateGlobalPerekIndex(mesechetIndex, perekIndexZeroBased) {
+                let globalPerekIndex = 0;
+                for (let i = 0; i < mesechetIndex - 1; i++) {
+                    globalPerekIndex += mesechotData[i].pereks;
+                }
+                globalPerekIndex += perekIndexZeroBased; // 0-based like your old code
+                return globalPerekIndex;
+            }
 
-        const perekHebrewNumber = hebrewDigits[i]; // translate to Hebrew number
-        sideNav.innerHTML = `<p>${mesechet} פרק ${perekHebrewNumber}</p>`; // use Hebrew number here
+            // Render the mesechet list (default view)
+            function renderMesechetList() {
+                isShowingPereks = false;
+                mesechetList.innerHTML = '';
 
-        sideNav.addEventListener('click', () => {
-            pereksTodayStartIndex = globalPerekIndex;
-            localStorage.setItem('pereksTodayStartIndex', pereksTodayStartIndex.toString());
-            updatePereksTodayStartIndexDisplay();
-            updateGoalDisplay(); 
-        });
-        sideNavContainer.appendChild(sideNav);
-    }
-    
-            setTimeout(() => {
-                document.addEventListener('click', function (event) {
-                    if (!event.target.closest('.side-nav') && !event.target.closest('.bb')) {
-                        const sideNavs = document.querySelectorAll('.side-nav');
-                        document.querySelector('.menu-item').style.opacity = 1;
-                        sideNavs.forEach(sideNav => sideNav.remove());
-                    }
+                mesechotData.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    const p = document.createElement('p');
+
+                    // Keep bb + bb{pereks}
+                    p.classList.add('bb', `bb${item.pereks}`);
+                    p.textContent = item.name;
+                    p.style.cursor = 'pointer';
+
+                    p.addEventListener('click', (e) => {
+                        e.stopPropagation(); // avoid global click handlers interfering
+                        // console.log('Mesechet clicked:', item.name);
+                        renderPerekList(index + 1); // mesechetIndex is 1-based
+                    });
+
+                    li.appendChild(p);
+                    mesechetList.appendChild(li);
                 });
-            }, 0);
-        }
-    
-        bbElements.forEach((bbElement, index) => {
-            bbElement.addEventListener('click', () => {
-                createSideNavs(index + 1);
-            });
-        });
-        document.addEventListener('click', function(event) {
-    var goalInput = document.getElementById('goalInput');
-    var editGoalBtn = document.getElementById('editGoalBtn');
-    var container = document.querySelector('.container');
+            }
 
-    // Check if the clicked element is not the goalInput and not the editGoalBtn
-    if (!goalInput.contains(event.target) && event.target !== editGoalBtn) {
-        if (goalInput.style.display === 'block') {
-            goalInput.style.display = 'none';
-            container.style.transform = 'translate(-50%, -50%)'; // Reset the container position
-        }
-    }
-});
-        document.addEventListener('click', function (event) {
-            if (!event.target.closest('.sidebar')) {
-                const oldSideNavContainer = document.querySelector('.side-nav-container');
-                if (oldSideNavContainer) {
-                    oldSideNavContainer.remove();
+            // Render the perek list for a given mesechet
+            function renderPerekList(mesechetIndex) {
+                isShowingPereks = true;
+                const mesechet = mesechotData[mesechetIndex - 1];
+                mesechetList.innerHTML = '';
+
+                // Header with X button
+                const headerLi = document.createElement('li');
+                headerLi.classList.add('perek-header');
+
+                const headerWrapper = document.createElement('div');
+                headerWrapper.style.display = 'flex';
+                headerWrapper.style.justifyContent = 'space-between';
+                headerWrapper.style.alignItems = 'center';
+
+                const titleSpan = document.createElement('span');
+                titleSpan.textContent = mesechet.name;
+                titleSpan.className = 'perek-header-title';
+                const closeBtn = document.createElement('button');
+                closeBtn.type = 'button';
+                closeBtn.textContent = '×';
+                closeBtn.style.border = 'none';
+                closeBtn.style.background = 'transparent';
+                closeBtn.style.fontSize = '1.2rem';
+                closeBtn.style.cursor = 'pointer';
+
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    renderMesechetList();
+                });
+
+                headerWrapper.appendChild(titleSpan);
+                headerWrapper.appendChild(closeBtn);
+                headerLi.appendChild(headerWrapper);
+                mesechetList.appendChild(headerLi);
+
+                // Perek items
+                for (let i = 0; i < mesechet.pereks; i++) {
+                    const li = document.createElement('li');
+                    const p = document.createElement('p');
+                    p.style.cursor = 'pointer';
+
+                    const perekHebrewNumber = hebrewDigits[i];
+                    p.textContent = `${mesechet.name} פרק ${perekHebrewNumber}`;
+
+                    p.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const globalPerekIndex = calculateGlobalPerekIndex(mesechetIndex, i + 0);
+                        let pereksTodayStartIndex = globalPerekIndex;
+                        localStorage.setItem('pereksTodayStartIndex', pereksTodayStartIndex.toString());
+                        updatePereksTodayStartIndexDisplay();
+
+                        if (goalAPI && goalAPI.updateGoalDisplay) {
+                            goalAPI.updateGoalDisplay();
+                        }
+
+                        // After choosing a perek, return to mesechet list
+                        renderMesechetList();
+                    });
+
+                    li.appendChild(p);
+                    mesechetList.appendChild(li);
                 }
             }
+
+            // Use shared helper to wire Edit Goal + Save/Cancel
+            const goalAPI = initPerekGoalControls({
+                goalElId: 'goal',
+                editBtnId: 'editGoalBtn',
+                panelId: 'goalEditPanel',
+                inputId: 'goalInput',
+                saveBtnId: 'saveGoalBtn',
+                cancelBtnId: 'cancelGoalBtn',
+                deferInitialRender: true,
+                renderGoal: (goalEl, perekGoal) => {
+                    // If user turned off goal display in settings, don't draw text,
+                    // but DO NOT touch the edit UI or goalContainer here.
+                    if (!showGoal) {
+                        goalEl.textContent = '';
+                        return;
+                    }
+
+                    let pereksTodayStartIndex = parseInt(
+                        localStorage.getItem('pereksTodayStartIndex') || '0',
+                        10
+                    );
+                    if (isNaN(pereksTodayStartIndex)) pereksTodayStartIndex = 0;
+
+                    // your original style preserved
+                    const goalIndex = pereksTodayStartIndex + perekGoal - 0;
+                    const { mesechet, perek } = findMesechetAndPerekByIndex(goalIndex + 1);
+
+                    goalEl.innerHTML = `Goal + ${perekGoal + 0}  ${mesechet} פרק ${perek}`;
+                }
+            });
+
+
+
+
+
+            // Daily reset of pereksTodayStartIndex
+            let pereksTodayStartIndex = parseInt(localStorage.getItem('pereksTodayStartIndex') || '0', 10);
+            let lastDate = localStorage.getItem('lastDate') || '';
+            let todayDate = new Date().toDateString();
+
+            if (lastDate !== todayDate) {
+                lastDate = todayDate;
+                localStorage.setItem('lastDate', todayDate);
+                pereksTodayStartIndex = 0;
+                localStorage.setItem('pereksTodayStartIndex', pereksTodayStartIndex.toString());
+            }
+
+            // Click-outside handler: if in perek view and user clicks outside sidebar, go back to mesechet list
+            document.addEventListener('click', function (event) {
+                if (isShowingPereks && sidebar && !sidebar.contains(event.target)) {
+                    renderMesechetList();
+                }
+            });
+
+
+            // Initial render
+            renderMesechetList();
+            updatePereksTodayStartIndexDisplay();
+
+            if (goalAPI && goalAPI.updateGoalDisplay) {
+                goalAPI.updateGoalDisplay();
+            }
         });
-    
-        // Display the pereksTodayStartIndex from local storage
-        const pereksTodayStartIndexDisplay = document.getElementById('pereksTodayStartIndex');
-        updatePereksTodayStartIndexDisplay();
-        updateGoalDisplay(); 
-    });
-  
     </script>
+
+
 </body>
+
 </html>

@@ -20,13 +20,33 @@
             <a href="calcualate.html" class="themes-link fade">Calculater</a>
             <a href="themes/index.html" class="themes-link fade">Themes</a>
             <a href="start-perek.html">Edit start day perek</a>
-             <a href="daily-progress.html">Daily progress</a>
-             
-           
+            <a href="daily-progress.html">Daily progress</a>
+
+
             <a href="calendar.html">Calendar</a>
             <a href="changelog.html" class="themes-link fade">Change log</a>
-  <a href="extras.html">Extras</a>
-           
+            <a href="extras.html">Extras</a>
+
+        </div>
+        <div class="goal-display-container">
+            <h2 id="goal"></h2>
+        </div>
+        <div class="edit-goal-container">
+            <button id="editGoalBtn">Edit Perek Goal</button>
+
+            <div id="goalEditPanel" class="goal-edit-panel"
+                style="display: none; margin-top: 10px; gap: 8px; align-items: center;">
+                <input type="number" id="goalInput" min="1" placeholder="Perekim per day"
+                    style="padding: 6px 8px; border-radius: 6px; border: 1px solid #ccc; max-width: 120px;" />
+                <button id="saveGoalBtn"
+                    style="padding: 6px 10px; border-radius: 6px; border: none; background: #4caf50; color: white; cursor: pointer;">
+                    Save
+                </button>
+                <button id="cancelGoalBtn" type="button"
+                    style="padding: 6px 10px; border-radius: 6px; border: 1px solid #ccc; background: #f5f5f5; cursor: pointer;">
+                    Cancel
+                </button>
+            </div>
         </div>
 
         <div style="margin-top: 30px;">
@@ -35,32 +55,36 @@
             <p id="goalStatus"></p>
         </div>
     </div>
+    <script src="js/settings.js">
 
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const toggleBtn = document.getElementById('toggleGoalDisplayBtn');
-            const goalStatus = document.getElementById('goalStatus');
-
-            let displayPerekGoal = localStorage.getItem('displayPerekGoal');
-            if (displayPerekGoal === null) {
-                displayPerekGoal = 'true';
-                localStorage.setItem('displayPerekGoal', displayPerekGoal);
-            }
-
-            function updateGoalStatusText() {
-                const current = localStorage.getItem('displayPerekGoal') === 'true';
-                goalStatus.textContent = current ? 'Goal display is ON' : 'Goal display is OFF';
-            }
-
-            toggleBtn.addEventListener('click', () => {
-                const current = localStorage.getItem('displayPerekGoal') === 'true';
-                localStorage.setItem('displayPerekGoal', (!current).toString());
-                updateGoalStatusText();
+            const goalAPI = initPerekGoalControls({
+                goalElId: 'goal',
+                editBtnId: 'editGoalBtn',
+                panelId: 'goalEditPanel',
+                inputId: 'goalInput',
+                saveBtnId: 'saveGoalBtn',
+                cancelBtnId: 'cancelGoalBtn',
+                renderGoal: (goalEl, perekGoal) => {
+                    goalEl.textContent = 'Daily perek goal: ' + perekGoal;
+                }
             });
 
-            updateGoalStatusText();
+            initPerekGoalToggle({
+                toggleBtnId: 'toggleGoalDisplayBtn',
+                statusElId: 'goalStatus',
+                goalContainerSelector: '.goal-display-container',
+                onToggle: (show) => {
+                    if (show && goalAPI && goalAPI.updateGoalDisplay) {
+                        goalAPI.updateGoalDisplay();
+                    }
+                }
+            });
         });
     </script>
+
 </body>
 
 </html>

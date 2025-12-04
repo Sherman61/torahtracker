@@ -1,56 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <title>Theme Selector</title>
- 
- <style>
- body { 
-  opacity: 1;
-  transition: background-color 2.5s;
-  display: flex; /* Use flex display */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  min-height: 100vh; /* Full viewport height */
-  margin: 0; /* Reset default margin */
-  padding: 0; /* Reset default padding */
-}
 
-.theme-selector-container {
-  text-align: center; /* Center text inside the container */
-}
+  <style>
+    body {
+      opacity: 1;
+      transition: background-color 2.5s;
+      display: flex;
+      /* Use flex display */
+      justify-content: center;
+      /* Center horizontally */
+      align-items: center;
+      /* Center vertically */
+      min-height: 100vh;
+      /* Full viewport height */
+      margin: 0;
+      /* Reset default margin */
+      padding: 0;
+      /* Reset default padding */
+    }
 
-#openNav {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 2;
-}
+    .theme-selector-container {
+      text-align: center;
+      /* Center text inside the container */
+    }
 
-#theme-link, #bottom-nav-link {
-  transition: none; /* Disable transition for theme links */
-}
+    #openNav {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+    }
 
+    #theme-link,
+    #bottom-nav-link {
+      transition: none;
+      /* Disable transition for theme links */
+    }
   </style>
   <link rel="stylesheet" href="light/themes.css" id="theme-link">
   <link rel="stylesheet" href="light/bottom-nav.css" id="bottom-nav-link">
-</head> 
-<body>  
-    <i class="fa-solid fa-arrow-left" id="openNav" onclick="location.href='../settings.html'"></i>
-    
-    <div class="theme-selector-container">
-      <h1>Theme Selector</h1> 
-      <label for="theme-selector">Select Theme:</label>
-      <select id="theme-selector">
-        <option value="light">Light Theme</option>
-        <option value="dark">Dark Theme</option>
-      </select>
-    </div>
-    <!-- Rest of the body content -->
-  
-  
+</head>
+
+<body>
+  <i class="fa-solid fa-arrow-left" id="openNav" onclick="location.href='../settings.html'"></i>
+
+  <div class="theme-selector-container">
+    <h1>Theme Selector</h1>
+    <label for="theme-selector">Select Theme:</label>
+    <select id="theme-selector">
+      <option value="light">Light Theme</option>
+      <option value="dark">Dark Theme</option>
+    </select>
+  </div>
+  <!-- Rest of the body content -->
+
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const themeSelector = document.getElementById('theme-selector');
@@ -72,7 +82,7 @@
     function applyTheme(theme) {
       // Get the current page's file name (e.g., index.html, accounts.html)
       const currentPage = window.location.pathname.split('/').pop();
-      
+
       // Generate the CSS file path based on the current page and selected theme
       const cssFilePath = `./${theme}/${currentPage.split('.')[0]}.css`;
       const bottomNavCssFilePath = `./${theme}/bottom-nav.css`;
@@ -100,4 +110,5 @@
     });
   </script>
 </body>
+
 </html>
