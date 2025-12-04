@@ -46,7 +46,9 @@
 
       if (item.section) {
         li.classList.add("section-title");
-        li.textContent = item.section;
+        const label = document.createElement("span");
+        label.textContent = item.section;
+        li.appendChild(label);
         container.appendChild(li);
         return;
       }

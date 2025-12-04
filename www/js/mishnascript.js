@@ -297,23 +297,51 @@ function updateGoalDisplayParagraph() {
 }
 
 // Scroll to current mesechet on load
+// Scroll to current mesechet on load
 function scrollToCurrentMesechet() {
-  const mesechetName = localStorage.getItem("mesechet");
+  const mesechetName = (localStorage.getItem("mesechet") || "").trim();
   if (!mesechetName) return;
 
-  const bbEls = document.querySelectorAll(".bb");
-  for (const el of bbEls) {
-    if (el.textContent.trim() === mesechetName.trim()) {
-      el.scrollIntoView({ block: "center", behavior: "smooth" });
-      break;
+  const sidebar = document.querySelector(".sidebar");
+  if (!sidebar) return;
+
+  // If later you decide to make .submenu the actual scroll container,
+  // this line will automatically pick it up:
+  const scrollContainer = sidebar.querySelector(".submenu") || sidebar;
+
+  const bbEls = scrollContainer.querySelectorAll(".bb");
+  let targetEl = null;
+
+  // Clear previous highlight and find the right element
+  bbEls.forEach((el) => {
+    el.classList.remove("current-mesechet");
+    if (!targetEl && el.textContent.trim() === mesechetName) {
+      targetEl = el;
     }
+  });
+
+  // Fallback: if nothing matched, just use the first mesechet
+  if (!targetEl && bbEls.length > 0) {
+    targetEl = bbEls[0];
   }
+  if (!targetEl) return;
+
+  // Highlight it
+  targetEl.classList.add("current-mesechet");
+
+  // Scroll it into view inside the scrollContainer
+  const containerRect = scrollContainer.getBoundingClientRect();
+  const elRect = targetEl.getBoundingClientRect();
+  const offset = elRect.top - containerRect.top;
+
+  scrollContainer.scrollTop += offset - scrollContainer.clientHeight * 0.3;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   updateGoalDisplayParagraph();
   checkAndLaunchGoalConfetti();
-  scrollToCurrentMesechet();
+  // delay a tick to make sure the list is fully painted
+  setTimeout(scrollToCurrentMesechet, 0);
 });
 
 // Update stats and mesechet and perek on page load
@@ -326,5 +354,4 @@ const prevIndex = parseInt(
   10
 );
 updatePereksToday(prevIndex, currentGlobalPerekIndex);
-console.log(window.mesechotData);
-Array.isArray(window.mesechotData);
+// console.log(mesechotData);
