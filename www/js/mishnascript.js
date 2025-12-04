@@ -1,25 +1,5 @@
 // js/mishnascript.js
 
-// 1) Build mesechet list from data (must be before we query .bb)
-if (typeof buildMesechetList === "function") {
-  buildMesechetList("mesechetList");
-} else {
-  console.warn(
-    "buildMesechetList is not defined. Static .bb list must exist in HTML."
-  );
-}
-
-// 2) Original logic, now using dynamically built .bb elements
-
-// Calculate the total number of pereks in all masechtot
-let totalPereks = Array.from(document.querySelectorAll(".bb")).reduce(
-  (sum, bbElement) => {
-    return sum + parseInt(bbElement.className.match(/\d+/)[0], 10);
-  },
-  0
-);
-
-// A mapping of English to Hebrew digits
 const hebrewDigits = [
   "א",
   "ב",
@@ -53,103 +33,113 @@ const hebrewDigits = [
   "ל",
 ];
 
-const bbElements = document.querySelectorAll(".bb");
+let mesechotListData = [];
+let realMasechtot = [];
+let totalPereks = 0;
+let currentGlobalPerekIndex = 0; // zero-based
+let pereksTodayStartIndex = 0;
+let lastDate = "";
+let isShowingPereks = false;
 
-// global index is 1-based in storage, 0-based here
-let currentGlobalPerekIndex =
-  parseInt(localStorage.getItem("globalPerekIndex") || "1", 10) - 1;
-
-let pereksTodayStartIndex = parseInt(
-  localStorage.getItem("pereksTodayStartIndex") || "0",
-  10
-);
-let lastDate = localStorage.getItem("lastDate") || "";
-let todayDate = new Date().toDateString();
-
-if (lastDate !== todayDate) {
-  lastDate = todayDate;
-  localStorage.setItem("lastDate", todayDate);
-  pereksTodayStartIndex = currentGlobalPerekIndex;
-  localStorage.setItem(
-    "pereksTodayStartIndex",
-    pereksTodayStartIndex.toString()
-  );
+function calculateGlobalPerekIndex(mesechetIndex1Based, perekIndexZeroBased) {
+  let globalPerekIndex = 0;
+  for (let i = 0; i < mesechetIndex1Based - 1; i++) {
+    globalPerekIndex += realMasechtot[i].pereks;
+  }
+  globalPerekIndex += perekIndexZeroBased;
+  return globalPerekIndex;
 }
 
-// Attach click to each mesechet to open perek side list
-bbElements.forEach((bbElement, index) => {
-  bbElement.addEventListener("click", () => createSideNavs(index + 1));
-});
+function findMesechetAndPerekByIndex(idxZeroBased) {
+  let cumulative = 0;
+  for (let i = 0; i < realMasechtot.length; i++) {
+    const count = realMasechtot[i].pereks;
+    if (cumulative + count > idxZeroBased) {
+      const local = idxZeroBased - cumulative;
+      return {
+        mesechet: realMasechtot[i].name,
+        perek: hebrewDigits[local] || "?",
+      };
+    }
+    cumulative += count;
+  }
+  return { mesechet: "Unknown", perek: "?" };
+}
 
-function createSideNavs(mesechetIndex) {
-  const oldSideNavContainer = document.querySelector(".side-nav-container");
-  if (oldSideNavContainer) {
-    oldSideNavContainer.remove();
-    document.querySelector("ul").style.opacity = "0";
-    document.querySelector(".menu").style.opacity = "0";
+function updateMesAndPerek() {
+  const mesechet = localStorage.getItem("mesechet") || "";
+  let perekNumber = (localStorage.getItem("perek") || "").split(" ")[1] || "";
+  if (perekNumber) {
+    perekNumber = hebrewDigits[parseInt(perekNumber, 10) - 1];
+  }
+  const mesAndPerekElement = document.getElementById("mesandperek");
+  if (mesAndPerekElement) {
+    mesAndPerekElement.innerText = `${mesechet} פרק ${perekNumber}`;
+  }
+}
+
+function updateStats() {
+  const finishedElement = document.getElementById("finished");
+  if (finishedElement) {
+    finishedElement.innerText = `Pereks done: ${currentGlobalPerekIndex}`;
   }
 
-  const sideNavContainer = document.createElement("ul");
-  sideNavContainer.classList.add("side-nav-container");
-  document.querySelector(".sidebar").appendChild(sideNavContainer);
+  const percentDoneElement = document.getElementById("percentdone");
+  if (percentDoneElement) {
+    const percentDone = Math.round((currentGlobalPerekIndex / totalPereks) * 100);
+    percentDoneElement.innerText = `Percent done: ${percentDone}%`;
+  }
 
-  const bbElement = bbElements[mesechetIndex - 1];
-  const num = parseInt(bbElement.className.match(/\d+/)[0], 10);
-  const mesechet = bbElement.textContent;
+  const toGoElement = document.getElementById("to-go");
+  if (toGoElement) {
+    const toGo = totalPereks - currentGlobalPerekIndex;
+    toGoElement.innerText = `Pereks left: ${toGo}`;
+  }
 
-  for (let i = 1; i <= num; i++) {
-    const globalPerekIndex = calculateGlobalPerekIndex(mesechetIndex, i);
-    const sideNav = document.createElement("li");
-    sideNav.classList.add("side-nav");
-    sideNav.style.top = `${i * 1}px`;
-    sideNav.style.transform = `translateX(0px)`;
+  const pereksTodayElement = document.getElementById("today");
+  if (pereksTodayElement) {
+    const pereksToday = localStorage.getItem("pereksToday") || 0;
+    pereksTodayElement.innerText = `Pereks today: ${Math.abs(pereksToday)}`;
+  }
+}
 
-    const perekHebrewNumber = hebrewDigits[i - 1]; // translate to Hebrew number
-    sideNav.innerHTML = `<p>${mesechet} פרק ${perekHebrewNumber}</p>`;
+function updateGoalDisplayParagraph() {
+  const goalElement = document.getElementById("goal");
+  const displayPerekGoal = localStorage.getItem("displayPerekGoal") === "true";
+  if (!goalElement) return;
 
-    sideNav.addEventListener("click", () => {
-      const previousGlobalPerekIndex = currentGlobalPerekIndex;
-      const newGlobalPerekIndex = calculateGlobalPerekIndex(mesechetIndex, i);
+  if (!displayPerekGoal) {
+    goalElement.style.display = "none";
+    return;
+  }
 
-      handlePerekClick(
-        previousGlobalPerekIndex,
-        newGlobalPerekIndex,
-        mesechet,
-        i
-      );
+  let perekGoal = parseInt(localStorage.getItem("perekGoal"), 10) || 18;
+  const startIndex = parseInt(localStorage.getItem("pereksTodayStartIndex"), 10) || 0;
+  if (isNaN(perekGoal) || perekGoal <= 0) perekGoal = 18;
 
-      currentGlobalPerekIndex = globalPerekIndex - 1;
+  const goalIndex = startIndex + perekGoal;
+  const currentIndex = currentGlobalPerekIndex;
 
-      localStorage.setItem(
-        "globalPerekIndex",
-        `${currentGlobalPerekIndex + 1}`
-      );
-      localStorage.setItem("mesechet", mesechet);
-      localStorage.setItem("perek", `perek ${i}`);
+  const { mesechet, perek } = findMesechetAndPerekByIndex(goalIndex);
+  const isComplete = currentIndex >= goalIndex;
+  const checkMark = isComplete ? " ✅" : "";
 
-      updatePereksToday(previousGlobalPerekIndex, currentGlobalPerekIndex);
-      updateStats();
-      updateMesAndPerek();
+  goalElement.innerText = `Goal: ${mesechet} פרק ${perek}${checkMark}`;
+  goalElement.style.display = "block";
+
+  if (isComplete) {
+    const today = new Date().toISOString().split("T")[0];
+    getProgress(today).then((record) => {
+      const start = pereksTodayStartIndex;
+      const end = currentGlobalPerekIndex;
+      const doneToday = end - start;
+      if (record && !record.goalReached) {
+        saveDailyProgressToDB(today, start, end, doneToday, true);
+      } else if (!record) {
+        saveDailyProgressToDB(today, startIndex, currentIndex, perekGoal, true);
+      }
     });
-
-    sideNavContainer.appendChild(sideNav);
   }
-
-  setTimeout(() => {
-    document.addEventListener(
-      "click",
-      function (event) {
-        if (
-          !event.target.closest(".side-nav") &&
-          !event.target.closest(".bb")
-        ) {
-          const sideNavs = document.querySelectorAll(".side-nav");
-          sideNavs.forEach((sideNav) => sideNav.remove());
-        }
-      },
-      { once: true }
-    );
-  }, 0);
 }
 
 function updatePereksToday(previousIndex, currentIndex) {
@@ -180,7 +170,7 @@ function handlePerekClick(prevIndex, newIndex, mesechet, perekNumber) {
   }
   currentGlobalPerekIndex = newIndex;
 
-  localStorage.setItem("globalPerekIndex", currentGlobalPerekIndex);
+  localStorage.setItem("globalPerekIndex", currentGlobalPerekIndex + 1);
   localStorage.setItem("mesechet", mesechet);
   localStorage.setItem("perek", `perek ${perekNumber}`);
   localStorage.setItem("pereksTodayStartIndex", pereksTodayStartIndex);
@@ -192,144 +182,29 @@ function handlePerekClick(prevIndex, newIndex, mesechet, perekNumber) {
   checkAndLaunchGoalConfetti();
 }
 
-document.addEventListener("click", function (event) {
-  if (!event.target.closest(".sidebar")) {
-    const oldSideNavContainer = document.querySelector(".side-nav-container");
-    if (oldSideNavContainer) {
-      oldSideNavContainer.remove();
-      document.querySelector("ul").style.opacity = "1";
-      document.querySelector(".menu").style.opacity = "1";
-    }
-  }
-});
-
-function calculateGlobalPerekIndex(mesechetIndex, perekIndex) {
-  let globalPerekIndex = 0;
-  for (let i = 0; i < mesechetIndex - 1; i++) {
-    globalPerekIndex += parseInt(bbElements[i].className.match(/\d+/)[0], 10);
-  }
-  globalPerekIndex += perekIndex;
-  return globalPerekIndex;
-}
-
-function updateMesAndPerek() {
-  const mesechet = localStorage.getItem("mesechet") || "";
-  let perekNumber = (localStorage.getItem("perek") || "").split(" ")[1] || "";
-  if (perekNumber) {
-    perekNumber = hebrewDigits[parseInt(perekNumber, 10) - 1];
-  }
-  const mesAndPerekElement = document.getElementById("mesandperek");
-  mesAndPerekElement.innerText = `${mesechet} פרק ${perekNumber}`;
-}
-
-function updateStats() {
-  const finishedElement = document.getElementById("finished");
-  finishedElement.innerText = `Pereks done: ${currentGlobalPerekIndex}`;
-
-  const percentDoneElement = document.getElementById("percentdone");
-  const percentDone = Math.round((currentGlobalPerekIndex / totalPereks) * 100);
-  percentDoneElement.innerText = `Percent done: ${percentDone}%`;
-
-  const toGoElement = document.getElementById("to-go");
-  const toGo = totalPereks - currentGlobalPerekIndex;
-  toGoElement.innerText = `Pereks left: ${toGo}`;
-
-  const pereksTodayElement = document.getElementById("today");
-  const pereksToday = localStorage.getItem("pereksToday") || 0;
-  pereksTodayElement.innerText = `Pereks today: ${Math.abs(pereksToday)}`;
-}
-
-function updateGoalDisplayParagraph() {
-  const goalElement = document.getElementById("goal");
-  const displayPerekGoal = localStorage.getItem("displayPerekGoal") === "true";
-  if (!goalElement) return;
-
-  if (!displayPerekGoal) {
-    goalElement.style.display = "none";
-    return;
-  }
-
-  let perekGoal = parseInt(localStorage.getItem("perekGoal"), 10) || 18;
-  let startIndex =
-    parseInt(localStorage.getItem("pereksTodayStartIndex"), 10) || 0;
-  if (isNaN(perekGoal) || perekGoal <= 0) perekGoal = 18;
-
-  const goalIndex = startIndex + perekGoal;
-  const currentIndex =
-    parseInt(localStorage.getItem("globalPerekIndex"), 10) - 1;
-
-  function findMesechetAndPerekByIndex(idx) {
-    let cumulative = 0;
-    for (let i = 0; i < bbElements.length; i++) {
-      const count = parseInt(bbElements[i].className.match(/\d+/)[0], 10);
-      if (cumulative + count > idx) {
-        const local = idx - cumulative + 1;
-        return {
-          mesechet: bbElements[i].textContent,
-          perek: hebrewDigits[local - 1] || "?",
-        };
-      }
-      cumulative += count;
-    }
-    return { mesechet: "Unknown", perek: "?" };
-  }
-
-  const { mesechet, perek } = findMesechetAndPerekByIndex(goalIndex);
-  const isComplete = currentIndex >= goalIndex;
-  const checkMark = isComplete ? " ✅" : "";
-
-  goalElement.innerText = `Goal: ${mesechet} פרק ${perek}${checkMark}`;
-  goalElement.style.display = "block";
-
-  if (isComplete) {
-    const today = new Date().toISOString().split("T")[0];
-    getProgress(today).then((record) => {
-      const start = pereksTodayStartIndex;
-      const end = currentGlobalPerekIndex;
-      const doneToday = end - start;
-      if (record && !record.goalReached) {
-        saveDailyProgressToDB(today, start, end, doneToday, true);
-      } else if (!record) {
-        saveDailyProgressToDB(today, startIndex, currentIndex, perekGoal, true);
-      }
-    });
-  }
-}
-
-// Scroll to current mesechet on load
-// Scroll to current mesechet on load
 function scrollToCurrentMesechet() {
   const mesechetName = (localStorage.getItem("mesechet") || "").trim();
-  if (!mesechetName) return;
-
   const sidebar = document.querySelector(".sidebar");
   if (!sidebar) return;
 
-  // If later you decide to make .submenu the actual scroll container,
-  // this line will automatically pick it up:
   const scrollContainer = sidebar.querySelector(".submenu") || sidebar;
-
   const bbEls = scrollContainer.querySelectorAll(".bb");
   let targetEl = null;
 
-  // Clear previous highlight and find the right element
   bbEls.forEach((el) => {
     el.classList.remove("current-mesechet");
-    if (!targetEl && el.textContent.trim() === mesechetName) {
+    if (!targetEl && mesechetName && el.textContent.trim() === mesechetName) {
       targetEl = el;
     }
   });
 
-  // Fallback: if nothing matched, just use the first mesechet
   if (!targetEl && bbEls.length > 0) {
     targetEl = bbEls[0];
   }
   if (!targetEl) return;
 
-  // Highlight it
   targetEl.classList.add("current-mesechet");
 
-  // Scroll it into view inside the scrollContainer
   const containerRect = scrollContainer.getBoundingClientRect();
   const elRect = targetEl.getBoundingClientRect();
   const offset = elRect.top - containerRect.top;
@@ -337,21 +212,169 @@ function scrollToCurrentMesechet() {
   scrollContainer.scrollTop += offset - scrollContainer.clientHeight * 0.3;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  updateGoalDisplayParagraph();
-  checkAndLaunchGoalConfetti();
-  // delay a tick to make sure the list is fully painted
+function renderMesechetList() {
+  isShowingPereks = false;
+  const mesechetList = document.getElementById("mesechetList");
+  if (!mesechetList) return;
+
+  mesechetList.innerHTML = "";
+  let realIndex = 0;
+
+  mesechotListData.forEach((item) => {
+    if (item.section) {
+      const li = document.createElement("li");
+      li.classList.add("section-title");
+      const label = document.createElement("span");
+      label.textContent = item.section;
+      li.appendChild(label);
+      mesechetList.appendChild(li);
+      return;
+    }
+
+    const li = document.createElement("li");
+    const p = document.createElement("p");
+
+    p.classList.add("bb", `bb${item.pereks}`);
+    p.textContent = item.name;
+    p.style.cursor = "pointer";
+
+    const realIndex1Based = realIndex + 1;
+    p.dataset.realIndex = String(realIndex1Based);
+
+    p.addEventListener("click", (e) => {
+      e.stopPropagation();
+      renderPerekList(realIndex1Based);
+    });
+
+    li.appendChild(p);
+    mesechetList.appendChild(li);
+
+    realIndex++;
+  });
+
   setTimeout(scrollToCurrentMesechet, 0);
+}
+
+function renderPerekList(realMasechetIndex1Based) {
+  isShowingPereks = true;
+  const mesechetList = document.getElementById("mesechetList");
+  if (!mesechetList) return;
+
+  const mesechet = realMasechtot[realMasechetIndex1Based - 1];
+  if (!mesechet) return;
+
+  mesechetList.innerHTML = "";
+
+  const headerLi = document.createElement("li");
+  headerLi.classList.add("perek-header");
+
+  const headerWrapper = document.createElement("div");
+  headerWrapper.style.display = "flex";
+  headerWrapper.style.justifyContent = "space-between";
+  headerWrapper.style.alignItems = "center";
+
+  const titleSpan = document.createElement("span");
+  titleSpan.textContent = mesechet.name;
+  titleSpan.className = "perek-header-title";
+
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.textContent = "×";
+  closeBtn.style.border = "none";
+  closeBtn.style.background = "transparent";
+  closeBtn.style.fontSize = "1.2rem";
+  closeBtn.style.cursor = "pointer";
+
+  closeBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    renderMesechetList();
+  });
+
+  headerWrapper.appendChild(titleSpan);
+  headerWrapper.appendChild(closeBtn);
+  headerLi.appendChild(headerWrapper);
+  mesechetList.appendChild(headerLi);
+
+  for (let i = 0; i < mesechet.pereks; i++) {
+    const li = document.createElement("li");
+    const p = document.createElement("p");
+    p.style.cursor = "pointer";
+
+    const perekHebrewNumber = hebrewDigits[i];
+    p.textContent = `${mesechet.name} פרק ${perekHebrewNumber}`;
+
+    p.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const globalPerekIndex = calculateGlobalPerekIndex(
+        realMasechetIndex1Based,
+        i
+      );
+
+      handlePerekClick(currentGlobalPerekIndex, globalPerekIndex, mesechet.name, i + 1);
+      renderMesechetList();
+    });
+
+    li.appendChild(p);
+    mesechetList.appendChild(li);
+  }
+}
+
+document.addEventListener("click", function (event) {
+  if (isShowingPereks) {
+    const sidebar = document.querySelector(".sidebar");
+    if (sidebar && !sidebar.contains(event.target)) {
+      renderMesechetList();
+    }
+  }
 });
 
-// Update stats and mesechet and perek on page load
-updateStats();
-updateMesAndPerek();
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof buildMesechetList === "function") {
+    // we rebuild manually, but ensure data is ready
+  }
 
-// bottom function to update pereks today
-const prevIndex = parseInt(
-  localStorage.getItem("pereksTodayStartIndex") || "0",
-  10
-);
-updatePereksToday(prevIndex, currentGlobalPerekIndex);
-// console.log(mesechotData);
+  mesechotListData = Array.isArray(mesechotData) ? mesechotData : [];
+  realMasechtot = mesechotListData.filter(
+    (item) => item.name && typeof item.pereks === "number"
+  );
+  totalPereks = realMasechtot.reduce((sum, m) => sum + m.pereks, 0);
+
+  currentGlobalPerekIndex =
+    parseInt(localStorage.getItem("globalPerekIndex") || "1", 10) - 1;
+  if (isNaN(currentGlobalPerekIndex) || currentGlobalPerekIndex < 0) {
+    currentGlobalPerekIndex = 0;
+  }
+
+  pereksTodayStartIndex = parseInt(
+    localStorage.getItem("pereksTodayStartIndex") || "0",
+    10
+  );
+  if (isNaN(pereksTodayStartIndex) || pereksTodayStartIndex < 0) {
+    pereksTodayStartIndex = 0;
+  }
+
+  lastDate = localStorage.getItem("lastDate") || "";
+  const todayDate = new Date().toDateString();
+
+  if (lastDate !== todayDate) {
+    lastDate = todayDate;
+    localStorage.setItem("lastDate", todayDate);
+    pereksTodayStartIndex = currentGlobalPerekIndex;
+    localStorage.setItem(
+      "pereksTodayStartIndex",
+      pereksTodayStartIndex.toString()
+    );
+  }
+
+  renderMesechetList();
+  updateGoalDisplayParagraph();
+  checkAndLaunchGoalConfetti();
+  updateStats();
+  updateMesAndPerek();
+
+  const prevIndex = parseInt(
+    localStorage.getItem("pereksTodayStartIndex") || "0",
+    10
+  );
+  updatePereksToday(prevIndex, currentGlobalPerekIndex);
+});
