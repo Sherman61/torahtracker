@@ -1,0 +1,82 @@
+body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            background-color: var(--surface);
+            color: var(--text-strong);
+        }
+        h1 {
+            text-align: center;
+            color: var(--link-color);
+        }
+        input, button {
+            padding: 8px 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+            background-color: var(--link-color);
+            color: white;
+            border: none;
+        }
+        button:hover {
+            background-color: var(--link-hover);
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+            font-size: 18px;
+            color: var(--text-strong);
+        }
+        #displayArea {
+            margin-top: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #displayArea > div {
+            border-bottom: 1px solid var(--surface-soft);
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #displayArea input[type="text"] {
+            flex: 1;
+            margin-right: 10px;
+        }
+   
+    
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        input, button { margin-top: 10px; }
+
+        
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    table{
+        max-width: fit-content;
+    }
+    input{
+         max-width: 100px;
+         
+    }
+ input, th, td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    max-height: 30px;
+   
+  }
+  button {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.8rem;
+  }
+  
+  .key {
+    font-weight: bold;
+    width:50px;
+    overflow-y: auto;
+}
+}

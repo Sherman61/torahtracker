@@ -1,0 +1,240 @@
+:root {
+  --page-bg: #c9d3e5;
+  --page-bg-alt: #d7e1e5;
+  --surface: #f1f1f1;
+  --surface-soft: #eae2e2;
+  --border: #ddd;
+  --border-strong: #999;
+  --text: #222;
+  --text-strong: #333;
+  --muted-text: #888;
+  --muted-strong: #555;
+  --primary: #3f567e;
+  --primary-dark: #2c3e50;
+  --primary-text: #fff;
+  --nav-color: #000;
+  --accent: #4caf50;
+  --accent-hover: #45a049;
+  --accent-strong: #FFD700;
+  --link-color: #007bff;
+  --link-hover: #0056b3;
+  --highlight: #e0f0ff;
+  --highlight-strong: #cce5ff;
+  --danger: #e74c3c;
+  --danger-strong: #c0392b;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --page-bg: #1a1a1a;
+  --page-bg-alt: #262626;
+  --surface: #333;
+  --surface-soft: #2c3e50;
+  --border: #444;
+  --border-strong: #555;
+  --text: #e0e0e0;
+  --text-strong: #f1f1f1;
+  --muted-text: #bbb;
+  --muted-strong: #999;
+  --primary: #3f567e;
+  --primary-dark: #2c3e50;
+  --primary-text: #fff;
+  --nav-color: #fff;
+  --accent: #4caf50;
+  --accent-hover: #45a049;
+  --accent-strong: #b59b4c;
+  --link-color: #8ab4f8;
+  --link-hover: #5f8bd7;
+  --highlight: #2a3b4a;
+  --highlight-strong: #3f5670;
+  --danger: #e06666;
+  --danger-strong: #b34747;
+  color-scheme: dark;
+}
+
+:root[data-theme="vintage"] {
+  --page-bg: #f5ecd9;
+  --page-bg-alt: #efe3c8;
+  --surface: #f3e9d2;
+  --surface-soft: #e6d3a3;
+  --border: #c3b091;
+  --border-strong: #a48b6d;
+  --text: #3b2f2f;
+  --text-strong: #2f241d;
+  --muted-text: #6b5b4d;
+  --muted-strong: #574839;
+  --primary: #b08d57;
+  --primary-dark: #8a6f3e;
+  --primary-text: #fefbf3;
+  --nav-color: #2f241d;
+  --accent: #9c6b30;
+  --accent-hover: #7f5627;
+  --accent-strong: #cfa75c;
+  --link-color: #8b5e34;
+  --link-hover: #6f492b;
+  --highlight: #f0e4c3;
+  --highlight-strong: #e3d2a2;
+  --danger: #b65c50;
+  --danger-strong: #8c4239;
+  color-scheme: light;
+}
+
+body {
+  background: var(--page-bg);
+  color: var(--text);
+  margin: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+main,
+section,
+article,
+.card,
+.panel,
+.surface {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+header,
+footer,
+.app-header,
+.app-footer {
+  background: var(--primary);
+  color: var(--primary-text);
+  border-bottom: 1px solid var(--primary-dark);
+  padding: 1rem;
+}
+
+footer,
+.app-footer {
+  border-top: 1px solid var(--border-strong);
+  border-bottom: none;
+  text-align: center;
+}
+
+.header-title,
+.footer-title,
+header h1,
+header h2,
+footer h1,
+footer h2 {
+  margin: 0;
+  color: var(--primary-text);
+}
+
+nav a,
+.nav a {
+  color: var(--primary-text);
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+}
+
+nav a:hover,
+.nav a:hover,
+nav a:focus,
+.nav a:focus {
+  background: var(--primary-dark);
+}
+
+a {
+  color: var(--link-color);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: var(--text);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+button {
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--primary-text);
+  border-color: var(--accent);
+}
+
+button:hover,
+button:focus {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-strong);
+  border-color: var(--border-strong);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background: var(--highlight);
+}
+
+.chip,
+.pill,
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background: var(--highlight);
+  color: var(--text-strong);
+  border: 1px solid var(--border);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.muted {
+  color: var(--muted-text);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table th,
+table td {
+  border: 1px solid var(--border);
+  padding: 0.5rem;
+}
+
+table th {
+  background: var(--surface);
+}
+
+.bottom-nav {
+  background-color: var(--primary);
+  color: var(--primary-text);
+}
+
+.bottom-nav a {
+  color: var(--primary-text);
+}
+
+.bottom-nav a:hover,
+.bottom-nav a.active {
+  background-color: var(--primary-dark);
+}
+
+.details,
+summary,
+header,
+section,
+main {
+  background-color: transparent;
+}
