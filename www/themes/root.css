@@ -1,0 +1,66 @@
+:root {
+  --bg: #ffffff;
+  --text: #222222;
+  --border: #cccccc;
+  --surface: #f2f2f2;
+  --goal-hover: #eef;
+  --nav-color: #000;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #121212;
+  --text: #e0e0e0;
+  --border: #444444;
+  --surface: #333333;
+  --goal-hover: #444;
+  --nav-color: #fff;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+a {
+  color: var(--nav-color);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table th,
+table td {
+  border: 1px solid var(--border);
+  padding: 0.5rem;
+}
+
+table th {
+  background: var(--surface);
+}
+
+.bottom-nav {
+  background-color: var(--surface);
+}
+
+.bottom-nav a {
+  color: var(--nav-color);
+}
+
+.bottom-nav a:hover,
+.bottom-nav a.active {
+  background-color: var(--goal-hover);
+}
+
+details,
+summary,
+header,
+section,
+main {
+  background-color: transparent;
+}
