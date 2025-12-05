@@ -10,24 +10,17 @@
   <style>
     body {
       opacity: 1;
-      transition: background-color 2.5s;
+      transition: background-color 0.2s ease, color 0.2s ease;
       display: flex;
-      /* Use flex display */
       justify-content: center;
-      /* Center horizontally */
       align-items: center;
-      /* Center vertically */
       min-height: 100vh;
-      /* Full viewport height */
       margin: 0;
-      /* Reset default margin */
       padding: 0;
-      /* Reset default padding */
     }
 
     .theme-selector-container {
       text-align: center;
-      /* Center text inside the container */
     }
 
     #openNav {
@@ -36,15 +29,8 @@
       left: 10px;
       z-index: 2;
     }
-
-    #theme-link,
-    #bottom-nav-link {
-      transition: none;
-      /* Disable transition for theme links */
-    }
   </style>
-  <link rel="stylesheet" href="light/themes.css" id="theme-link">
-  <link rel="stylesheet" href="light/bottom-nav.css" id="bottom-nav-link">
+  <script src="theme.js"></script>
 </head>
 
 <body>
@@ -56,59 +42,10 @@
     <select id="theme-selector">
       <option value="light">Light Theme</option>
       <option value="dark">Dark Theme</option>
+      <option value="vintage">Vintage Theme</option>
     </select>
   </div>
   <!-- Rest of the body content -->
-
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const themeSelector = document.getElementById('theme-selector');
-
-      themeSelector.addEventListener('change', () => {
-        const selectedTheme = themeSelector.value;
-        localStorage.setItem('selectedTheme', selectedTheme);
-        applyTheme(selectedTheme);
-      });
-
-      // Apply theme on page load
-      const selectedTheme = localStorage.getItem('selectedTheme');
-      if (selectedTheme) {
-        applyTheme(selectedTheme);
-        themeSelector.value = selectedTheme;
-      }
-    });
-
-    function applyTheme(theme) {
-      // Get the current page's file name (e.g., index.html, accounts.html)
-      const currentPage = window.location.pathname.split('/').pop();
-
-      // Generate the CSS file path based on the current page and selected theme
-      const cssFilePath = `./${theme}/${currentPage.split('.')[0]}.css`;
-      const bottomNavCssFilePath = `./${theme}/bottom-nav.css`;
-
-      // Update the CSS file links
-      const themeLink = document.getElementById('theme-link');
-      const bottomNavLink = document.getElementById('bottom-nav-link');
-      themeLink.href = cssFilePath;
-      bottomNavLink.href = bottomNavCssFilePath;
-
-      // Gradually change the background color
-      const body = document.body;
-      const currentBgColor = getComputedStyle(body).backgroundColor;
-      const newBgColor = getComputedStyle(document.documentElement).getPropertyValue(`--${theme}-bg-color`);
-
-      body.style.backgroundColor = currentBgColor;
-      setTimeout(() => {
-        body.style.backgroundColor = newBgColor;
-      }, 10);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      // Show the content after applying the theme
-      document.body.style.display = 'block';
-    });
-  </script>
 </body>
 
 </html>

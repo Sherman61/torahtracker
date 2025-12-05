@@ -1,0 +1,127 @@
+:root {
+  --page-bg: #c9d3e5;
+  --page-bg-alt: #d7e1e5;
+  --surface: #f1f1f1;
+  --surface-soft: #eae2e2;
+  --border: #ddd;
+  --border-strong: #999;
+  --text: #222;
+  --text-strong: #333;
+  --muted-text: #888;
+  --muted-strong: #555;
+  --primary: #3f567e;
+  --primary-dark: #2c3e50;
+  --primary-text: #fff;
+  --nav-color: #000;
+  --accent: #4caf50;
+  --accent-hover: #45a049;
+  --accent-strong: #FFD700;
+  --link-color: #007bff;
+  --link-hover: #0056b3;
+  --highlight: #e0f0ff;
+  --highlight-strong: #cce5ff;
+  --danger: #e74c3c;
+  --danger-strong: #c0392b;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --page-bg: #1a1a1a;
+  --page-bg-alt: #262626;
+  --surface: #333;
+  --surface-soft: #2c3e50;
+  --border: #444;
+  --border-strong: #555;
+  --text: #e0e0e0;
+  --text-strong: #f1f1f1;
+  --muted-text: #bbb;
+  --muted-strong: #999;
+  --primary: #3f567e;
+  --primary-dark: #2c3e50;
+  --primary-text: #fff;
+  --nav-color: #fff;
+  --accent: #4caf50;
+  --accent-hover: #45a049;
+  --accent-strong: #b59b4c;
+  --link-color: #8ab4f8;
+  --link-hover: #5f8bd7;
+  --highlight: #2a3b4a;
+  --highlight-strong: #3f5670;
+  --danger: #e06666;
+  --danger-strong: #b34747;
+  color-scheme: dark;
+}
+
+:root[data-theme="vintage"] {
+  --page-bg: #f5ecd9;
+  --page-bg-alt: #efe3c8;
+  --surface: #f3e9d2;
+  --surface-soft: #e6d3a3;
+  --border: #c3b091;
+  --border-strong: #a48b6d;
+  --text: #3b2f2f;
+  --text-strong: #2f241d;
+  --muted-text: #6b5b4d;
+  --muted-strong: #574839;
+  --primary: #b08d57;
+  --primary-dark: #8a6f3e;
+  --primary-text: #fefbf3;
+  --nav-color: #2f241d;
+  --accent: #9c6b30;
+  --accent-hover: #7f5627;
+  --accent-strong: #cfa75c;
+  --link-color: #8b5e34;
+  --link-hover: #6f492b;
+  --highlight: #f0e4c3;
+  --highlight-strong: #e3d2a2;
+  --danger: #b65c50;
+  --danger-strong: #8c4239;
+  color-scheme: light;
+}
+
+body {
+  background: var(--page-bg);
+  color: var(--text);
+  margin: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+a {
+  color: var(--link-color);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table th,
+table td {
+  border: 1px solid var(--border);
+  padding: 0.5rem;
+}
+
+table th {
+  background: var(--surface);
+}
+
+.bottom-nav {
+  background-color: var(--surface);
+}
+
+.bottom-nav a {
+  color: var(--nav-color);
+}
+
+.bottom-nav a:hover,
+.bottom-nav a.active {
+  background-color: var(--surface-soft);
+}
+
+.details,
+summary,
+header,
+section,
+main {
+  background-color: transparent;
+}

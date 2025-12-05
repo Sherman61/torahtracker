@@ -23,11 +23,14 @@
 })();
 
 function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+}
+
+function resolvePageName() {
   let currentPage = window.location.pathname.split("/").pop();
   if (!currentPage) {
-    currentPage = "index.html"; // Default to index.html if no page name is found
+    return "index";
   }
-  const pageName = currentPage.split(".")[0];
 
   document.documentElement.setAttribute("data-theme", theme);
 
@@ -58,11 +61,4 @@ function addThemeCss(href, id) {
   link.href = href;
   link.id = id;
   document.head.appendChild(link);
-}
-
-function removeExistingThemeCss(id) {
-  const existingLink = document.getElementById(id);
-  if (existingLink) {
-    document.head.removeChild(existingLink);
-  }
 }
