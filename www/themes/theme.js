@@ -1,22 +1,26 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Apply theme on page load
-  const selectedTheme = localStorage.getItem("selectedTheme") || "light"; // Default to light theme if not set
-  applyTheme(selectedTheme);
+(() => {
+  const initialTheme = localStorage.getItem("selectedTheme") || "light"; // Default to light theme if not set
 
-  // Optional: If you have a theme selector in your HTML
-  const themeSelector = document.getElementById("theme-selector");
-  if (themeSelector) {
-    themeSelector.value = selectedTheme;
-    themeSelector.addEventListener("change", () => {
-      const newTheme = themeSelector.value;
-      localStorage.setItem("selectedTheme", newTheme);
-      applyTheme(newTheme);
-    });
-  }
+  // Apply base theme immediately to avoid flash of incorrect theme
+  document.documentElement.setAttribute("data-theme", initialTheme);
+  ensureRootCss();
+  applyTheme(initialTheme);
 
-  // Show the content after applying the theme
-  document.body.style.display = "block";
-});
+  document.addEventListener("DOMContentLoaded", () => {
+    const themeSelector = document.getElementById("theme-selector");
+    if (themeSelector) {
+      themeSelector.value = initialTheme;
+      themeSelector.addEventListener("change", () => {
+        const newTheme = themeSelector.value;
+        localStorage.setItem("selectedTheme", newTheme);
+        applyTheme(newTheme);
+      });
+    }
+
+    // Show the content after applying the theme
+    document.body.style.display = "block";
+  });
+})();
 
 function applyTheme(theme) {
   let currentPage = window.location.pathname.split("/").pop();
@@ -25,6 +29,8 @@ function applyTheme(theme) {
   }
   const pageName = currentPage.split(".")[0];
 
+  document.documentElement.setAttribute("data-theme", theme);
+
   // Remove existing theme CSS if present
   removeExistingThemeCss("theme-css");
   removeExistingThemeCss("bottom-nav-css");
@@ -32,6 +38,17 @@ function applyTheme(theme) {
   // Add the new theme CSS
   addThemeCss(`themes/${theme}/${pageName}.css`, "theme-css");
   addThemeCss(`themes/${theme}/bottom-nav.css`, "bottom-nav-css");
+}
+
+function ensureRootCss() {
+  if (document.getElementById("root-theme-css")) return;
+
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.type = "text/css";
+  link.href = "themes/root.css";
+  link.id = "root-theme-css";
+  document.head.appendChild(link);
 }
 
 function addThemeCss(href, id) {
