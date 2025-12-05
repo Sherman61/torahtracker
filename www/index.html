@@ -9,97 +9,12 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-  <style>
-    .section-title {
-      font-size: 1.08em;
-      background-color: #eae2e2;
-      font-weight: 300;
-      margin-bottom: 10px;
-      cursor: default;
-    }
-
-    .bb.current-mesechet {
-      font-size: 1.1em;
-      font-weight: bolder;
-      text-decoration: underline;
-    }
-
-    .perek-header-title {
-      flex: 1;
-      /* take up the remaining space between left & right */
-      font-size: 18px;
-      font-weight: bold;
-      padding: 4px 0;
-      text-align: center;
-      /* center the text within that space */
-    }
-
-
-
-    .perek-close-button {
-      position: absolute;
-      top: 35px;
-      right: 40px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    .sidebar,
-    .side-nav-container {
-      width: 300px;
-      /* Adjust as necessary */
-      max-height: 60vh;
-      overflow-y: auto;
-      padding: 10px;
-      border-right: 1px solid #ddd;
-      background: #f1f1f1;
-      /* Add any additional common styles here */
-    }
-
-    /* Adjustments for larger screens */
-    @media (min-width: 800px) and (min-height: 620px) {
-
-      .sidebar,
-      .side-nav-container {
-        width: 500px;
-        /* Add any additional adjustments here */
-      }
-    }
-
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: fixed;
-      /* Keeps the container in a fixed position */
-      top: initial;
-      /* Keeps the container in its natural vertical position */
-      left: 50%;
-      /* Center horizontally in the viewport */
-      transform: translateX(-50%);
-      /* Adjust only horizontally */
-      text-align: center;
-      font-size: 20px;
-
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #f1f1f1;
-      padding: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-    }
-  </style>
 
   <script src="themes/theme.js"></script>
   <title>Mishnayes</title>
 </head>
 
-<body>
+<body class="with-bottom-nav">
   <details class="stats-dock" open>
     <summary>Progress 📊</summary>
     <header class="header">

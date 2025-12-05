@@ -1,0 +1,138 @@
+/* Shared layout styles for headers and bottom navigation across themes */
+
+.header,
+.site-header,
+.app-header,
+header {
+  background: var(--primary);
+  color: var(--primary-text);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--primary-dark);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header h1,
+header h2,
+.header h1,
+.header h2,
+.site-header h1,
+.site-header h2,
+.app-header h1,
+.app-header h2 {
+  margin: 0;
+  color: var(--primary-text);
+}
+
+nav a,
+.header a,
+.site-header a,
+.app-header a,
+header a {
+  color: var(--primary-text);
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+nav a:hover,
+.header a:hover,
+.site-header a:hover,
+.app-header a:hover,
+header a:hover,
+nav a:focus,
+.header a:focus,
+.site-header a:focus,
+.app-header a:focus,
+header a:focus {
+  background: var(--primary-dark);
+  color: var(--primary-text);
+}
+
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.app-footer,
+footer {
+  background: var(--primary);
+  color: var(--primary-text);
+  text-align: center;
+  padding: 12px 16px;
+  border-top: 1px solid var(--primary-dark);
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--primary);
+  color: var(--primary-text);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 10px 0;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 90;
+  border-top: 1px solid var(--primary-dark);
+}
+
+.bottom-nav a {
+  color: var(--primary-text);
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 12px 12px 0 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.bottom-nav a.active,
+.bottom-nav a:hover,
+.bottom-nav a:focus {
+  background-color: var(--primary-dark);
+  color: var(--primary-text);
+}
+
+body.with-bottom-nav {
+  padding-bottom: 96px;
+}
+
+@media (max-width: 860px) {
+  .bottom-nav a {
+    font-size: 16px;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 680px) {
+  .bottom-nav a {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 350px) {
+  .bottom-nav a {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+}
+
+@media (max-width: 300px) {
+  .bottom-nav a {
+    font-size: 10px;
+    padding: 6px 8px;
+  }
+}
