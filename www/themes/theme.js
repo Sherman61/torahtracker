@@ -1,14 +1,10 @@
 (() => {
-  const initialTheme = localStorage.getItem("selectedTheme") || "light";
-  const pageName = resolvePageName();
-  const basePath = window.location.pathname.includes("/themes/") ? "../" : "";
-
-  ensureCss(`${basePath}css/root.css`, "root-theme-css");
-  ensureCss(`${basePath}css/layout.css`, "layout-theme-css");
-  ensureCss(`${basePath}css/${pageName}.css`, "page-theme-css");
+  const initialTheme = localStorage.getItem("selectedTheme") || "light"; // Default to light theme if not set
 
   // Apply base theme immediately to avoid flash of incorrect theme
   document.documentElement.setAttribute("data-theme", initialTheme);
+  ensureRootCss();
+  applyTheme(initialTheme);
 
   document.addEventListener("DOMContentLoaded", () => {
     const themeSelector = document.getElementById("theme-selector");
@@ -36,7 +32,20 @@ function resolvePageName() {
     return "index";
   }
 
+  document.documentElement.setAttribute("data-theme", theme);
+
   return currentPage.split(".")[0];
+}
+
+function ensureRootCss() {
+  if (document.getElementById("root-theme-css")) return;
+
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.type = "text/css";
+  link.href = "themes/root.css";
+  link.id = "root-theme-css";
+  document.head.appendChild(link);
 }
 
 function ensureCss(href, id) {
