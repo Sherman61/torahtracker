@@ -86,120 +86,8 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-main,
-section,
-article,
-.card,
-.panel,
-.surface {
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-}
-
-header,
-footer,
-.app-header,
-.app-footer {
-  background: var(--primary);
-  color: var(--primary-text);
-  border-bottom: 1px solid var(--primary-dark);
-  padding: 1rem;
-}
-
-footer,
-.app-footer {
-  border-top: 1px solid var(--border-strong);
-  border-bottom: none;
-  text-align: center;
-}
-
-.header-title,
-.footer-title,
-header h1,
-header h2,
-footer h1,
-footer h2 {
-  margin: 0;
-  color: var(--primary-text);
-}
-
-nav a,
-.nav a {
-  color: var(--primary-text);
-  text-decoration: none;
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-}
-
-nav a:hover,
-.nav a:hover,
-nav a:focus,
-.nav a:focus {
-  background: var(--primary-dark);
-}
-
 a {
   color: var(--link-color);
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-  color: var(--text);
-  background-color: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.5rem 0.75rem;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-
-button {
-  cursor: pointer;
-  background: var(--accent);
-  color: var(--primary-text);
-  border-color: var(--accent);
-}
-
-button:hover,
-button:focus {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--text-strong);
-  border-color: var(--border-strong);
-}
-
-.btn-secondary:hover,
-.btn-secondary:focus {
-  background: var(--highlight);
-}
-
-.chip,
-.pill,
-.tag {
-  display: inline-block;
-  padding: 0.25rem 0.6rem;
-  border-radius: 9999px;
-  background: var(--highlight);
-  color: var(--text-strong);
-  border: 1px solid var(--border);
-}
-
-.accent {
-  color: var(--accent);
-}
-
-.muted {
-  color: var(--muted-text);
 }
 
 table {
@@ -218,17 +106,16 @@ table th {
 }
 
 .bottom-nav {
-  background-color: var(--primary);
-  color: var(--primary-text);
+  background-color: var(--surface);
 }
 
 .bottom-nav a {
-  color: var(--primary-text);
+  color: var(--nav-color);
 }
 
 .bottom-nav a:hover,
 .bottom-nav a.active {
-  background-color: var(--primary-dark);
+  background-color: var(--surface-soft);
 }
 
 .details,
