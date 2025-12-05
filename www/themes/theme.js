@@ -48,7 +48,9 @@ function ensureRootCss() {
   document.head.appendChild(link);
 }
 
-function addThemeCss(href, id) {
+function ensureCss(href, id) {
+  if (document.getElementById(id)) return;
+
   const link = document.createElement("link");
   link.rel = "stylesheet";
   link.type = "text/css";
