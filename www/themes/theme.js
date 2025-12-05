@@ -34,13 +34,7 @@ function resolvePageName() {
 
   document.documentElement.setAttribute("data-theme", theme);
 
-  // Remove existing theme CSS if present
-  removeExistingThemeCss("theme-css");
-  removeExistingThemeCss("bottom-nav-css");
-
-  // Add the new theme CSS
-  addThemeCss(`themes/${theme}/${pageName}.css`, "theme-css");
-  addThemeCss(`themes/${theme}/bottom-nav.css`, "bottom-nav-css");
+  return currentPage.split(".")[0];
 }
 
 function ensureRootCss() {
