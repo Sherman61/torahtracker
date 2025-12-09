@@ -4,16 +4,16 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #333333; /* Dark background for the bottom nav */
+  background-color: var(--surface);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   padding: 10px 0;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.5); /* Adjusted for better visibility in dark theme */
+  box-shadow: 0 -8px 24px rgba(9, 12, 24, 0.6);
 }
 
 .bottom-nav a {
-  color: #f1f1f1; /* Light text color for readability */
+  color: var(--nav-color);
   text-decoration: none;
   font-size: 18px;
   font-weight: 500;
@@ -23,11 +23,13 @@
 }
 
 .bottom-nav a.active {
-  background-color: #4a4a4a; /* Darker shade for active state */
+  background-color: var(--goal-hover);
+  color: var(--text-strong);
 }
 
 .bottom-nav a:hover {
-  background-color: #4a4a4a; /* Darker shade for hover state */
+  background-color: var(--goal-hover);
+  color: var(--text-strong);
 }
 
 @media (max-width: 860px) {
