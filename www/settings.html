@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
     <script src="themes/theme.js"></script>
+    <link rel="stylesheet" href="css/settings.css" />
 </head>
 
 <body>
@@ -55,6 +56,16 @@
             <p id="goalStatus"></p>
         </div>
     </div>
+
+    <!-- Scroll to current masechet toggle -->
+    <div class="setting-block">
+        <h3>Scroll to current Masechet</h3>
+        <p id="scroll-status"></p>
+        <button id="scroll-toggle-btn" type="button">
+            Toggle scroll behavior
+        </button>
+    </div>
+
     <script src="js/settings.js">
 
     </script>
@@ -81,6 +92,11 @@
                         goalAPI.updateGoalDisplay();
                     }
                 }
+            });
+
+            initScrollToMesechetToggle({
+                toggleBtnId: "scroll-toggle-btn",
+                statusElId: "scroll-status",
             });
         });
     </script>

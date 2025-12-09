@@ -1,116 +1,246 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: var(--page-bg-alt);
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--page-bg-alt);
+  margin: 0;
+  padding: 0;
 }
 
+/* Main container */
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px 20px 40px;
 }
 
+/* Page title */
 h1 {
-    color: var(--text-strong);
-    text-align: center;
+  color: var(--text-strong);
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
+/* Links block */
 .links {
-    margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .links a {
-    display: block;
-    padding: 10px 20px;
-    background-color: var(--primary-text);
-    border: 1px solid var(--border);
-    margin-bottom: 10px;
-    text-decoration: none;
-    color: var(--text-strong);
+  display: block;
+  padding: 10px 16px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: var(--text-strong);
+  border-radius: 6px;
+  transition: background-color 0.15s ease, transform 0.1s ease;
 }
 
 .links a:hover {
-    background-color: var(--surface-soft);
+  background-color: var(--surface-soft);
+  transform: translateY(-1px);
 }
 
-.security-page {
-    background-color: var(--primary-text);
-    padding: 20px;
-    margin-bottom: 20px;
+/* Goal display + editor */
+.goal-display-container {
+  margin-top: 20px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
 }
 
-.security-page label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
+.goal-display-container h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-strong);
 }
 
-.security-page input[type="checkbox"] {
-    margin-right: 10px;
+.edit-goal-container {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
 }
 
-.themes-page {
-    background-color: var(--primary-text);
-    padding: 20px;
-    margin-bottom: 20px;
+/* Generic button styling */
+button {
+  font-family: inherit;
 }
 
+/* Main edit goal button */
+#editGoalBtn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--primary);
+  color: var(--primary-text);
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+#editGoalBtn:hover {
+  filter: brightness(0.95);
+}
+
+/* Inline panel for goal edit (you already have inline styles, this just backs it up) */
+.goal-edit-panel {
+  display: none;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.goal-edit-panel input[type="number"] {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  max-width: 140px;
+  background: var(--surface-soft);
+  color: var(--text);
+}
+
+.goal-edit-panel button {
+  font-size: 0.9rem;
+}
+
+/* Perek goal display toggle section */
+.container > div:nth-of-type(3) {
+  /* the block that has "Perek Goal Display" title and toggle */
+  margin-top: 30px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.container > div:nth-of-type(3) h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  color: var(--text-strong);
+}
+
+#toggleGoalDisplayBtn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--primary);
+  color: var(--primary-text);
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+#toggleGoalDisplayBtn:hover {
+  filter: brightness(0.95);
+}
+
+#goalStatus {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--muted-text);
+}
+
+/* Scroll-to-masechet setting block */
+.setting-block {
+  max-width: 800px;
+  margin: 0 auto 24px;
+  padding: 16px 18px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.setting-block h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  color: var(--text-strong);
+}
+
+#scroll-status {
+  margin: 4px 0 10px;
+  font-size: 0.9rem;
+  color: var(--muted-text);
+}
+
+#scroll-toggle-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--primary);
+  color: var(--primary-text);
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+#scroll-toggle-btn:hover {
+  filter: brightness(0.95);
+}
+
+/* Back button icon */
+#openNav {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  margin: 10px;
+  font-size: 24px;
+  color: var(--nav-color);
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Old "pages" sections, if you still use them elsewhere */
+.security-page,
+.themes-page,
+.transfer-page,
+.notifications-page {
+  background-color: var(--surface);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.security-page label,
 .themes-page label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
-.transfer-page {
-    background-color: var(--primary-text);
-    padding: 20px;
-    margin-bottom: 20px;
+.security-page input[type="checkbox"],
+.notifications-page input[type="radio"] {
+  margin-right: 10px;
 }
 
 .transfer-page input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid var(--border);
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
 }
 
-.notifications-page {
-    background-color: var(--primary-text);
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.notifications-page input[type="radio"] {
-    margin-right: 10px;
-}
-
-/* Media queries */
+/* Responsive tweaks */
 @media only screen and (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
+  .container {
+    padding: 16px 12px 32px;
+  }
 
-    h1 {
-        font-size: 24px;
-    }
+  h1 {
+    font-size: 24px;
+  }
 
-    .links a {
-        padding: 8px 16px;
-    }
-}
+  .links a {
+    padding: 8px 14px;
+  }
 
-header {
-background-color: var(--surface-soft);
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-padding: 20px;
-text-align: center;
-}
-#openNav {
-position: fixed;
-top: 10px;
-left: 10px;
-margin: 10px;
-font-size: 24px;
-color: var(--nav-color);
+  .goal-display-container,
+  .container > div:nth-of-type(3),
+  .setting-block {
+    padding: 12px;
+  }
 }

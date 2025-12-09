@@ -1,80 +1,115 @@
- *{text-align:center; font-weight:800;} 
-
-body{background-color:var(--page-bg-alt); font-family: Arial, sans-serif;
-}
-body, html {
-
-margin: 0;}
-table { width: fit; 
-border-collapse: collapse; 
-overflow:flow;
-text-align:center;
-//background-color:Turquoise; 
-margin:0 auto; 
-margin-top:10px;
-font-size:24px;
+* {
+  text-align: center;
+  font-weight: 800;
 }
 
-th, td { border: 1px solid black; padding: 10px; text-align:center; }
+body {
+  background-color: var(--page-bg-alt);
+  font-family: Arial, sans-serif;
+}
+body,
+html {
+  margin: 0;
+}
+table {
+  width: fit;
+  border-collapse: collapse;
+  overflow: flow;
+  text-align: center;
 
-tr{background-color: var(--surface-soft);}
-
-#total { font-size: 20px; font-weight: bold;}
-
-#percent { font-size: 18px;} 
-
-th{ background-color: var(--text-strong);
-color: var(--primary-text);
+  margin: 0 auto;
+  margin-top: 10px;
+  font-size: 24px;
 }
 
-input{width:16.5vw; height:50px; cursor: pointer;}
-
-.input-field{font-size:34px; text-align:center; }
-
-#clear-all{
-background-color: var(--primary);
-color: white;
-padding: 12px 20px;
-border: none;
-border-radius: 4px;
-cursor: pointer;
-font-size: 14px;
-margin-top: 10px;
-width:90%;
+th,
+td {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
 }
 
-@media(min-width:500px) {
+tr {
+  background-color: var(--surface-soft);
+}
 
-//body{background-color:#ADD8E6;}}
+#total {
+  font-size: 20px;
+  font-weight: bold;
+}
 
-.space{padding-bottom: 70px;}
+#percent {
+  font-size: 18px;
+}
 
+th {
+  background-color: var(--text-strong);
+  color: var(--text);
+}
 
-//#torahPortion {
-    background-color: var(--accent-strong);  /* Gold background */
-  
-    color: var(--nav-color);                /* Black text */
-    padding: 10px;              /* Padding for some space around the text */
-    margin: 20px auto;          /* Centered with margin */
-    border-radius: 10px;        /* Rounded corners */
-    border: 2px solid var(--nav-color);     /* Black border */
-    font-size: 1.5em;           /* Larger text */
-    width: 60%;                 /* Width of the element */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Adding some shadow for depth */
-    text-align: center;         /* Centering the text */
+input {
+  width: 16.5vw;
+  height: 40px;
+  cursor: pointer;
+}
+
+.input-field {
+  font-size: 34px;
+  text-align: center;
+}
+
+#clear-all {
+  background-color: var(--primary);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  width: 90%;
+}
+#torahPortion {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+@media (min-width: 680px) {
+  table {
+    width: 60%;
+    box-sizing: border-box;
+    height: 200px;
   }
-
-  /* Media query for larger screens */
-  @media(min-width:500px) {
-    body {
-      background-color: var(--page-bg-alt);
-    }
-
-    #torahPortion {
-      width: 40%; /* Smaller width for larger screens */
-    }
+  input {
+    height: 45px;
   }
-  #openNav {
+}
+
+@media (min-width: 500px) {
+  /* body{background-color:#ADD8E6;}} */
+
+  .space {
+    padding-bottom: 70px;
+  }
+  body {
+    background-color: var(--page-bg-alt);
+  }
+  #torahPortion {
+    /* background-color: var(--accent-strong); Gold background */
+
+    color: var(--nav-color); /* Black text */
+    padding: 10px; /* Padding for some space around the text */
+    /* margin: 20px auto; Centered with margin */
+    border-radius: 10px; /* Rounded corners */
+    border: 1px solid var(--nav-color);
+    /* Black border */
+    font-size: 1.1em; /* Larger text */
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adding some shadow for depth */
+    text-align: center; /* Centering the text */
+    width: 40%; /* Smaller width for larger screens */
+  }
+}
+#openNav {
   position: fixed;
   top: 10px;
   left: 10px;
@@ -84,29 +119,79 @@ width:90%;
 }
 .header {
   margin-top: 0px;
-            position: sticky;
-            top: 0;
-            background-color:var(--primary) ;
-            color: var(--primary-text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            font-size: 2em;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+  position: sticky;
+  top: 0;
+  background-color: var(--primary);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-size: 2em;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 
-        @media only screen and (max-width: 800px) {
-            .header {
-                font-size: 1.5em;
-            }
-            table{width: 90%;}
-        }
+@media only screen and (max-width: 800px) {
+  .header {
+    font-size: 1.5em;
+  }
+  table {
+    width: 90%;
+  }
+}
 
-        @media only screen and (max-width: 500px) {
-            .header {
-                font-size: 1em;
-            }
-            
-        }
+@media only screen and (max-width: 500px) {
+  .header {
+    font-size: 1em;
+  }
+}
+
+/* double parsha css */
+#parshaSlider {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+
+  /* max-width: 620px; */
+  margin: 1rem auto;
+}
+
+.slider-inner {
+  display: flex;
+
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.parsha-panel {
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1;
+}
+
+#prevParsha {
+  left: 0;
+}
+
+#nextParsha {
+  right: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.parsha-panel:only-child h2.dbparsh {
+  display: none;
+}

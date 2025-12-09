@@ -186,6 +186,10 @@ function handlePerekClick(prevIndex, newIndex, mesechet, perekNumber) {
 }
 
 function scrollToCurrentMesechet() {
+  const scrollSetting = localStorage.getItem("scrollToCurrentMesechet");
+  if (scrollSetting === "false") {
+    return; // user turned it off
+  }
   const mesechetName = (localStorage.getItem("mesechet") || "").trim();
   if (!mesechetName) return;
 

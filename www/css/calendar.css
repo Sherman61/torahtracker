@@ -4,7 +4,8 @@
   margin: 0;
   padding: 0;
 }
-html, body {
+html,
+body {
   font-family: Arial, sans-serif;
   background: var(--page-bg-alt);
   height: 100%;
@@ -26,7 +27,7 @@ h1 {
   color: var(--primary-text);
   padding: 1rem;
   font-size: 2rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Instruction */
@@ -64,7 +65,7 @@ h1 {
 }
 .day.today {
   border-color: var(--primary);
-  box-shadow: 0 0 5px rgba(63,86,126,0.5);
+  box-shadow: 0 0 5px rgba(63, 86, 126, 0.5);
 }
 .day .date {
   font-weight: bold;
@@ -80,28 +81,30 @@ h1 {
 #menuOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.hidden { display: none!important; }
+.hidden {
+  display: none !important;
+}
 #menu {
   background: var(--surface);
   border-radius: 8px;
   width: 90%;
   max-width: 400px;
   padding: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   max-height: 80vh;
   overflow: auto;
 }
-.menu-hidden { display: none;
-overflow: auto; 
+.menu-hidden {
+  display: none;
+  overflow: auto;
 
-  max-height: 80vh; }
-
-
+  max-height: 80vh;
+}
 
 /* Masechtot & Pereks Lists */
 #bbContainer,
@@ -114,7 +117,8 @@ overflow: auto;
   /* height: 300px; Fixed height for scrolling */
   overflow: auto;
 }
-.bb, .perek {
+.bb,
+.perek {
   padding: 0.6rem 1rem;
   background: var(--primary-text);
   border: 1px solid var(--border-strong);
@@ -123,7 +127,8 @@ overflow: auto;
   transition: background 0.2s, transform 0.1s;
   white-space: nowrap;
 }
-.bb:hover, .perek:hover {
+.bb:hover,
+.perek:hover {
   background: var(--highlight-strong);
   transform: translateY(-1px);
 }
@@ -156,10 +161,16 @@ overflow: auto;
   background: var(--muted-text);
   color: var(--primary-text);
 }
-#backBtn:hover { background: var(--primary-dark); }
+#backBtn:hover {
+  background: var(--primary-dark);
+}
 #clearBtn:hover,
-#clearAllBtn:hover { background: var(--danger-strong); }
-#cancelBtn:hover { background: var(--muted-strong); }
+#clearAllBtn:hover {
+  background: var(--danger-strong);
+}
+#cancelBtn:hover {
+  background: var(--muted-strong);
+}
 
 /* Media Queries */
 @media (max-width: 800px) {
@@ -167,14 +178,14 @@ overflow: auto;
     grid-template-columns: repeat(4, 1fr);
     font-size: 1rem;
     gap: 0.2rem;
-  padding: 0.5rem;
-  min-height: 50px;
+    padding: 0.5rem;
+    min-height: 50px;
   }
   #menu {
     max-width: 90%;
     padding: 1rem;
   }
-}/* Extra-small devices (≤ 500px) */
+} /* Extra-small devices (≤ 500px) */
 @media (max-width: 500px) {
   #calendar {
     grid-template-columns: repeat(3, 1fr);
@@ -194,14 +205,19 @@ overflow: auto;
   #menu {
     padding: 1rem;
   }
-  #bbContainer, #pereksContainer {
+  #bbContainer,
+  #pereksContainer {
     gap: 0.4rem;
   }
-  .bb, .perek {
+  .bb,
+  .perek {
     padding: 0.5rem 0.8rem;
     font-size: 0.85rem;
   }
-  #backBtn, #clearBtn, #clearAllBtn, #cancelBtn {
+  #backBtn,
+  #clearBtn,
+  #clearAllBtn,
+  #cancelBtn {
     padding: 0.5rem 0.8rem;
     font-size: 0.85rem;
   }
@@ -230,10 +246,12 @@ overflow: auto;
     font-size: 0.9rem;
     margin: 0.5rem 0;
   }
-  #bbContainer, #pereksContainer {
+  #bbContainer,
+  #pereksContainer {
     gap: 0.3rem;
   }
-  .bb, .perek {
+  .bb,
+  .perek {
     padding: 0.4rem 0.6rem;
     font-size: 0.8rem;
   }
@@ -241,7 +259,6 @@ overflow: auto;
     width: 95%;
   }
 }
-
 
 /* Ultra-tiny devices (≤ 320px) */
 @media (max-width: 320px) {
@@ -271,7 +288,7 @@ overflow: auto;
   /* hide _vertical_ scrollbar but leave horizontal visible */
   #bbContainer::-webkit-scrollbar,
   #pereksContainer::-webkit-scrollbar {
-    width: 0;      /* hide vertical scrollbar */
-    height: auto;  /* keep horizontal scrollbar height normal */
+    width: 0; /* hide vertical scrollbar */
+    height: auto; /* keep horizontal scrollbar height normal */
   }
 }

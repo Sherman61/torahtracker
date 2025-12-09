@@ -1,10 +1,13 @@
-(() => {
-  const initialTheme = localStorage.getItem("selectedTheme") || "light"; // Default to light theme if not set
+// themes/theme.js
 
-  // Apply base theme immediately to avoid flash of incorrect theme
+(() => {
+  const initialTheme = localStorage.getItem("selectedTheme") || "light";
+
+  // Apply theme ASAP
   document.documentElement.setAttribute("data-theme", initialTheme);
+
+  // Always load the shared theme root CSS
   ensureRootCss();
-  applyTheme(initialTheme);
 
   document.addEventListener("DOMContentLoaded", () => {
     const themeSelector = document.getElementById("theme-selector");
@@ -16,9 +19,6 @@
         applyTheme(newTheme);
       });
     }
-
-    // Show the content after applying the theme
-    document.body.style.display = "block";
   });
 })();
 
@@ -26,29 +26,12 @@ function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
 }
 
-function resolvePageName() {
-  let currentPage = window.location.pathname.split("/").pop();
-  if (!currentPage) {
-    return "index";
-  }
-
-  document.documentElement.setAttribute("data-theme", theme);
-
-  return currentPage.split(".")[0];
-}
-
 function ensureRootCss() {
-  if (document.getElementById("root-theme-css")) return;
-
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.type = "text/css";
-  link.href = "themes/root.css";
-  link.id = "root-theme-css";
-  document.head.appendChild(link);
+  ensureCss("themes/root.css", "root-theme-css");
 }
 
 function ensureCss(href, id) {
+  if (!href || !id) return;
   if (document.getElementById(id)) return;
 
   const link = document.createElement("link");

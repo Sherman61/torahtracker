@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Torah Tracker Calendar</title>
-  <link rel="stylesheet" href="themes/light/calendar.css"/>
+
   <script src="themes/theme.js"></script>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
-    
+  <link rel="stylesheet" href="css/calendar.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
+
 <body>
   <h1>Torah Tracker <span style="font-size: medium; margin: 0%;">Mishnayes</span></h1>
-  
+
   <i class="fa-solid fa-arrow-left" id="openNav" onclick="location.href='settings.html'"></i>
 
   <!-- calendar grid -->
@@ -19,36 +24,38 @@
 
   <!-- overlay + menu -->
   <div id="menuOverlay" class="hidden">
-    
+
     <div id="menu" class="menu-hidden">
-      
-      <div id="instruction"><p>select a date</p> 
+
+      <div id="instruction">
+        <p>select a date</p>
 
       </div>
-       <button id="backBtn" >
-  <i class="fa fa-arrow-left"></i> Back
-</button>
-      
-        
+      <button id="backBtn">
+        <i class="fa fa-arrow-left"></i> Back
+      </button>
 
-    
+
+
+
       <!-- list of masechtot -->
       <div id="bbContainer"></div>
       <!-- list of pereks -->
-         
+
       <div id="pereksContainer"></div>
-      
-  
-       <button id="clearBtn" >Clear</button>
+
+
+      <button id="clearBtn">Clear</button>
       <button id="cancelBtn">Cancel</button>
     </div>
-    
+
   </div>
-    <!-- new Clear All button -->
-      <button id="clearAllBtn">Clear All Dates</button>
+  <!-- new Clear All button -->
+  <button id="clearAllBtn">Clear All Dates</button>
   <script src="js/mesechtot-data.js"></script>
   <script src="js/db.js"></script>
   <script src="js/calendar.js"></script>
   <script src="js/calendar-sidebar.js"></script>
 </body>
+
 </html>

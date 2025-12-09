@@ -190,3 +190,37 @@ function initPerekGoalToggle(config) {
   // Initial sync
   refresh();
 }
+
+function initScrollToMesechetToggle(config) {
+  const { toggleBtnId, statusElId } = config;
+
+  const toggleBtn = document.getElementById(toggleBtnId);
+  const statusEl = document.getElementById(statusElId);
+
+  // default: ON
+  let enabled = localStorage.getItem("scrollToCurrentMesechet");
+  if (enabled === null) {
+    enabled = "true";
+    localStorage.setItem("scrollToCurrentMesechet", enabled);
+  }
+
+  function refresh() {
+    const isOn = localStorage.getItem("scrollToCurrentMesechet") === "true";
+    if (statusEl) {
+      statusEl.textContent = isOn
+        ? "Auto scroll to current masechet is ON"
+        : "Auto scroll to current masechet is OFF";
+    }
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      const isOn = localStorage.getItem("scrollToCurrentMesechet") === "true";
+      localStorage.setItem("scrollToCurrentMesechet", (!isOn).toString());
+      refresh();
+    });
+  }
+
+  // Initial sync
+  refresh();
+}

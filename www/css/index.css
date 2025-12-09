@@ -2,15 +2,63 @@ body,
 html {
   margin: 0;
   padding: 0;
- height: 100vh;
+  height: 100vh;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   background-color: var(--page-bg-alt);
   font-family: Arial, sans-serif;
 }
+
+/* Progress dock at bottom */
+.stats-dock {
+  position: sticky;
+  bottom: 0;
+  background: var(--primary);
+  color: var(--primary-text);
+  border-top: 2px solid var(--primary-dark);
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  z-index: 10;
+}
+
+.stats-dock summary {
+  list-style: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.stats-dock summary::-webkit-details-marker {
+  display: none; /* hide default marker */
+}
+
+.stats-dock summary::before {
+  content: "📊 ";
+}
+
+.stats-dock .header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.stats-dock .header p {
+  margin: 0;
+  color: var(--surface-soft);
+}
+
+/* hide expanded header when dock is collapsed */
+.stats-dock:not([open]) .header {
+  display: none;
+}
+
+/* Top “header” inside the dock */
 .header {
-  margin-top: 0px;
+  margin-top: 0;
   position: sticky;
   top: 0;
   background-color: var(--primary);
@@ -23,46 +71,8 @@ html {
   gap: 20px;
   flex-wrap: wrap;
 }
-/* style the details/summary dock */
-.stats-dock {
-  position: sticky;
-  bottom: 0;
-  background: var(--primary);
-  color: var(--primary-text);
-  border-top: 2px solid var(--primary-dark);
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
-  width: 100%;
-  z-index: 10;
-}
-.stats-dock summary {
-  list-style: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-weight: bold;
-}
-.stats-dock summary::-webkit-details-marker {
-  display: none; /* hide the default marker */
-}
-.stats-dock summary::before {
-  content: "📊 ";
-}
-.stats-dock .header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.5rem 1rem;
-}
-.stats-dock .header p {
-  margin: 0;
-  color: var(--surface-soft);
-}
 
-/* Make sure internal collapse hides the header */
-.stats-dock:not([open]) .header {
-  display: none;
-}
+/* Responsive header font / spacing */
 @media only screen and (max-width: 800px) {
   .header {
     font-size: 1.5em;
@@ -76,29 +86,32 @@ html {
     gap: 5px;
   }
 }
+
+/* Masechet + perek label */
 #mesandperek,
 #bold {
   text-align: center;
   font-weight: 700;
   font-size: 1.5em;
-  /* margin-bottom: 40px; */
 }
+
+/* Centered main container with fixed horizontal position */
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed; /* Keeps the container in a fixed position */
-  top: initial; /* Keeps the container in its natural vertical position */
-  left: 50%; /* Center horizontally in the viewport */
-  transform: translateX(-50%); /* Adjust only horizontally */
+  position: relative;
+  top: initial;
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
   font-size: 20px;
-  /* margin-top: 20px; Adds 20px margin to the top */
 }
 
+/* Sidebar with masechtot list */
 .sidebar {
   width: 300px;
-  position: relative; /* To position the sideNavContainer absolutely relative to this element */
+  position: relative;
   background: var(--surface);
   padding: 10px;
   transition: transform 0.3s ease;
@@ -114,6 +127,19 @@ html {
   overflow-y: auto;
 }
 
+/* dynamic list of masechtot: */
+#mesechetList.submenu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  color: var(--text);
+}
+
+#mesechetList.submenu li {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
 .menu-item {
   margin-bottom: 10px;
 }
@@ -125,15 +151,16 @@ html {
   padding: 5px;
 }
 
+/* Overlay list of perakim */
 .side-nav-container {
-  position: fixed; /* Changed from fixed to absolute */
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   z-index: 15;
-  max-height: 100%; /* Changed from 60vh to 100% to cover the entire sidebar */
+  max-height: 100%;
   overflow-y: auto;
-  width: 100%; /* Make it the same width as the sidebar */
+  width: 100%;
   padding: 10px;
   border-left: 1px solid var(--border);
   background: var(--surface);
@@ -144,14 +171,16 @@ html {
   top: 0;
   width: 300px;
   background: var(--surface);
-
   border-left: 1px solid var(--border);
   transform: translateX(0px);
   transition: transform 0.5s ease-out;
   overflow-y: auto;
-  max-height: 60vh; /* Add this line to limit the height of the side navigation */
+  max-height: 60vh;
+  padding: 15px 20px;
+  cursor: pointer;
 }
 
+/* Scrollbar styling for perakim overlay */
 .side-nav-container::-webkit-scrollbar {
   width: 10px;
 }
@@ -168,25 +197,29 @@ html {
   background: var(--muted-strong);
 }
 
+/* Generic list + hover */
 li {
   list-style: none;
   cursor: pointer;
 }
+
 .bb:hover {
   font-weight: bolder;
- 
 }
 
+/* Highlight for current masechet */
+.current-mesechet {
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
+/* Hide helpers */
 .hide,
 .hidden {
   display: none !important;
 }
 
-.side-nav {
-  padding: 15px 20px;
-  cursor: pointer;
-  transition: 0.5s;
-}
+/* Back arrow */
 #openNav {
   position: fixed;
   top: 10px;
@@ -197,22 +230,22 @@ li {
   cursor: pointer;
 }
 
+/* Spacer under list so bottom dock doesn’t overlap */
 .space {
   margin-bottom: 90px;
   padding-bottom: 50px;
-
   background-color: var(--primary);
 }
 
-
-
+/* Wider sidebar on larger screens */
 @media (min-width: 800px) and (min-height: 620px) {
   .sidebar {
     width: 500px;
-    padding: 0px;
+    padding: 0;
   }
 }
 
+/* Adjust max-height on smaller screens */
 @media (max-width: 800px) {
   .sidebar,
   .menu {
@@ -226,7 +259,7 @@ li {
   .menu {
     max-height: 48vh;
   }
-  header{
+  header {
     gap: 5px;
   }
 }
@@ -237,15 +270,41 @@ li {
     max-height: 46vh;
   }
 }
+
 @media (max-width: 350px) {
   .sidebar,
   .menu {
     max-height: 42vh;
   }
 }
+
 @media (max-height: 500px) {
   .sidebar,
   .menu {
     max-height: 42vh;
   }
+}
+
+.section-title {
+  font-size: 1.08em;
+  background-color: var(--bg);
+  font-weight: 300;
+  margin-bottom: 10px;
+  cursor: default;
+}
+
+.bb.current-mesechet {
+  font-size: 1.1em;
+  font-weight: bolder;
+  text-decoration: underline;
+}
+
+.perek-header-title {
+  flex: 1;
+  /* take up the remaining space between left & right */
+  font-size: 18px;
+  font-weight: bold;
+  padding: 4px 0;
+  text-align: center;
+  /* center the text within that space */
 }

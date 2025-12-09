@@ -11,25 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <style>
     /* 1) Define all colors as CSS variables on :root */
-    :root {
-      /* Light‐mode defaults */
-      --bg: #fff;
-      --text: #333;
-      --border: #ccc;
-      --th-bg: #f2f2f2;
-      --goal-hover: #eef;
 
-    }
-
-    /* 2) Dark‐mode overrides whenever <html> has class "dark" */
-    html.dark {
-      --bg: #121212;
-      --text: #e0e0e0;
-      --border: #444;
-      --th-bg: #333;
-      --goal-hover: #444;
-      --nav-color: #fff;
-    }
 
     /* 3) Base styles use those variables */
     body {
@@ -39,14 +21,7 @@
       color: var(--text);
     }
 
-    #openNav {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      font-size: 24px;
-      color: var(--nav-color);
-      cursor: pointer;
-    }
+
 
     table {
       width: 100%;
@@ -73,6 +48,7 @@
       background: var(--goal-hover);
     }
   </style>
+  <link rel="stylesheet" href="css/daily-progress.css">
 </head>
 
 <body>
