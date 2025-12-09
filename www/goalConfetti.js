@@ -8,23 +8,43 @@ window.checkAndLaunchGoalConfetti = function () {
     "#dc3545",
     "#f8f9fa",
   ];
-  const max_particles = 350;
-  const confettiDuration = 5000; // 5 seconds
-  const today = new Date().toDateString();
-  const confettiTag = "confetti-already-fired";
-  const start = parseInt(localStorage.getItem("pereksTodayStartIndex") || "0");
-  const goalAmount = parseInt(localStorage.getItem("perekGoal") || "18");
-  const goalIndex = start + goalAmount + 1; // +1 to account for the current perek
+  const max_particles = 250;
+  const confettiDuration = 4000; // 4 seconds
+
+  // Use ISO date for key, but keep lastDate (toDateString) for your existing logic
+  const todayIso = new Date().toISOString().split("T")[0]; // e.g. "2025-07-18"
+  const todayNice = new Date().toDateString(); // e.g. "Fri Jul 18 2025"
+
+  const confettiPrefix = "confetti-already-fired-";
+
+  // --- CLEAN UP OLD CONFETTI FLAGS ---
+  for (let i = localStorage.length - 1; i >= 0; i--) {
+    const key = localStorage.key(i);
+    if (!key) continue;
+
+    if (key.startsWith(confettiPrefix) && key !== confettiPrefix + todayIso) {
+      localStorage.removeItem(key);
+    }
+  }
+
+  // --- GOAL / INDEX LOGIC ---
+  const start = parseInt(
+    localStorage.getItem("pereksTodayStartIndex") || "0",
+    10
+  );
+  const goalAmount = parseInt(localStorage.getItem("perekGoal") || "18", 10);
+  const goalIndex = start + goalAmount; // this is zero-based like your other code
 
   const currentIndex =
-    parseInt(localStorage.getItem("globalPerekIndex") || "1") - 0;
+    parseInt(localStorage.getItem("globalPerekIndex") || "1", 10) - 1;
   const lastDate = localStorage.getItem("lastDate") || "";
 
-  const alreadyFired = localStorage.getItem(confettiTag + today);
+  const todayKey = confettiPrefix + todayIso;
+  const alreadyFired = localStorage.getItem(todayKey);
   if (alreadyFired === "true") return;
 
-  if (currentIndex >= goalIndex && lastDate === today) {
-    localStorage.setItem(confettiTag + today, "true");
+  if (currentIndex >= goalIndex && lastDate === todayNice) {
+    localStorage.setItem(todayKey, "true");
     injectConfettiStyles();
     launchConfetti();
   }
@@ -61,17 +81,17 @@ window.checkAndLaunchGoalConfetti = function () {
     const style = document.createElement("style");
     style.id = "confetti-style";
     style.textContent = `
-            @keyframes fall {
-                0% { transform: translateY(0vh); opacity: 1; }
-                100% { transform: translateY(100vh); opacity: 0; }
-            }
-            .particle {
-                will-change: transform;
-                border-radius: 50%;
-                z-index: 9999;
-                pointer-events: none;
-            }
-        `;
+      @keyframes fall {
+        0%   { transform: translateY(0vh);   opacity: 1; }
+        100% { transform: translateY(100vh); opacity: 0; }
+      }
+      .particle {
+        will-change: transform;
+        border-radius: 50%;
+        z-index: 9999;
+        pointer-events: none;
+      }
+    `;
     document.head.appendChild(style);
   }
 };

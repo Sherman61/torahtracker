@@ -224,3 +224,102 @@ function initScrollToMesechetToggle(config) {
   // Initial sync
   refresh();
 }
+
+function initScrollToggles(config) {
+  const { globalBtnId, mishBtnId, tehBtnId, statusElId } = config;
+
+  const globalBtn = document.getElementById(globalBtnId);
+  const mishBtn = document.getElementById(mishBtnId);
+  const tehBtn = document.getElementById(tehBtnId);
+  const statusEl = document.getElementById(statusElId);
+
+  if (!globalBtn || !mishBtn || !tehBtn || !statusEl) return;
+
+  function getStates() {
+    const globalRaw = localStorage.getItem("scrollGlobal");
+    const mishRaw = localStorage.getItem("scrollMishnayes");
+    const tehRaw = localStorage.getItem("scrollTehillim");
+
+    // default everything ON if never set
+    const globalOn = globalRaw === null || globalRaw === "true";
+    const mishOn = mishRaw === null || mishRaw === "true";
+    const tehOn = tehRaw === null || tehRaw === "true";
+
+    return { globalOn, mishOn, tehOn };
+  }
+
+  function setStates({ globalOn, mishOn, tehOn }) {
+    localStorage.setItem("scrollGlobal", globalOn.toString());
+    localStorage.setItem("scrollMishnayes", mishOn.toString());
+    localStorage.setItem("scrollTehillim", tehOn.toString());
+  }
+
+  function updateToggleButton(btn, isOn, disabled) {
+    btn.classList.remove("on", "off", "disabled");
+    btn.classList.add(isOn ? "on" : "off");
+    if (disabled) btn.classList.add("disabled");
+
+    const icon = btn.querySelector("i");
+    const text = btn.querySelector(".toggle-text");
+
+    if (icon) {
+      icon.className = isOn
+        ? "fa-solid fa-toggle-on"
+        : "fa-solid fa-toggle-off";
+    }
+    if (text) {
+      text.textContent = isOn ? "On" : "Off";
+    }
+
+    btn.disabled = !!disabled;
+  }
+
+  function refreshUI() {
+    const { globalOn, mishOn, tehOn } = getStates();
+
+    updateToggleButton(globalBtn, globalOn, false);
+    updateToggleButton(mishBtn, mishOn && globalOn, !globalOn);
+    updateToggleButton(tehBtn, tehOn && globalOn, !globalOn);
+
+    if (!globalOn) {
+      statusEl.textContent =
+        "Global auto scroll is OFF. Mishnayes and Tehillim will not auto scroll.";
+    } else {
+      statusEl.textContent = `Global ON. Mishnayes: ${
+        mishOn ? "On" : "Off"
+      }, Tehillim: ${tehOn ? "On" : "Off"}.`;
+    }
+  }
+
+  // Click handlers
+  globalBtn.addEventListener("click", () => {
+    const { globalOn } = getStates();
+
+    if (globalOn) {
+      // Turn everything off
+      setStates({ globalOn: false, mishOn: false, tehOn: false });
+    } else {
+      // Turn everything on by default
+      setStates({ globalOn: true, mishOn: true, tehOn: true });
+    }
+    refreshUI();
+  });
+
+  mishBtn.addEventListener("click", () => {
+    const { globalOn, mishOn, tehOn } = getStates();
+    if (!globalOn) return; // respect global off
+
+    setStates({ globalOn, mishOn: !mishOn, tehOn });
+    refreshUI();
+  });
+
+  tehBtn.addEventListener("click", () => {
+    const { globalOn, mishOn, tehOn } = getStates();
+    if (!globalOn) return; // respect global off
+
+    setStates({ globalOn, mishOn, tehOn: !tehOn });
+    refreshUI();
+  });
+
+  refreshUI();
+}

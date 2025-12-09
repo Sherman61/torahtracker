@@ -17,89 +17,120 @@
     <div class="container">
         <h1>Settings</h1>
 
+        <!-- Navigation links -->
         <div class="links">
-            <a href="calcualate.html" class="themes-link fade">Calculater</a>
+            <a href="calcualate.html" class="themes-link fade">Calculator</a>
             <a href="themes/index.html" class="themes-link fade">Themes</a>
             <a href="start-perek.html">Edit start day perek</a>
             <a href="daily-progress.html">Daily progress</a>
-
-
             <a href="calendar.html">Calendar</a>
             <a href="changelog.html" class="themes-link fade">Change log</a>
             <a href="extras.html">Extras</a>
-
         </div>
+
+        <!-- Goal display + edit -->
         <div class="goal-display-container">
             <h2 id="goal"></h2>
-        </div>
-        <div class="edit-goal-container">
-            <button id="editGoalBtn">Edit Perek Goal</button>
 
-            <div id="goalEditPanel" class="goal-edit-panel"
-                style="display: none; margin-top: 10px; gap: 8px; align-items: center;">
-                <input type="number" id="goalInput" min="1" placeholder="Perekim per day"
-                    style="padding: 6px 8px; border-radius: 6px; border: 1px solid #ccc; max-width: 120px;" />
-                <button id="saveGoalBtn"
-                    style="padding: 6px 10px; border-radius: 6px; border: none; background: #4caf50; color: white; cursor: pointer;">
-                    Save
-                </button>
-                <button id="cancelGoalBtn" type="button"
-                    style="padding: 6px 10px; border-radius: 6px; border: 1px solid #ccc; background: #f5f5f5; cursor: pointer;">
-                    Cancel
-                </button>
+
+            <div class="edit-goal-container">
+                <button id="editGoalBtn">Edit Perek Goal</button>
+
+                <div id="goalEditPanel" class="goal-edit-panel">
+                    <input type="number" id="goalInput" min="1" placeholder="Perekim per day" />
+                    <button id="saveGoalBtn">Save</button>
+                    <button id="cancelGoalBtn" type="button">Cancel</button>
+                </div>
             </div>
         </div>
-
-        <div style="margin-top: 30px;">
+        <!-- Goal display toggle -->
+        <div class="card-block">
             <h2>Perek Goal Display</h2>
+            <p class="block-desc">
+                Turn this on if you want the Mishnayes page to show your daily goal
+                (and the checkmark when you hit it).
+            </p>
             <button id="toggleGoalDisplayBtn">Toggle Perek Goal</button>
             <p id="goalStatus"></p>
         </div>
-    </div>
 
-    <!-- Scroll to current masechet toggle -->
-    <div class="setting-block">
-        <h3>Scroll to current Masechet</h3>
-        <p id="scroll-status"></p>
-        <button id="scroll-toggle-btn" type="button">
-            Toggle scroll behavior
-        </button>
-    </div>
+        <!-- Scroll to current masechet toggle -->
+        <!-- Auto scroll settings -->
+        <div class="setting-block">
+            <h3>Auto scroll settings</h3>
+            <p class="block-desc">
+                Control which pages auto scroll to where you are up to when you open them.
+            </p>
 
-    <script src="js/settings.js">
+            <!-- Global toggle -->
+            <div class="toggle-row">
+                <span class="toggle-label">Global auto scroll</span>
+                <button id="scroll-global-btn" class="toggle-btn" type="button">
+                    <i class="fa-solid fa-toggle-on"></i>
+                    <span class="toggle-text">On</span>
+                </button>
+            </div>
+            <p class="toggle-help">
+                When this is off, no page will auto scroll, even if the page toggle is on.
+            </p>
 
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const goalAPI = initPerekGoalControls({
-                goalElId: 'goal',
-                editBtnId: 'editGoalBtn',
-                panelId: 'goalEditPanel',
-                inputId: 'goalInput',
-                saveBtnId: 'saveGoalBtn',
-                cancelBtnId: 'cancelGoalBtn',
-                renderGoal: (goalEl, perekGoal) => {
-                    goalEl.textContent = 'Daily perek goal: ' + perekGoal;
-                }
-            });
+            <!-- Mishnayes toggle -->
+            <div class="toggle-row">
+                <span class="toggle-label">Mishnayes auto scroll</span>
+                <button id="scroll-mish-btn" class="toggle-btn" type="button">
+                    <i class="fa-solid fa-toggle-on"></i>
+                    <span class="toggle-text">On</span>
+                </button>
+            </div>
 
-            initPerekGoalToggle({
-                toggleBtnId: 'toggleGoalDisplayBtn',
-                statusElId: 'goalStatus',
-                goalContainerSelector: '.goal-display-container',
-                onToggle: (show) => {
-                    if (show && goalAPI && goalAPI.updateGoalDisplay) {
-                        goalAPI.updateGoalDisplay();
+            <!-- Tehillim toggle -->
+            <div class="toggle-row">
+                <span class="toggle-label">Tehillim auto scroll</span>
+                <button id="scroll-teh-btn" class="toggle-btn" type="button">
+                    <i class="fa-solid fa-toggle-on"></i>
+                    <span class="toggle-text">On</span>
+                </button>
+            </div>
+
+            <p id="scroll-status" class="toggle-status"></p>
+        </div>
+
+
+        <script src="js/settings.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const goalAPI = initPerekGoalControls({
+                    goalElId: 'goal',
+                    editBtnId: 'editGoalBtn',
+                    panelId: 'goalEditPanel',
+                    inputId: 'goalInput',
+                    saveBtnId: 'saveGoalBtn',
+                    cancelBtnId: 'cancelGoalBtn',
+                    renderGoal: (goalEl, perekGoal) => {
+                        goalEl.textContent = 'Daily perek goal: ' + perekGoal;
                     }
-                }
-            });
+                });
 
-            initScrollToMesechetToggle({
-                toggleBtnId: "scroll-toggle-btn",
-                statusElId: "scroll-status",
+                initPerekGoalToggle({
+                    toggleBtnId: 'toggleGoalDisplayBtn',
+                    statusElId: 'goalStatus',
+                    goalContainerSelector: '.goal-display-container',
+                    onToggle: (show) => {
+                        if (show && goalAPI && goalAPI.updateGoalDisplay) {
+                            goalAPI.updateGoalDisplay();
+                        }
+                    }
+                });
+
+                // new multi toggle init
+                initScrollToggles({
+                    globalBtnId: 'scroll-global-btn',
+                    mishBtnId: 'scroll-mish-btn',
+                    tehBtnId: 'scroll-teh-btn',
+                    statusElId: 'scroll-status'
+                });
             });
-        });
-    </script>
+        </script>
 
 </body>
 

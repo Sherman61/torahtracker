@@ -42,7 +42,7 @@ h1 {
   transform: translateY(-1px);
 }
 
-/* Goal display + editor */
+/* Goal display card */
 .goal-display-container {
   margin-top: 20px;
   padding: 12px 14px;
@@ -57,6 +57,7 @@ h1 {
   color: var(--text-strong);
 }
 
+/* Goal edit row */
 .edit-goal-container {
   margin-top: 12px;
   display: flex;
@@ -65,7 +66,7 @@ h1 {
   align-items: center;
 }
 
-/* Generic button styling */
+/* Generic button base */
 button {
   font-family: inherit;
 }
@@ -85,7 +86,7 @@ button {
   filter: brightness(0.95);
 }
 
-/* Inline panel for goal edit (you already have inline styles, this just backs it up) */
+/* Inline panel for goal edit */
 .goal-edit-panel {
   display: none;
   gap: 8px;
@@ -104,11 +105,26 @@ button {
 
 .goal-edit-panel button {
   font-size: 0.9rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  cursor: pointer;
 }
 
-/* Perek goal display toggle section */
-.container > div:nth-of-type(3) {
-  /* the block that has "Perek Goal Display" title and toggle */
+#saveGoalBtn {
+  background: #4caf50;
+  color: #fff;
+  border-color: #4caf50;
+}
+
+#cancelGoalBtn {
+  background: var(--surface-soft);
+  color: var(--text);
+}
+
+/* Reusable card-style blocks */
+.card-block,
+.setting-block {
   margin-top: 30px;
   padding: 14px 16px;
   border-radius: 8px;
@@ -116,13 +132,21 @@ button {
   border: 1px solid var(--border);
 }
 
-.container > div:nth-of-type(3) h2 {
+.card-block h2,
+.setting-block h3 {
   margin-top: 0;
   margin-bottom: 8px;
   font-size: 1.1rem;
   color: var(--text-strong);
 }
 
+.block-desc {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  color: var(--muted-text);
+}
+
+/* Perek goal toggle */
 #toggleGoalDisplayBtn {
   padding: 6px 12px;
   border-radius: 6px;
@@ -144,22 +168,7 @@ button {
   color: var(--muted-text);
 }
 
-/* Scroll-to-masechet setting block */
-.setting-block {
-  max-width: 800px;
-  margin: 0 auto 24px;
-  padding: 16px 18px;
-  border-radius: 8px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-}
-
-.setting-block h3 {
-  margin: 0 0 8px;
-  font-size: 1.05rem;
-  color: var(--text-strong);
-}
-
+/* Scroll-to-masechet block */
 #scroll-status {
   margin: 4px 0 10px;
   font-size: 0.9rem;
@@ -192,7 +201,7 @@ button {
   z-index: 10;
 }
 
-/* Old "pages" sections, if you still use them elsewhere */
+/* Old "page" sections if you still use them somewhere */
 .security-page,
 .themes-page,
 .transfer-page,
@@ -239,8 +248,66 @@ button {
   }
 
   .goal-display-container,
-  .container > div:nth-of-type(3),
+  .card-block,
   .setting-block {
     padding: 12px;
   }
+}
+
+/* Row layout for each toggle */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.toggle-label {
+  font-size: 0.95rem;
+  color: var(--text-strong);
+}
+
+/* Icon toggle button */
+.toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  color: var(--text-strong);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.toggle-btn i {
+  font-size: 1.2rem;
+}
+
+/* On / off colors */
+.toggle-btn.on {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-text);
+}
+
+.toggle-btn.off {
+  background: var(--surface-soft);
+  border-color: var(--border);
+  color: var(--muted-text);
+}
+
+/* Disabled when global off */
+.toggle-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.toggle-help,
+.toggle-status {
+  font-size: 0.85rem;
+  color: var(--muted-text);
+  margin: 4px 0 0;
 }

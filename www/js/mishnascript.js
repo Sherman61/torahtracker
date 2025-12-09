@@ -41,6 +41,27 @@ let pereksTodayStartIndex = 0;
 let lastDate = "";
 let isShowingPereks = false;
 
+// Initialize default values if not present
+function initializeDefaults() {
+  if (localStorage.getItem("mesechet") === null) {
+    localStorage.setItem("mesechet", "ברכות");
+    localStorage.setItem("perek", "perek 1");
+    localStorage.setItem("globalPerekIndex", "1");
+    // localStorage.setItem("pereksTodayStartIndex", "0");
+  }
+
+  if (localStorage.getItem("selectedTheme") === null) {
+    localStorage.setItem("selectedTheme", "light");
+  }
+  if (localStorage.getItem("perekGoal") === null) {
+    localStorage.setItem("perekGoal", "18");
+  }
+  if (localStorage.getItem("displayPerekGoal") === null) {
+    localStorage.setItem("displayPerekGoal", "true");
+  }
+}
+initializeDefaults();
+
 function calculateGlobalPerekIndex(mesechetIndex1Based, perekIndexZeroBased) {
   let globalPerekIndex = 0;
   for (let i = 0; i < mesechetIndex1Based - 1; i++) {
@@ -170,6 +191,7 @@ function handlePerekClick(prevIndex, newIndex, mesechet, perekNumber) {
   const diff = newIndex - prevIndex;
   if (diff < -100 || (diff < -50 && confirm("Reset to earlier perek?"))) {
     pereksTodayStartIndex = newIndex;
+    // handleDIffereencence(prevIndex, newIndex);
   }
   currentGlobalPerekIndex = newIndex;
 
@@ -185,11 +207,23 @@ function handlePerekClick(prevIndex, newIndex, mesechet, perekNumber) {
   checkAndLaunchGoalConfetti();
 }
 
+function isScrollEnabledFor(pageKey) {
+  const globalRaw = localStorage.getItem("scrollGlobal");
+  const globalOn = globalRaw === null || globalRaw === "true";
+  if (!globalOn) return false;
+
+  const pageRaw = localStorage.getItem(pageKey);
+  const pageOn = pageRaw === null || pageRaw === "true";
+
+  return pageOn;
+}
+
 function scrollToCurrentMesechet() {
   const scrollSetting = localStorage.getItem("scrollToCurrentMesechet");
   if (scrollSetting === "false") {
     return; // user turned it off
   }
+  if (!isScrollEnabledFor("scrollMishnayes")) return;
   const mesechetName = (localStorage.getItem("mesechet") || "").trim();
   if (!mesechetName) return;
 

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IndexedDB – Daily Progress Viewer</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="themes/theme.js"></script>
+
+    <style>
+        :root {
+            /* fallback if root.css not loaded yet */
+            --page-bg-alt: #f4f4f4;
+            --surface: #ffffff;
+            --surface-soft: #f8f8f8;
+            --border: #cccccc;
+            --text: #333333;
+            --text-strong: #111111;
+            --muted-text: #777777;
+            --primary: #3f567e;
+            --primary-text: #ffffff;
+            --danger: #c0392b;
+            --nav-color: #000000;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--page-bg-alt);
+            color: var(--text);
+        }
+
+        #openNav {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            margin: 10px;
+            font-size: 24px;
+            color: var(--nav-color);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px 16px 40px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 10px 0 6px;
+            color: var(--text-strong);
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--muted-text);
+            font-size: 0.95rem;
+        }
+
+        .info-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding: 10px 12px;
+            background: var(--surface);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        .info-bar span {
+            white-space: nowrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            font-size: 0.9rem;
+            background: var(--surface-soft);
+            color: var(--text);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--primary-text);
+            border-color: var(--primary);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+            border-color: var(--danger);
+        }
+
+        .btn:hover {
+            filter: brightness(0.95);
+        }
+
+        .table-wrapper {
+            background: var(--surface);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            padding: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+            font-size: 0.9rem;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        th {
+            background: var(--surface-soft);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        tr:nth-child(even) td {
+            background: rgba(0, 0, 0, 0.01);
+        }
+
+        tr:hover td {
+            background: rgba(63, 86, 126, 0.05);
+        }
+
+        td.actions {
+            white-space: nowrap;
+        }
+
+        td.goal-toggle {
+            cursor: pointer;
+        }
+
+        td.goal-toggle:hover {
+            filter: brightness(1.1);
+        }
+
+        .empty-message {
+            padding: 16px;
+            text-align: center;
+            color: var(--muted-text);
+            font-size: 0.95rem;
+        }
+
+        .raw-panel {
+            margin-top: 18px;
+            padding: 10px 12px;
+            background: var(--surface);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+
+        .raw-panel summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-strong);
+            margin-bottom: 4px;
+        }
+
+        .raw-panel pre {
+            margin: 8px 0 0;
+            padding: 8px;
+            background: var(--surface-soft);
+            border-radius: 6px;
+            max-height: 300px;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px 10px 32px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            .info-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            table {
+                font-size: 0.8rem;
+                min-width: 520px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <i class="fa-solid fa-arrow-left" id="openNav" onclick="location.href='settings.html'"></i>
+
+    <div class="container">
+        <h1>Daily Progress (IndexedDB)</h1>
+        <p class="subtitle">
+            Viewing <strong>TorahTrackerDB</strong> / <strong>dailyProgress</strong>
+        </p>
+
+        <div class="info-bar">
+            <span id="db-info">Loading record count…</span>
+            <div>
+                <button id="reload-btn" class="btn">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Reload
+                </button>
+                <button id="clear-all-btn" class="btn btn-danger">
+                    <i class="fa-solid fa-trash"></i>
+                    Clear All
+                </button>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Start Index</th>
+                        <th>End Index</th>
+                        <th>Pereks Today</th>
+                        <th>Goal Reached</th>
+                        <th class="actions">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="data-body">
+                    <!-- rows injected here -->
+                </tbody>
+            </table>
+        </div>
+
+        <details class="raw-panel" id="raw-panel" open>
+            <summary>Raw JSON dump</summary>
+            <pre id="raw-json">// waiting for data…</pre>
+        </details>
+    </div>
+
+    <script src="js/db.js"></script>
+    <script>
+        const tbody = document.getElementById('data-body');
+        const dbInfoEl = document.getElementById('db-info');
+        const rawJsonEl = document.getElementById('raw-json');
+        const reloadBtn = document.getElementById('reload-btn');
+        const clearAllBtn = document.getElementById('clear-all-btn');
+
+        async function loadTable() {
+            try {
+                const all = await getAllProgress();
+                tbody.innerHTML = '';
+
+                dbInfoEl.textContent = `Records: ${all.length}`;
+
+                if (!all.length) {
+                    const tr = document.createElement('tr');
+                    const td = document.createElement('td');
+                    td.colSpan = 6;
+                    td.className = 'empty-message';
+                    td.textContent = 'No records found in dailyProgress store.';
+                    tr.appendChild(td);
+                    tbody.appendChild(tr);
+                } else {
+                    all.forEach(entry => {
+                        const tr = document.createElement('tr');
+
+                        const goalMark = entry.goalReached ? '✔️' : '❌';
+
+                        tr.innerHTML = `
+              <td>${entry.date}</td>
+              <td>${entry.startIndex ?? '-'}</td>
+              <td>${entry.endIndex ?? '-'}</td>
+              <td>${entry.pereksToday ?? '-'}</td>
+              <td class="goal-toggle">${goalMark}</td>
+              <td class="actions">
+                <button class="btn btn-danger btn-delete">
+                  <i class="fa-solid fa-trash"></i>
+                  Delete
+                </button>
+              </td>
+            `;
+
+                        // Attach date in dataset for easy access
+                        tr.dataset.date = entry.date;
+
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                // Raw JSON
+                rawJsonEl.textContent = JSON.stringify(all, null, 2);
+            } catch (err) {
+                console.error(err);
+                dbInfoEl.textContent = 'Error loading DB contents';
+                rawJsonEl.textContent = 'Error: ' + err;
+            }
+        }
+
+        // Toggle goalReached on click
+        tbody.addEventListener('click', async (e) => {
+            const row = e.target.closest('tr');
+            if (!row || !row.dataset.date) return;
+
+            const date = row.dataset.date;
+
+            // Toggle goal cell
+            if (e.target.closest('.goal-toggle')) {
+                try {
+                    const rec = await getProgress(date);
+                    if (!rec) return;
+
+                    rec.goalReached = !rec.goalReached;
+
+                    await saveProgress(date, {
+                        startIndex: rec.startIndex,
+                        endIndex: rec.endIndex,
+                        pereksToday: rec.pereksToday,
+                        goalReached: rec.goalReached
+                    });
+
+                    e.target.textContent = rec.goalReached ? '✔️' : '❌';
+                    await loadTable(); // refresh raw JSON & counts
+                } catch (err) {
+                    console.error('Error toggling goalReached', err);
+                }
+            }
+
+            // Delete row
+            if (e.target.closest('.btn-delete')) {
+                if (!confirm(`Delete record for ${date}?`)) return;
+                try {
+                    await deleteProgress(date);
+                    await loadTable();
+                } catch (err) {
+                    console.error('Error deleting record', err);
+                }
+            }
+        });
+
+        // Reload button
+        reloadBtn.addEventListener('click', loadTable);
+
+        // Clear all
+        clearAllBtn.addEventListener('click', async () => {
+            if (!confirm('Clear ALL records from dailyProgress?')) return;
+            try {
+                await clearAllProgress();
+                await loadTable();
+            } catch (err) {
+                console.error('Error clearing store', err);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', loadTable);
+    </script>
+</body>
+
+</html>

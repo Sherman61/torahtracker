@@ -2,6 +2,9 @@
   text-align: center;
   font-weight: 800;
 }
+.bottom-nav a  {
+  font-weight: normal;
+}
 
 body {
   background-color: var(--page-bg-alt);
