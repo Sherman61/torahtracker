@@ -9,31 +9,128 @@
 body {
   background-color: var(--page-bg-alt);
   font-family: Arial, sans-serif;
+  min-height: 100vh;
+  overflow-y: auto;
 }
 body,
 html {
   margin: 0;
 }
 table {
-  width: fit;
-  border-collapse: collapse;
-  overflow: flow;
+  width: fit-content;
+  border-collapse: separate;
+  border-spacing: 8px;
   text-align: center;
-
   margin: 0 auto;
-  margin-top: 10px;
+  margin-top: 20px;
   font-size: 24px;
 }
 
 th,
 td {
-  border: 1px solid black;
-  padding: 10px;
+  padding: 15px;
   text-align: center;
 }
 
 tr {
-  background-color: var(--surface-soft);
+  background-color: transparent;
+}
+
+/* Clickable cell styles - more obvious design */
+.clickable-cell {
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+  position: relative;
+  user-select: none;
+  min-width: 70px;
+  height: 60px;
+  border-radius: 12px;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15), 
+              -2px -2px 8px rgba(255, 255, 255, 0.7);
+  border: 2px solid #d0d0d0;
+  font-size: 28px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/* Pulsing animation for first-time users */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15), 
+                -2px -2px 8px rgba(255, 255, 255, 0.7);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 4px 4px 12px rgba(76, 175, 80, 0.3), 
+                -3px -3px 12px rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* Apply pulse to all cells initially */
+tbody tr:first-child .clickable-cell {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.clickable-cell:hover {
+  background: linear-gradient(145deg, #4CAF50, #45a049);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25),
+              -3px -3px 15px rgba(255, 255, 255, 0.5);
+  border-color: #4CAF50;
+  color: white;
+}
+
+.clickable-cell:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.clickable-cell.checked {
+  background: linear-gradient(145deg, #4CAF50, #388E3C);
+  color: white;
+  font-weight: bold;
+  box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.2),
+              2px 2px 8px rgba(76, 175, 80, 0.4);
+  border-color: #2E7D32;
+  animation: none;
+}
+
+.clickable-cell.checked:hover {
+  background: linear-gradient(145deg, #66BB6A, #4CAF50);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.cell-icon {
+  font-size: 32px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+/* Placeholder text for empty cells */
+.clickable-cell:not(.checked):before {
+  content: '✓';
+  opacity: 0.15;
+  font-size: 28px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.clickable-cell:not(.checked):hover:before {
+  opacity: 0.4;
+  color: white;
+}
+
+.day-cell {
+  font-weight: bold;
+  background: linear-gradient(145deg, #1976D2, #1565C0);
+  color: white;
+  cursor: default;
+  border-radius: 12px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid #0D47A1;
 }
 
 #total {
@@ -46,8 +143,12 @@ tr {
 }
 
 th {
-  background-color: var(--text-strong);
-  color: var(--text);
+  background: linear-gradient(145deg, #1976D2, #1565C0);
+  color: white;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid #0D47A1;
 }
 
 input {
@@ -61,26 +162,63 @@ input {
   text-align: center;
 }
 
-#clear-all {
-  background-color: var(--primary);
+.clear-btn {
+  background: linear-gradient(145deg, #f44336, #d32f2f);
   color: white;
-  padding: 12px 20px;
+  padding: 14px 24px;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 14px;
-  margin-top: 10px;
+  font-size: 18px;
+  margin-top: 15px;
   width: 90%;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
+
+.clear-btn:hover {
+  background: linear-gradient(145deg, #e53935, #c62828);
+  transform: translateY(-3px);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.clear-btn:active {
+  transform: translateY(-1px);
+}
+
+.percent {
+  font-size: 20px;
+  font-weight: bold;
+}
+
 #torahPortion {
   font-weight: bold;
   font-size: 1.2em;
 }
+
+/* Helper text for first-time users */
+.parsha-panel:before {
+  content: '👆 לחץ על התאים לסימון';
+  display: block;
+  text-align: center;
+  color: var(--nav-color);
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  opacity: 0.7;
+  font-weight: normal;
+  animation: fadeInOut 3s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.9; }
+}
+
 @media (min-width: 680px) {
   table {
     width: 60%;
     box-sizing: border-box;
-    height: 200px;
   }
   input {
     height: 45px;
@@ -88,8 +226,6 @@ input {
 }
 
 @media (min-width: 500px) {
-  /* body{background-color:#ADD8E6;}} */
-
   .space {
     padding-bottom: 70px;
   }
@@ -97,21 +233,17 @@ input {
     background-color: var(--page-bg-alt);
   }
   #torahPortion {
-    /* background-color: var(--accent-strong); Gold background */
-
-    color: var(--nav-color); /* Black text */
-    padding: 10px; /* Padding for some space around the text */
-    /* margin: 20px auto; Centered with margin */
-    border-radius: 10px; /* Rounded corners */
+    color: var(--nav-color);
+    padding: 10px;
+    border-radius: 10px;
     border: 1px solid var(--nav-color);
-    /* Black border */
-    font-size: 1.1em; /* Larger text */
-
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adding some shadow for depth */
-    text-align: center; /* Centering the text */
-    width: 40%; /* Smaller width for larger screens */
+    font-size: 1.1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 40%;
   }
 }
+
 #openNav {
   position: fixed;
   top: 10px;
@@ -119,7 +251,14 @@ input {
   margin: 10px;
   font-size: 24px;
   color: var(--nav-color);
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
+
+#openNav:hover {
+  transform: scale(1.1) rotate(15deg);
+}
+
 .header {
   margin-top: 0px;
   position: sticky;
@@ -133,6 +272,7 @@ input {
   font-size: 2em;
   gap: 20px;
   flex-wrap: wrap;
+  z-index: 10;
 }
 
 @media only screen and (max-width: 800px) {
@@ -141,12 +281,34 @@ input {
   }
   table {
     width: 90%;
+    border-spacing: 6px;
+  }
+  .clickable-cell {
+    min-width: 60px;
+    height: 55px;
+  }
+  th, td {
+    padding: 12px;
   }
 }
 
 @media only screen and (max-width: 500px) {
   .header {
     font-size: 1em;
+  }
+  table {
+    border-spacing: 4px;
+  }
+  .clickable-cell {
+    min-width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+  .cell-icon {
+    font-size: 26px;
+  }
+  th, td {
+    padding: 10px;
   }
 }
 
@@ -155,14 +317,11 @@ input {
   position: relative;
   overflow: hidden;
   width: 100%;
-
-  /* max-width: 620px; */
   margin: 1rem auto;
 }
 
 .slider-inner {
   display: flex;
-
   transition: transform 0.3s ease;
   width: 100%;
 }
@@ -170,25 +329,39 @@ input {
 .parsha-panel {
   min-width: 100%;
   box-sizing: border-box;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+  padding-bottom: 80px;
 }
 
 .slider-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.1);
+  background: linear-gradient(145deg, #1976D2, #1565C0);
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   cursor: pointer;
   z-index: 1;
+  padding: 12px 18px;
+  border-radius: 8px;
+  color: white;
+  transition: all 0.2s ease;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.slider-btn:hover {
+  background: linear-gradient(145deg, #2196F3, #1976D2);
+  transform: translateY(-50%) scale(1.15);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
 }
 
 #prevParsha {
-  left: 0;
+  left: 5px;
 }
 
 #nextParsha {
-  right: 0;
+  right: 5px;
 }
 
 .hidden {
@@ -197,4 +370,10 @@ input {
 
 .parsha-panel:only-child h2.dbparsh {
   display: none;
+}
+
+.dbparsha {
+  margin: 15px 0;
+  color: var(--nav-color);
+  font-size: 1.5em;
 }
