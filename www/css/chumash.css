@@ -36,6 +36,45 @@ tr {
   background-color: var(--surface-soft);
 }
 
+/* Clickable cell styles */
+.clickable-cell {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: var(--surface-soft);
+  position: relative;
+  user-select: none;
+  min-width: 60px;
+  height: 50px;
+}
+
+.clickable-cell:hover {
+  background-color: var(--primary);
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.clickable-cell.checked {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+}
+
+.clickable-cell.checked:hover {
+  background-color: #45a049;
+}
+
+.cell-icon {
+  font-size: 24px;
+  display: inline-block;
+}
+
+.day-cell {
+  font-weight: bold;
+  background-color: var(--text-strong) !important;
+  color: var(--text);
+  cursor: default;
+}
+
 #total {
   font-size: 20px;
   font-weight: bold;
@@ -61,21 +100,35 @@ input {
   text-align: center;
 }
 
-#clear-all {
+.clear-btn {
   background-color: var(--primary);
   color: white;
   padding: 12px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   margin-top: 10px;
   width: 90%;
+  transition: all 0.3s ease;
+  font-weight: bold;
 }
+
+.clear-btn:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.clear-btn:active {
+  transform: translateY(0);
+}
+
 #torahPortion {
   font-weight: bold;
   font-size: 1.2em;
 }
+
 @media (min-width: 680px) {
   table {
     width: 60%;
@@ -87,8 +140,6 @@ input {
 }
 
 @media (min-width: 500px) {
-  /* body{background-color:#ADD8E6;}} */
-
   .space {
     padding-bottom: 70px;
   }
@@ -96,21 +147,17 @@ input {
     background-color: var(--page-bg-alt);
   }
   #torahPortion {
-    /* background-color: var(--accent-strong); Gold background */
-
-    color: var(--nav-color); /* Black text */
-    padding: 10px; /* Padding for some space around the text */
-    /* margin: 20px auto; Centered with margin */
-    border-radius: 10px; /* Rounded corners */
+    color: var(--nav-color);
+    padding: 10px;
+    border-radius: 10px;
     border: 1px solid var(--nav-color);
-    /* Black border */
-    font-size: 1.1em; /* Larger text */
-
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adding some shadow for depth */
-    text-align: center; /* Centering the text */
-    width: 40%; /* Smaller width for larger screens */
+    font-size: 1.1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 40%;
   }
 }
+
 #openNav {
   position: fixed;
   top: 10px;
@@ -118,7 +165,14 @@ input {
   margin: 10px;
   font-size: 24px;
   color: var(--nav-color);
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
+
+#openNav:hover {
+  transform: scale(1.1);
+}
+
 .header {
   margin-top: 0px;
   position: sticky;
@@ -142,11 +196,22 @@ input {
   table {
     width: 90%;
   }
+  .clickable-cell {
+    min-width: 50px;
+    height: 45px;
+  }
 }
 
 @media only screen and (max-width: 500px) {
   .header {
     font-size: 1em;
+  }
+  .clickable-cell {
+    min-width: 45px;
+    height: 40px;
+  }
+  .cell-icon {
+    font-size: 20px;
   }
 }
 
@@ -155,7 +220,6 @@ input {
   position: relative;
   overflow: hidden;
   width: 100%;
-  /* max-width: 620px; */
   margin: 1rem auto;
 }
 
@@ -177,12 +241,20 @@ input {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.3);
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 1;
   padding: 10px 15px;
+  border-radius: 5px;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.slider-btn:hover {
+  background: rgba(0, 0, 0, 0.5);
+  transform: translateY(-50%) scale(1.1);
 }
 
 #prevParsha {
@@ -199,4 +271,10 @@ input {
 
 .parsha-panel:only-child h2.dbparsh {
   display: none;
+}
+
+.dbparsha {
+  margin: 15px 0;
+  color: var(--nav-color);
+  font-size: 1.5em;
 }
