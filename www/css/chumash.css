@@ -9,20 +9,23 @@
 body {
   background-color: var(--page-bg-alt);
   font-family: Arial, sans-serif;
+  min-height: 100vh;
+  overflow-y: auto;
 }
 body,
 html {
   margin: 0;
 }
 table {
-  width: fit;
+  width: fit-content;
   border-collapse: collapse;
-  overflow: flow;
+  overflow-y: auto;
   text-align: center;
-
   margin: 0 auto;
   margin-top: 10px;
   font-size: 24px;
+  max-height: 70vh;
+  display: block;
 }
 
 th,
@@ -133,6 +136,7 @@ input {
   font-size: 2em;
   gap: 20px;
   flex-wrap: wrap;
+  z-index: 10;
 }
 
 @media only screen and (max-width: 800px) {
@@ -155,14 +159,12 @@ input {
   position: relative;
   overflow: hidden;
   width: 100%;
-
   /* max-width: 620px; */
   margin: 1rem auto;
 }
 
 .slider-inner {
   display: flex;
-
   transition: transform 0.3s ease;
   width: 100%;
 }
@@ -170,6 +172,9 @@ input {
 .parsha-panel {
   min-width: 100%;
   box-sizing: border-box;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+  padding-bottom: 80px;
 }
 
 .slider-btn {
@@ -181,6 +186,7 @@ input {
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 1;
+  padding: 10px 15px;
 }
 
 #prevParsha {
