@@ -1,13 +1,13 @@
 
 
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.example.torahtracker" version="1.9.1." xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.example.torahtracker" version="1.4.6." xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Torah Tracker</name>
-<icon src="www/torah.png" platform="ios" width="auto" height="auto" density="mdpi" />
-<preference name="AndroidWindowSplashScreenAnimatedIcon" value="www/torah.png" />
-<preference name="AndroidWindowSplashScreenBackground" value="#fff" />
-    <name>Torah Tracker</name>
-    <description>Torah Tracker</description>
+<icon src="resources/icon.png" platform="ios" width="auto" height="auto" density="mdpi" />
+<preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/splash.png" />
+<!-- <preference name="AndroidWindowSplashScreenBackground" value="#5d5454ff" /> -->
+    <name>Torah Tracker</name> 
+    <description>Torah Tracker</description> 
     <author>Shiya Sherman</author>
 
     <preference name = 'orientation' value = 'portrait'/>

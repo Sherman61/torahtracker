@@ -1,17 +1,30 @@
-<?xml version = '1.0' encoding = 'UTF-8' ?>
+<?xml version='1.0' encoding='utf-8'?>
 <widget
-    android-versionCode = '1'
-    id = 'com.shiyaswebsite.torahtracker'
-    version = '1.4.5' 
-    xmlns = 'https://www.w3.org/ns/widgets'>
-<icon src="torah.png" platform="ios" width="auto" height="auto" density="mdpi" />
-<preference name="AndroidWindowSplashScreenAnimatedIcon" value="torah.png" />
-<preference name="AndroidWindowSplashScreenBackground" value="#3f567e" />
+    id="com.shiyaswebsite.torahtracker"
+    version="1.4.6.1"
+    android-versionCode="1"
+    xmlns="http://www.w3.org/ns/widgets"
+    xmlns:cdv="http://cordova.apache.org/ns/1.0">
+
     <name>Torah Tracker</name>
     <description>Torah Tracker</description>
     <author>Shiya Sherman</author>
 
-    <preference name = 'orientation' value = 'portrait'/>
+    <!-- Main entry point -->
+    <content src="index.html" />
+
+    <!-- Orientation and SDKs -->
+    <preference name="orientation" value="portrait" />
+    <preference name="android-minSdkVersion" value="21" />
+    <preference name="android-targetSdkVersion" value="34" />
+
+    <!-- Global app icon (what cordova-res generates from resources/icon.png) -->
+    <icon src="resources/icon.png" />
+
+    <!-- Optional iOS specific icon (used only when you build iOS) -->
+    <!-- <icon src="resources.icon.png" platform="ios" width="auto" height="auto" density="mdpi" /> -->
+
+    <!-- Android 12+ splash background color -->
+    <preference name="AndroidWindowSplashScreenBackground" value="#3f567e" />
 
 </widget>
- 

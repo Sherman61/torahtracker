@@ -214,6 +214,84 @@
                 min-width: 520px;
             }
         }
+
+
+
+
+        .hidden {
+            display: none !important;
+        }
+
+        .import-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 30;
+        }
+
+        .import-dialog {
+            background: var(--surface);
+            color: var(--text);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            padding: 14px 14px 10px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .import-dialog h2 {
+            margin: 0 0 6px;
+            font-size: 1.1rem;
+            color: var(--text-strong);
+        }
+
+        .import-help {
+            margin: 0 0 10px;
+            font-size: 0.9rem;
+            color: var(--muted-text);
+        }
+
+        #import-json-input {
+            width: 100%;
+            flex: 1;
+            min-height: 150px;
+            max-height: 50vh;
+            resize: vertical;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-family: monospace;
+            font-size: 0.85rem;
+            background: var(--surface-soft);
+            color: var(--text);
+            box-sizing: border-box;
+        }
+
+        .import-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        /* Small screen tweaks */
+        @media (max-width: 600px) {
+            .import-dialog {
+                width: 94%;
+                padding: 12px 10px 8px;
+            }
+
+            #import-json-input {
+                min-height: 180px;
+            }
+        }
     </style>
 </head>
 
@@ -261,20 +339,75 @@
         <details class="raw-panel" id="raw-panel" open>
             <summary>Raw JSON dump</summary>
             <pre id="raw-json">// waiting for data…</pre>
-        </details>
+
+    </div>
+    <div id="import-modal" class="import-modal hidden">
+        <div class="import-dialog">
+            <h2>Import JSON</h2>
+            <p class="import-help">
+                Paste a JSON <strong>array</strong> of records.
+                Importing will <strong>replace</strong> all existing daily progress.
+            </p>
+            <textarea id="import-json-input"
+                placeholder='[{"date":"2025-07-16","startIndex":0,"endIndex":18,"pereksToday":18,"goalReached":true}]'></textarea>
+            <div class="import-actions">
+                <button id="import-cancel" class="btn">
+                    <i class="fa-solid fa-xmark"></i>
+                    Cancel
+                </button>
+                <button id="import-confirm" class="btn btn-primary">
+                    <i class="fa-solid fa-file-import"></i>
+                    Import
+                </button>
+            </div>
+        </div>
     </div>
 
+    <div class="info-bar">
+        <span id="db-info">Loading record count…</span>
+        <div>
+            <button id="copy-json-btn" class="btn">
+                <i class="fa-solid fa-copy"></i>
+                Copy JSON
+            </button>
+            <button id="paste-json-btn" class="btn">
+                <i class="fa-solid fa-paste"></i>
+                Paste JSON
+            </button>
+            <button id="reload-btn" class="btn">
+                <i class="fa-solid fa-rotate-right"></i>
+                Reload
+            </button>
+            <button id="clear-all-btn" class="btn btn-danger">
+                <i class="fa-solid fa-trash"></i>
+                Clear All
+            </button>
+        </div>
+    </div>
+    </details>
     <script src="js/db.js"></script>
+
     <script>
         const tbody = document.getElementById('data-body');
         const dbInfoEl = document.getElementById('db-info');
         const rawJsonEl = document.getElementById('raw-json');
         const reloadBtn = document.getElementById('reload-btn');
         const clearAllBtn = document.getElementById('clear-all-btn');
+        const copyJsonBtn = document.getElementById('copy-json-btn');
+        const pasteJsonBtn = document.getElementById('paste-json-btn');
+
+        // Modal elements
+        const importModal = document.getElementById('import-modal');
+        const importTextarea = document.getElementById('import-json-input');
+        const importCancel = document.getElementById('import-cancel');
+        const importConfirm = document.getElementById('import-confirm');
+
+        let lastSnapshot = [];
 
         async function loadTable() {
             try {
                 const all = await getAllProgress();
+                lastSnapshot = all;
                 tbody.innerHTML = '';
 
                 dbInfoEl.textContent = `Records: ${all.length}`;
@@ -290,31 +423,27 @@
                 } else {
                     all.forEach(entry => {
                         const tr = document.createElement('tr');
-
                         const goalMark = entry.goalReached ? '✔️' : '❌';
 
                         tr.innerHTML = `
-              <td>${entry.date}</td>
-              <td>${entry.startIndex ?? '-'}</td>
-              <td>${entry.endIndex ?? '-'}</td>
-              <td>${entry.pereksToday ?? '-'}</td>
-              <td class="goal-toggle">${goalMark}</td>
-              <td class="actions">
-                <button class="btn btn-danger btn-delete">
-                  <i class="fa-solid fa-trash"></i>
-                  Delete
-                </button>
-              </td>
-            `;
+            <td>${entry.date}</td>
+            <td>${entry.startIndex ?? '-'}</td>
+            <td>${entry.endIndex ?? '-'}</td>
+            <td>${entry.pereksToday ?? '-'}</td>
+            <td class="goal-toggle">${goalMark}</td>
+            <td class="actions">
+              <button class="btn btn-danger btn-delete">
+                <i class="fa-solid fa-trash"></i>
+                Delete
+              </button>
+            </td>
+          `;
 
-                        // Attach date in dataset for easy access
                         tr.dataset.date = entry.date;
-
                         tbody.appendChild(tr);
                     });
                 }
 
-                // Raw JSON
                 rawJsonEl.textContent = JSON.stringify(all, null, 2);
             } catch (err) {
                 console.error(err);
@@ -323,14 +452,14 @@
             }
         }
 
-        // Toggle goalReached on click
+        // Toggle goalReached on click + delete row
         tbody.addEventListener('click', async (e) => {
             const row = e.target.closest('tr');
             if (!row || !row.dataset.date) return;
 
             const date = row.dataset.date;
 
-            // Toggle goal cell
+            // Toggle goalReached
             if (e.target.closest('.goal-toggle')) {
                 try {
                     const rec = await getProgress(date);
@@ -378,8 +507,109 @@
             }
         });
 
+        // Copy JSON button
+        copyJsonBtn.addEventListener('click', async () => {
+            const text = rawJsonEl.textContent || '';
+            if (!text.trim()) {
+                alert('Nothing to copy yet.');
+                return;
+            }
+
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(text);
+                } else {
+                    const tmp = document.createElement('textarea');
+                    tmp.value = text;
+                    tmp.style.position = 'fixed';
+                    tmp.style.left = '-9999px';
+                    document.body.appendChild(tmp);
+                    tmp.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tmp);
+                }
+                alert('JSON copied to clipboard.');
+            } catch (err) {
+                console.error('Copy failed:', err);
+                alert('Could not copy JSON.');
+            }
+        });
+
+        // Open Paste JSON modal
+        pasteJsonBtn.addEventListener('click', () => {
+            // Pre-fill with current dump to make editing easier if you want
+            importTextarea.value = rawJsonEl.textContent.trim() || '[]';
+            importModal.classList.remove('hidden');
+            // focus without scrolling the whole page
+            setTimeout(() => importTextarea.focus(), 50);
+        });
+
+        // Cancel import
+        importCancel.addEventListener('click', () => {
+            importModal.classList.add('hidden');
+        });
+
+        // Confirm import
+        importConfirm.addEventListener('click', async () => {
+            const input = importTextarea.value.trim();
+            if (!input) {
+                alert('Please paste JSON first.');
+                return;
+            }
+
+            let data;
+            try {
+                data = JSON.parse(input);
+            } catch (err) {
+                alert('Invalid JSON. Please check your paste.');
+                return;
+            }
+
+            if (!Array.isArray(data)) {
+                alert('JSON must be an array of records.');
+                return;
+            }
+
+            const cleaned = data.filter(
+                r => r && typeof r.date === 'string' && r.date.trim().length > 0
+            );
+
+            if (!cleaned.length) {
+                alert('No valid records with a "date" field were found in the JSON.');
+                return;
+            }
+
+            const currentCount = lastSnapshot.length;
+            const ok = confirm(
+                `This will REPLACE all current records (${currentCount}) with ${cleaned.length} record(s) from the pasted JSON.\n\nContinue?`
+            );
+            if (!ok) return;
+
+            try {
+                await clearAllProgress();
+
+                for (const rec of cleaned) {
+                    const date = rec.date;
+                    await saveProgress(date, {
+                        startIndex: typeof rec.startIndex === 'number' ? rec.startIndex : 0,
+                        endIndex: typeof rec.endIndex === 'number' ? rec.endIndex : 0,
+                        pereksToday: typeof rec.pereksToday === 'number' ? rec.pereksToday : 0,
+                        goalReached: !!rec.goalReached
+                    });
+                }
+
+                importModal.classList.add('hidden');
+                await loadTable();
+                alert(`Imported ${cleaned.length} record(s) into IndexedDB.`);
+            } catch (err) {
+                console.error('Error importing JSON:', err);
+                alert('Failed to import JSON. Check console for details.');
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', loadTable);
     </script>
+
 </body>
 
 </html>
