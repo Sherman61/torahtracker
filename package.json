@@ -5,7 +5,6 @@
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
-    "start": "node scripts/serve.js",
     "test": "echo \"No automated tests configured; manual UI check run.\""
   },
   "keywords": [
