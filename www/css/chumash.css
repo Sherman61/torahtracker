@@ -35,6 +35,16 @@ thead tr th {
   color: inherit;
 }
 
+thead tr {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: var(--table-header-text);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+thead tr th {
+  color: inherit;
+}
+
 th,
 td {
   padding: 15px;
