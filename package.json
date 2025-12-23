@@ -5,7 +5,8 @@
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node scripts/serve.js",
+    "test": "echo \"No automated tests configured; manual UI check run.\""
   },
   "keywords": [
     "ecosystem:cordova"
