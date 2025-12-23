@@ -2,9 +2,6 @@
   text-align: center;
   font-weight: 800;
 }
-.bottom-nav a {
-  font-weight: normal;
-}
 
 body {
   background-color: var(--page-bg-alt);
@@ -24,6 +21,16 @@ table {
   margin: 0 auto;
   margin-top: 20px;
   font-size: 24px;
+}
+
+thead tr {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: var(--table-header-text);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+thead tr th {
+  color: inherit;
 }
 
 th,
@@ -144,12 +151,12 @@ tbody tr:first-child .clickable-cell {
 }
 
 th {
-  background: linear-gradient(145deg, #1976d2, #1565c0);
-  color: white;
+  background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+  color: var(--table-header-text);
   border-radius: 12px;
   padding: 15px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-  border: 2px solid #0d47a1;
+  border: 2px solid var(--primary-dark);
 }
 
 input {
