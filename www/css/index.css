@@ -365,7 +365,6 @@ body {
   .hero-chip {
     justify-self: start;
   }
-}
 
 @media (max-width: 640px) {
   .top-bar {
