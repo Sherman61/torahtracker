@@ -17,6 +17,14 @@ body {
   flex-direction: column;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+.app-shell {
+  width: min(1080px, 100%);
+  margin: 0 auto;
+  padding: 24px 18px calc(96px + env(safe-area-inset-bottom));
 .app-shell {
   width: min(1080px, 100%);
   margin: 0 auto;
@@ -36,6 +44,120 @@ body {
   top: 0;
   z-index: 5;
   backdrop-filter: blur(8px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--primary);
+  color: var(--primary-text);
+  font-size: 24px;
+}
+
+.brand-text h1 {
+  margin: 0;
+  font-size: 22px;
+  color: var(--text-strong);
+}
+
+.brand-text .eyebrow {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted-text);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ghost-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+  transition: border 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.ghost-button:hover {
+  border-color: var(--primary);
+  background: var(--highlight);
+  transform: translateY(-1px);
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.hero-card {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 18px;
+  padding: 26px 24px;
+  border-radius: var(--card-radius);
+  background: linear-gradient(120deg, var(--primary), var(--primary-dark));
+  color: var(--primary-text);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.hero-text h2 {
+  margin: 6px 0 10px;
+  font-size: clamp(22px, 4vw, 30px);
+}
+
+.hero-text .muted {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-chip {
+  align-self: center;
+  justify-self: end;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: var(--primary-text);
+  padding: 14px 16px;
+  border-radius: 14px;
+  display: grid;
+  gap: 6px;
+  min-width: 160px;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+
+.chip-label {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.chip-label {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.chip-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
 }
 
 .brand {
@@ -159,11 +281,21 @@ body {
   box-shadow: var(--shadow-soft);
   display: grid;
   gap: 6px;
+  position: relative;
+  overflow: hidden;
 }
 
 .stat-card.goal-card {
   background: linear-gradient(135deg, var(--highlight), var(--highlight-strong));
   border-color: rgba(0, 0, 0, 0.05);
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.08), transparent 45%);
+  pointer-events: none;
 }
 
 .stat-label {
@@ -182,6 +314,16 @@ body {
 
 .goal-card .stat-value {
   color: var(--primary-dark);
+}
+
+.list-card {
+  background: var(--surface);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  padding: 18px;
+}
+
 }
 
 .list-card {
@@ -223,6 +365,7 @@ body {
   background: var(--bg);
   border: 1px solid var(--border);
   padding: 6px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .submenu {
@@ -271,6 +414,19 @@ body {
   transform: translateY(-2px);
 }
 
+.bb:focus-visible,
+.ghost-button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.bb.current-mesechet {
+  border-color: var(--accent);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+}
+
 .bb.current-mesechet {
   border-color: var(--accent);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
@@ -299,6 +455,17 @@ body {
   padding: 16px;
   box-sizing: border-box;
   z-index: 12;
+}
+
+.side-nav {
+  width: min(480px, 100%);
+  background: var(--bg);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 16px;
 }
 
 .side-nav {
@@ -378,6 +545,9 @@ body {
   .hero-card {
     padding: 22px 18px;
   }
+
+  .stat-card {
+    padding: 16px 14px;
 
   .bottom-nav {
     height: 58px;
