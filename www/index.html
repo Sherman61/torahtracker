@@ -4,11 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
 
   <script src="themes/theme.js"></script>
   <link rel="stylesheet" href="css/index.css" />
@@ -16,52 +19,82 @@
 </head>
 
 <body class="with-bottom-nav">
-  <details class="stats-dock" open>
-    <summary>Progress 📊</summary>
-    <header class="header">
-      <i class="fas fa-cog" id="openNav" onclick="location.href='settings.html'"></i>
-      <p id="finished"></p>
-      <p id="percentdone"></p>
-      <p id="to-go"></p>
-      <p id="today"></p>
-      <p id="goal" style="display:none"></p>
-    </header>
-  </details>
-
-
-  <!-- <h1>Mishnayes</h1> -->
-  <h2 id="mesandperek"></h2>
-  <div class="container">
-    <div class="sidebar">
-      <div class="bb-container">
-        <ul class="menu">
-          <li class="menu-item">
-            <p id="bold">mesachet</p>
-
-            <ul class="submenu" id="mesechetList">
-              <!-- will be filled by JS -->
-            </ul>
-
+  <div class="app-shell">
+    <header class="top-bar">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">📜</span>
+        <div class="brand-text">
+          <p class="eyebrow">TorahTracker</p>
+          <h1>Mishnayes</h1>
+        </div>
       </div>
-    </div>
+      <button class="ghost-button" id="openNav" onclick="location.href='settings.html'">
+        <i class="fas fa-cog" aria-hidden="true"></i>
+        <span>Settings</span>
+      </button>
+    </header>
+
+    <main class="page-content">
+      <section class="hero-card">
+        <div class="hero-text">
+          <p class="eyebrow">Current focus</p>
+          <h2 id="mesandperek"></h2>
+          <p class="muted">Your progress and daily pace stay in sync across themes and devices.</p>
+        </div>
+        <div class="hero-chip">
+          <span class="chip-label">Daily streak</span>
+          <span class="chip-value" id="today"></span>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="Progress overview">
+        <article class="stat-card">
+          <p class="stat-label">Pereks done</p>
+          <p class="stat-value" id="finished"></p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-label">Percent done</p>
+          <p class="stat-value" id="percentdone"></p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-label">Pereks left</p>
+          <p class="stat-value" id="to-go"></p>
+        </article>
+        <article class="stat-card goal-card">
+          <p class="stat-label">Today's goal</p>
+          <p class="stat-value" id="goal"></p>
+        </article>
+      </section>
+
+      <section class="list-card">
+        <div class="list-header">
+          <div>
+            <p class="eyebrow">Start learning</p>
+            <h3>Choose a Masechet</h3>
+          </div>
+          <p class="helper-text">Tap any title to open its perakim.</p>
+        </div>
+        <div class="list-body">
+          <ul class="submenu" id="mesechetList"></ul>
+        </div>
+      </section>
+    </main>
   </div>
-  <!-- <div class="space">d</div> -->
+
   <div class="side-nav-container" style="display: none"></div>
 
-  <div class="bottom-nav">
+  <nav class="bottom-nav">
     <a href="index.html" class="active">Mishnayes</a>
     <a href="teheilem.html">Teheilem</a>
     <a href="chumash.html">Chumash</a>
-  </div>
+  </nav>
 
-  <p id="result"></p>
+  <p id="result" class="sr-only"></p>
   <script src="js/mesechot-data.js"></script>
   <script src="js/mesechet-ui.js"></script>
   <script src="js/db.js"></script>
   <script src="goalConfetti.js"></script>
-
   <script src="ms2.js"></script>
-
 </body>
 
 </html>
